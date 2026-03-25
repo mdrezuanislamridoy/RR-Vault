@@ -1,0 +1,12 @@
+model CloudData {
+    id String @id @unique @default(uuid())
+
+    data      String
+    publicKey String
+
+    shortenUrl ShortenUrl? 
+
+    
+
+    uploaded_at DateTime @default(now())
+}

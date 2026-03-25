@@ -1,0 +1,43 @@
+model User {
+    id String @id @unique @default(uuid())
+
+    name          String
+    email         String      @unique
+    password      String?
+    profilePic    String?
+    profilePicKey String?
+
+    refreshToken String?
+
+    resetCode       String?
+    resetCodeToken  String?
+    resetCodeExpiry DateTime?
+
+    verifyCode       String?
+    verifyCodeToken  String?
+    verifyCodeExpiry DateTime?
+    isEmailVerified  Boolean   @default(false)
+
+    accountType AccountType @default(EMAIL)
+    role        UserRoles   @default(USER)
+
+    isBlocked Boolean @default(false)
+    isDeleted Boolean @default(false)
+
+    // relations
+    cloudSecret CloudSecret?
+    StoredFiles   StoredFile[]
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+enum UserRoles {
+    ADMIN
+    USER
+}
+
+enum AccountType {
+    EMAIL
+    GOOGLE
+}

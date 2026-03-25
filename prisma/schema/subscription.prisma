@@ -1,0 +1,10 @@
+model SubscriptionPlan{
+    id String @id @default(uuid())
+}
+
+enum SubscriptionStatus {
+    PENDING
+    PAID
+    CANCELLED
+    FAILED
+}

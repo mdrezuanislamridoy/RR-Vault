@@ -1,0 +1,13 @@
+model ShortenUrl {
+    id String @id @unique @default(uuid())
+
+    shortenUrlCode String @unique
+
+    originalUrlId String    @unique
+    cloudData     CloudData @relation(fields: [originalUrlId], references: [id], onDelete: Cascade)
+
+    storedFileId String @unique
+    storedFile StoredFile @relation(fields:[storedFileId], references: [id], onDelete:Cascade)
+
+    createdAt DateTime @default(now())
+}

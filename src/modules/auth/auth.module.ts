@@ -1,0 +1,16 @@
+import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
+import { PrismaModule } from '@/lib/prisma/prisma.module';
+import { MailModule } from '@/modules/mail/mail.module';
+import { GoogleStrategy } from './strategies/google.strategy';
+
+@Module({
+  imports: [PassportModule, JwtModule.register({}), PrismaModule, MailModule],
+  controllers: [AuthController],
+  providers: [AuthService, GoogleStrategy],
+  exports: [AuthService],
+})
+export class AuthModule {}
