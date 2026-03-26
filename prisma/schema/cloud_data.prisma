@@ -6,7 +6,8 @@ model CloudData {
 
     shortenUrl ShortenUrl? 
 
-    
+    userId     String
+    user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     uploaded_at DateTime @default(now())
 }

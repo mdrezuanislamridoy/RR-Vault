@@ -28,6 +28,7 @@ export type CloudDataMinAggregateOutputType = {
   id: string | null
   data: string | null
   publicKey: string | null
+  userId: string | null
   uploaded_at: Date | null
 }
 
@@ -35,6 +36,7 @@ export type CloudDataMaxAggregateOutputType = {
   id: string | null
   data: string | null
   publicKey: string | null
+  userId: string | null
   uploaded_at: Date | null
 }
 
@@ -42,6 +44,7 @@ export type CloudDataCountAggregateOutputType = {
   id: number
   data: number
   publicKey: number
+  userId: number
   uploaded_at: number
   _all: number
 }
@@ -51,6 +54,7 @@ export type CloudDataMinAggregateInputType = {
   id?: true
   data?: true
   publicKey?: true
+  userId?: true
   uploaded_at?: true
 }
 
@@ -58,6 +62,7 @@ export type CloudDataMaxAggregateInputType = {
   id?: true
   data?: true
   publicKey?: true
+  userId?: true
   uploaded_at?: true
 }
 
@@ -65,6 +70,7 @@ export type CloudDataCountAggregateInputType = {
   id?: true
   data?: true
   publicKey?: true
+  userId?: true
   uploaded_at?: true
   _all?: true
 }
@@ -145,6 +151,7 @@ export type CloudDataGroupByOutputType = {
   id: string
   data: string
   publicKey: string
+  userId: string
   uploaded_at: Date
   _count: CloudDataCountAggregateOutputType | null
   _min: CloudDataMinAggregateOutputType | null
@@ -173,16 +180,20 @@ export type CloudDataWhereInput = {
   id?: Prisma.StringFilter<"CloudData"> | string
   data?: Prisma.StringFilter<"CloudData"> | string
   publicKey?: Prisma.StringFilter<"CloudData"> | string
+  userId?: Prisma.StringFilter<"CloudData"> | string
   uploaded_at?: Prisma.DateTimeFilter<"CloudData"> | Date | string
   shortenUrl?: Prisma.XOR<Prisma.ShortenUrlNullableScalarRelationFilter, Prisma.ShortenUrlWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type CloudDataOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   data?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   uploaded_at?: Prisma.SortOrder
   shortenUrl?: Prisma.ShortenUrlOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type CloudDataWhereUniqueInput = Prisma.AtLeast<{
@@ -192,14 +203,17 @@ export type CloudDataWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CloudDataWhereInput | Prisma.CloudDataWhereInput[]
   data?: Prisma.StringFilter<"CloudData"> | string
   publicKey?: Prisma.StringFilter<"CloudData"> | string
+  userId?: Prisma.StringFilter<"CloudData"> | string
   uploaded_at?: Prisma.DateTimeFilter<"CloudData"> | Date | string
   shortenUrl?: Prisma.XOR<Prisma.ShortenUrlNullableScalarRelationFilter, Prisma.ShortenUrlWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "id">
 
 export type CloudDataOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   data?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   uploaded_at?: Prisma.SortOrder
   _count?: Prisma.CloudDataCountOrderByAggregateInput
   _max?: Prisma.CloudDataMaxOrderByAggregateInput
@@ -213,6 +227,7 @@ export type CloudDataScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"CloudData"> | string
   data?: Prisma.StringWithAggregatesFilter<"CloudData"> | string
   publicKey?: Prisma.StringWithAggregatesFilter<"CloudData"> | string
+  userId?: Prisma.StringWithAggregatesFilter<"CloudData"> | string
   uploaded_at?: Prisma.DateTimeWithAggregatesFilter<"CloudData"> | Date | string
 }
 
@@ -222,12 +237,14 @@ export type CloudDataCreateInput = {
   publicKey: string
   uploaded_at?: Date | string
   shortenUrl?: Prisma.ShortenUrlCreateNestedOneWithoutCloudDataInput
+  user: Prisma.UserCreateNestedOneWithoutCloudDataInput
 }
 
 export type CloudDataUncheckedCreateInput = {
   id?: string
   data: string
   publicKey: string
+  userId: string
   uploaded_at?: Date | string
   shortenUrl?: Prisma.ShortenUrlUncheckedCreateNestedOneWithoutCloudDataInput
 }
@@ -238,12 +255,14 @@ export type CloudDataUpdateInput = {
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   uploaded_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shortenUrl?: Prisma.ShortenUrlUpdateOneWithoutCloudDataNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutCloudDataNestedInput
 }
 
 export type CloudDataUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   uploaded_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shortenUrl?: Prisma.ShortenUrlUncheckedUpdateOneWithoutCloudDataNestedInput
 }
@@ -252,6 +271,7 @@ export type CloudDataCreateManyInput = {
   id?: string
   data: string
   publicKey: string
+  userId: string
   uploaded_at?: Date | string
 }
 
@@ -266,6 +286,7 @@ export type CloudDataUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   uploaded_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -273,6 +294,7 @@ export type CloudDataCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   data?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   uploaded_at?: Prisma.SortOrder
 }
 
@@ -280,6 +302,7 @@ export type CloudDataMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   data?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   uploaded_at?: Prisma.SortOrder
 }
 
@@ -287,12 +310,23 @@ export type CloudDataMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   data?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   uploaded_at?: Prisma.SortOrder
 }
 
 export type CloudDataScalarRelationFilter = {
   is?: Prisma.CloudDataWhereInput
   isNot?: Prisma.CloudDataWhereInput
+}
+
+export type CloudDataListRelationFilter = {
+  every?: Prisma.CloudDataWhereInput
+  some?: Prisma.CloudDataWhereInput
+  none?: Prisma.CloudDataWhereInput
+}
+
+export type CloudDataOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -317,17 +351,61 @@ export type CloudDataUpdateOneRequiredWithoutShortenUrlNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CloudDataUpdateToOneWithWhereWithoutShortenUrlInput, Prisma.CloudDataUpdateWithoutShortenUrlInput>, Prisma.CloudDataUncheckedUpdateWithoutShortenUrlInput>
 }
 
+export type CloudDataCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.CloudDataCreateWithoutUserInput, Prisma.CloudDataUncheckedCreateWithoutUserInput> | Prisma.CloudDataCreateWithoutUserInput[] | Prisma.CloudDataUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.CloudDataCreateOrConnectWithoutUserInput | Prisma.CloudDataCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.CloudDataCreateManyUserInputEnvelope
+  connect?: Prisma.CloudDataWhereUniqueInput | Prisma.CloudDataWhereUniqueInput[]
+}
+
+export type CloudDataUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.CloudDataCreateWithoutUserInput, Prisma.CloudDataUncheckedCreateWithoutUserInput> | Prisma.CloudDataCreateWithoutUserInput[] | Prisma.CloudDataUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.CloudDataCreateOrConnectWithoutUserInput | Prisma.CloudDataCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.CloudDataCreateManyUserInputEnvelope
+  connect?: Prisma.CloudDataWhereUniqueInput | Prisma.CloudDataWhereUniqueInput[]
+}
+
+export type CloudDataUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.CloudDataCreateWithoutUserInput, Prisma.CloudDataUncheckedCreateWithoutUserInput> | Prisma.CloudDataCreateWithoutUserInput[] | Prisma.CloudDataUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.CloudDataCreateOrConnectWithoutUserInput | Prisma.CloudDataCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.CloudDataUpsertWithWhereUniqueWithoutUserInput | Prisma.CloudDataUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.CloudDataCreateManyUserInputEnvelope
+  set?: Prisma.CloudDataWhereUniqueInput | Prisma.CloudDataWhereUniqueInput[]
+  disconnect?: Prisma.CloudDataWhereUniqueInput | Prisma.CloudDataWhereUniqueInput[]
+  delete?: Prisma.CloudDataWhereUniqueInput | Prisma.CloudDataWhereUniqueInput[]
+  connect?: Prisma.CloudDataWhereUniqueInput | Prisma.CloudDataWhereUniqueInput[]
+  update?: Prisma.CloudDataUpdateWithWhereUniqueWithoutUserInput | Prisma.CloudDataUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.CloudDataUpdateManyWithWhereWithoutUserInput | Prisma.CloudDataUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.CloudDataScalarWhereInput | Prisma.CloudDataScalarWhereInput[]
+}
+
+export type CloudDataUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.CloudDataCreateWithoutUserInput, Prisma.CloudDataUncheckedCreateWithoutUserInput> | Prisma.CloudDataCreateWithoutUserInput[] | Prisma.CloudDataUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.CloudDataCreateOrConnectWithoutUserInput | Prisma.CloudDataCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.CloudDataUpsertWithWhereUniqueWithoutUserInput | Prisma.CloudDataUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.CloudDataCreateManyUserInputEnvelope
+  set?: Prisma.CloudDataWhereUniqueInput | Prisma.CloudDataWhereUniqueInput[]
+  disconnect?: Prisma.CloudDataWhereUniqueInput | Prisma.CloudDataWhereUniqueInput[]
+  delete?: Prisma.CloudDataWhereUniqueInput | Prisma.CloudDataWhereUniqueInput[]
+  connect?: Prisma.CloudDataWhereUniqueInput | Prisma.CloudDataWhereUniqueInput[]
+  update?: Prisma.CloudDataUpdateWithWhereUniqueWithoutUserInput | Prisma.CloudDataUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.CloudDataUpdateManyWithWhereWithoutUserInput | Prisma.CloudDataUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.CloudDataScalarWhereInput | Prisma.CloudDataScalarWhereInput[]
+}
+
 export type CloudDataCreateWithoutShortenUrlInput = {
   id?: string
   data: string
   publicKey: string
   uploaded_at?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutCloudDataInput
 }
 
 export type CloudDataUncheckedCreateWithoutShortenUrlInput = {
   id?: string
   data: string
   publicKey: string
+  userId: string
   uploaded_at?: Date | string
 }
 
@@ -352,9 +430,94 @@ export type CloudDataUpdateWithoutShortenUrlInput = {
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   uploaded_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutCloudDataNestedInput
 }
 
 export type CloudDataUncheckedUpdateWithoutShortenUrlInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  data?: Prisma.StringFieldUpdateOperationsInput | string
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  uploaded_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CloudDataCreateWithoutUserInput = {
+  id?: string
+  data: string
+  publicKey: string
+  uploaded_at?: Date | string
+  shortenUrl?: Prisma.ShortenUrlCreateNestedOneWithoutCloudDataInput
+}
+
+export type CloudDataUncheckedCreateWithoutUserInput = {
+  id?: string
+  data: string
+  publicKey: string
+  uploaded_at?: Date | string
+  shortenUrl?: Prisma.ShortenUrlUncheckedCreateNestedOneWithoutCloudDataInput
+}
+
+export type CloudDataCreateOrConnectWithoutUserInput = {
+  where: Prisma.CloudDataWhereUniqueInput
+  create: Prisma.XOR<Prisma.CloudDataCreateWithoutUserInput, Prisma.CloudDataUncheckedCreateWithoutUserInput>
+}
+
+export type CloudDataCreateManyUserInputEnvelope = {
+  data: Prisma.CloudDataCreateManyUserInput | Prisma.CloudDataCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type CloudDataUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.CloudDataWhereUniqueInput
+  update: Prisma.XOR<Prisma.CloudDataUpdateWithoutUserInput, Prisma.CloudDataUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.CloudDataCreateWithoutUserInput, Prisma.CloudDataUncheckedCreateWithoutUserInput>
+}
+
+export type CloudDataUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.CloudDataWhereUniqueInput
+  data: Prisma.XOR<Prisma.CloudDataUpdateWithoutUserInput, Prisma.CloudDataUncheckedUpdateWithoutUserInput>
+}
+
+export type CloudDataUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.CloudDataScalarWhereInput
+  data: Prisma.XOR<Prisma.CloudDataUpdateManyMutationInput, Prisma.CloudDataUncheckedUpdateManyWithoutUserInput>
+}
+
+export type CloudDataScalarWhereInput = {
+  AND?: Prisma.CloudDataScalarWhereInput | Prisma.CloudDataScalarWhereInput[]
+  OR?: Prisma.CloudDataScalarWhereInput[]
+  NOT?: Prisma.CloudDataScalarWhereInput | Prisma.CloudDataScalarWhereInput[]
+  id?: Prisma.StringFilter<"CloudData"> | string
+  data?: Prisma.StringFilter<"CloudData"> | string
+  publicKey?: Prisma.StringFilter<"CloudData"> | string
+  userId?: Prisma.StringFilter<"CloudData"> | string
+  uploaded_at?: Prisma.DateTimeFilter<"CloudData"> | Date | string
+}
+
+export type CloudDataCreateManyUserInput = {
+  id?: string
+  data: string
+  publicKey: string
+  uploaded_at?: Date | string
+}
+
+export type CloudDataUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  data?: Prisma.StringFieldUpdateOperationsInput | string
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  uploaded_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shortenUrl?: Prisma.ShortenUrlUpdateOneWithoutCloudDataNestedInput
+}
+
+export type CloudDataUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  data?: Prisma.StringFieldUpdateOperationsInput | string
+  publicKey?: Prisma.StringFieldUpdateOperationsInput | string
+  uploaded_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shortenUrl?: Prisma.ShortenUrlUncheckedUpdateOneWithoutCloudDataNestedInput
+}
+
+export type CloudDataUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
@@ -367,47 +530,61 @@ export type CloudDataSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   id?: boolean
   data?: boolean
   publicKey?: boolean
+  userId?: boolean
   uploaded_at?: boolean
   shortenUrl?: boolean | Prisma.CloudData$shortenUrlArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cloudData"]>
 
 export type CloudDataSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   data?: boolean
   publicKey?: boolean
+  userId?: boolean
   uploaded_at?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cloudData"]>
 
 export type CloudDataSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   data?: boolean
   publicKey?: boolean
+  userId?: boolean
   uploaded_at?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cloudData"]>
 
 export type CloudDataSelectScalar = {
   id?: boolean
   data?: boolean
   publicKey?: boolean
+  userId?: boolean
   uploaded_at?: boolean
 }
 
-export type CloudDataOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "data" | "publicKey" | "uploaded_at", ExtArgs["result"]["cloudData"]>
+export type CloudDataOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "data" | "publicKey" | "userId" | "uploaded_at", ExtArgs["result"]["cloudData"]>
 export type CloudDataInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   shortenUrl?: boolean | Prisma.CloudData$shortenUrlArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
-export type CloudDataIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type CloudDataIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type CloudDataIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type CloudDataIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
 
 export type $CloudDataPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CloudData"
   objects: {
     shortenUrl: Prisma.$ShortenUrlPayload<ExtArgs> | null
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     data: string
     publicKey: string
+    userId: string
     uploaded_at: Date
   }, ExtArgs["result"]["cloudData"]>
   composites: {}
@@ -804,6 +981,7 @@ readonly fields: CloudDataFieldRefs;
 export interface Prisma__CloudDataClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   shortenUrl<T extends Prisma.CloudData$shortenUrlArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CloudData$shortenUrlArgs<ExtArgs>>): Prisma.Prisma__ShortenUrlClient<runtime.Types.Result.GetResult<Prisma.$ShortenUrlPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -836,6 +1014,7 @@ export interface CloudDataFieldRefs {
   readonly id: Prisma.FieldRef<"CloudData", 'String'>
   readonly data: Prisma.FieldRef<"CloudData", 'String'>
   readonly publicKey: Prisma.FieldRef<"CloudData", 'String'>
+  readonly userId: Prisma.FieldRef<"CloudData", 'String'>
   readonly uploaded_at: Prisma.FieldRef<"CloudData", 'DateTime'>
 }
     
@@ -1086,6 +1265,10 @@ export type CloudDataCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    */
   data: Prisma.CloudDataCreateManyInput | Prisma.CloudDataCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CloudDataIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1156,6 +1339,10 @@ export type CloudDataUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many CloudData to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CloudDataIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

@@ -896,6 +896,7 @@ export const CloudDataScalarFieldEnum = {
   id: 'id',
   data: 'data',
   publicKey: 'publicKey',
+  userId: 'userId',
   uploaded_at: 'uploaded_at'
 } as const
 

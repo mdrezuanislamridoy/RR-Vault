@@ -27,6 +27,7 @@ model User {
     // relations
     cloudSecret CloudSecret?
     StoredFiles   StoredFile[]
+    CloudData     CloudData[]
 
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
