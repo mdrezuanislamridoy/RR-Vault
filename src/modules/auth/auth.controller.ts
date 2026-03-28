@@ -1,4 +1,6 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
+import { Response } from 'express';
+import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
@@ -15,11 +17,16 @@ import { CurrentUser } from '@/common/decorators/current-user.decorator';
 import { GoogleAuthGuard } from './strategies/google.guard';
 import { GoogleUser } from '@/common/decorators/google-user.decorator';
 import { GoogleUser as GoogleUserType } from './strategies/google.strategy';
+import { Roles } from '@/common/decorators/roles.decorator';
+import { UserRoles } from '@prisma';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly config: ConfigService,
+  ) { }
 
   @Public()
   @Post('register')
@@ -58,6 +65,7 @@ export class AuthController {
   }
 
   @Post('change-password')
+  @Roles(UserRoles.USER, UserRoles.ADMIN)
   changePassword(
     @Body() dto: ChangePasswordDto,
     @CurrentUser('sub') userId: string,
@@ -66,17 +74,19 @@ export class AuthController {
   }
 
   @Post('logout')
+  @Roles(UserRoles.USER, UserRoles.ADMIN)
   logout(@CurrentUser('sub') userId: string) {
     return this.authService.logout(userId);
   }
 
-  @Public()
   @Post('refresh-token')
-  refreshToken(@Body() dto: RefreshTokenDto) {
-    return this.authService.refreshAccessToken(dto.refreshToken);
+  @Roles(UserRoles.USER, UserRoles.ADMIN)
+  refreshToken(@CurrentUser('sub') userId: string) {
+    return this.authService.refreshAccessToken(userId);
   }
 
   @Get('profile')
+  @Roles(UserRoles.USER, UserRoles.ADMIN)
   getProfile(@CurrentUser('sub') userId: string) {
     return this.authService.getProfile(userId);
   }
@@ -93,7 +103,15 @@ export class AuthController {
   @Public()
   @UseGuards(GoogleAuthGuard)
   @Get('google/callback')
-  googleCallback(@GoogleUser() user: GoogleUserType) {
-    return this.authService.googleLogin(user);
+  async googleCallback(@GoogleUser() user: GoogleUserType, @Res() res: Response) {
+    const result = await this.authService.googleLogin(user);
+    const token = result.data?.accessToken;
+    const frontendUrl = this.config.get('FRONTEND_URL') || 'http://localhost:5173';
+
+    if (!token) {
+      return res.redirect(`${frontendUrl}/auth/error`);
+    }
+
+    return res.redirect(`${frontendUrl}/auth/success?token=${token}`);
   }
 }

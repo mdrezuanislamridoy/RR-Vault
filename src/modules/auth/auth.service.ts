@@ -3,6 +3,7 @@ import {
   ConflictException,
   ForbiddenException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -30,7 +31,7 @@ export class AuthService {
     private readonly jwt: JwtService,
     private readonly config: ConfigService,
     private readonly mail: MailService,
-  ) {}
+  ) { }
 
   // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -75,25 +76,25 @@ export class AuthService {
       type === 'verify'
         ? this.generateVerifyToken(userId)
         : this.jwt.sign(
-            { sub: userId, purpose: 'password-reset' },
-            {
-              secret: this.config.getOrThrow('JWT_RESET_SECRET'),
-              expiresIn: '15m',
-            },
-          );
+          { sub: userId, purpose: 'password-reset' },
+          {
+            secret: this.config.getOrThrow('JWT_RESET_SECRET'),
+            expiresIn: '15m',
+          },
+        );
 
     const data =
       type === 'verify'
         ? {
-            verifyCode: hashedCode,
-            verifyCodeToken: token,
-            verifyCodeExpiry: expiry,
-          }
+          verifyCode: hashedCode,
+          verifyCodeToken: token,
+          verifyCodeExpiry: expiry,
+        }
         : {
-            resetCode: hashedCode,
-            resetCodeToken: token,
-            resetCodeExpiry: expiry,
-          };
+          resetCode: hashedCode,
+          resetCodeToken: token,
+          resetCodeExpiry: expiry,
+        };
 
     await this.prisma.client.user.update({ where: { id: userId }, data });
 
@@ -103,33 +104,40 @@ export class AuthService {
   // ─── Register ───────────────────────────────────────────────────────────────
 
   async register(dto: RegisterDto) {
-    const existing = await this.prisma.client.user.findUnique({
-      where: { email: dto.email },
-    });
+    try {
+      const existing = await this.prisma.client.user.findUnique({
+        where: { email: dto.email },
+      });
 
-    if (existing && existing.isEmailVerified) {
-      throw new ConflictException('Email already in use');
+      if (existing && existing.isEmailVerified) {
+        throw new ConflictException('Email already in use');
+      }
+
+      // Allow re-registration if email was never verified
+      if (existing && !existing.isEmailVerified) {
+        await this.prisma.client.user.delete({ where: { id: existing.id } });
+      }
+
+      const hashed: string = await bcrypt.hash(dto.password, 10);
+
+      const user = await this.prisma.client.user.create({
+        data: { name: dto.name, email: dto.email, password: hashed },
+      });
+
+      const { code, token } = await this.generateAndStoreCode(user.id, 'verify');
+
+      await this.mail.sendVerificationCode(user.email, user.name, code);
+
+      return successResponse(
+        'Registered successfully. Please check your email for the verification code.',
+        { token },
+      );
+    } catch (error) {
+      if (error instanceof ConflictException) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to register user');
     }
-
-    // Allow re-registration if email was never verified
-    if (existing && !existing.isEmailVerified) {
-      await this.prisma.client.user.delete({ where: { id: existing.id } });
-    }
-
-    const hashed: string = await bcrypt.hash(dto.password, 10);
-
-    const user = await this.prisma.client.user.create({
-      data: { name: dto.name, email: dto.email, password: hashed },
-    });
-
-    const { code, token } = await this.generateAndStoreCode(user.id, 'verify');
-
-    await this.mail.sendVerificationCode(user.email, user.name, code);
-
-    return successResponse(
-      'Registered successfully. Please check your email for the verification code.',
-      { token },
-    );
   }
 
   // ─── Verify Email ────────────────────────────────────────────────────────────
@@ -249,7 +257,6 @@ export class AuthService {
 
     return successResponse('Login successful', {
       accessToken,
-      refreshToken,
       user: {
         id: user.id,
         name: user.name,
@@ -409,7 +416,6 @@ export class AuthService {
 
     return successResponse('Google login successful', {
       accessToken,
-      refreshToken,
       user: {
         id: user.id,
         name: user.name,
@@ -421,17 +427,30 @@ export class AuthService {
 
   // ─── Refresh Token ────────────────────────────────────────────────────────────
 
-  async refreshAccessToken(refreshToken: string) {
+  async refreshAccessToken(userId: string) {
     // Step 1: Verify the refresh token JWT signature and expiry
     let payload: { sub: string };
     try {
-      payload = this.jwt.verify<{ sub: string }>(refreshToken, {
+
+      const user = await this.prisma.client.user.findUnique({
+        where: { id: userId, isBlocked: false, isDeleted: false },
+        select: {
+          id: true,
+          email: true,
+          role: true,
+          refreshToken: true,
+        },
+      });
+
+      if (!user) throw new UnauthorizedException('User not found');
+
+      payload = this.jwt.verify<{ sub: string }>(user.refreshToken as string, {
         secret: this.config.getOrThrow<string>('JWT_REFRESH_SECRET'),
       });
     } catch {
       // Token expired or invalid — clear it from DB if it exists
       await this.prisma.client.user.updateMany({
-        where: { refreshToken: { not: null } },
+        where: { id: userId, refreshToken: { not: null } },
         data: { refreshToken: null },
       });
       throw new UnauthorizedException('Session expired. Please login again');
@@ -461,16 +480,6 @@ export class AuthService {
         'Your account has been blocked. Please contact support',
       );
 
-    // Step 3: Compare token against hashed value in DB
-    const isValid = await bcrypt.compare(refreshToken, user.refreshToken);
-    if (!isValid) {
-      // Token doesn't match — clear it and force re-login
-      await this.prisma.client.user.update({
-        where: { id: user.id },
-        data: { refreshToken: null },
-      });
-      throw new UnauthorizedException('Invalid session. Please login again');
-    }
 
     const accessToken = this.generateAccessToken(
       user.id,

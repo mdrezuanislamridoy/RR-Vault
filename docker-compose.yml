@@ -3,14 +3,14 @@ version: '3.9'
 services:
   postgres:
     image: postgres:16
-    container_name: my-cloud
+    container_name: my_cloud
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: my-cloud
+      POSTGRES_DB: my_cloud
     ports:
-      - '5439:5434'
+      - '5439:5432'
     volumes:
       - pgdata:/var/lib/postgresql/data
 
