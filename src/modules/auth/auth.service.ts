@@ -308,6 +308,7 @@ export class AuthService {
       ) {
         throw error;
       }
+      console.log('Login error: ', error);
       throw new InternalServerErrorException('Failed to login');
     }
   }

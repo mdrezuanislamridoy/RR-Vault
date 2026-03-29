@@ -1,14 +1,11 @@
-import { Body, Controller, UseGuards } from "@nestjs/common";
-import { AuthGuard } from "@/common/guards/auth.guard";
+import { Body, Controller } from "@nestjs/common";
 import { SecretsService } from "./secrets.service";
 import { Get, Param, Patch, Post } from "@nestjs/common";
-import { Request } from "express";
 import { Roles } from "@/common/decorators/roles.decorator";
 import { CurrentUser } from "@/common/decorators/current-user.decorator";
-import { ApiParam } from "@nestjs/swagger";
+import { ApiBody, ApiParam } from "@nestjs/swagger";
 
 @Controller('secrets')
-@UseGuards(AuthGuard)
 export class SecretsController {
     constructor(private readonly secretsService: SecretsService) { }
 
@@ -16,6 +13,12 @@ export class SecretsController {
     @Roles("USER")
     async getSecretKey(@CurrentUser() user: { id: string }) {
         return this.secretsService.getSecretKey(user.id);
+    }
+
+    @Get('get-api-key')
+    @Roles("USER")
+    async getApiKey(@CurrentUser() user: { id: string }) {
+        return this.secretsService.getApiKey(user.id);
     }
 
     @Post('generate-secret')
@@ -45,6 +48,16 @@ export class SecretsController {
 
     @Post('generate-app-id')
     @Roles("USER")
+    @ApiBody({
+        type: 'object',
+        schema: {
+            type: 'object',
+            properties: {
+                name: { type: 'string', example: 'my-app' },
+            },
+            required: ['name'],
+        },
+    })
     async generateAppId(@CurrentUser() user: { id: string }, @Body() body: { name: string }) {
         return this.secretsService.generateAppId(user.id, body.name);
     }

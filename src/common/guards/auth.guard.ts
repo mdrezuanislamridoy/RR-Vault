@@ -82,7 +82,7 @@ export class AuthGuard implements CanActivate {
       throw new ForbiddenException('Please verify your email to continue');
     }
 
-    request['user'] = { ...payload, role: user.role };
+    request['user'] = { id: payload.sub, ...payload, role: user.role };
 
     const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
       context.getHandler(),

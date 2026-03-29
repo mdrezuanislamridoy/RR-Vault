@@ -13,7 +13,7 @@ export class SecretsService {
                 where: { userId }
             })
 
-            if (existingSecret) {
+            if (existingSecret?.api_secret) {
                 throw new BadRequestException('Secret key already exists')
             }
 
@@ -38,11 +38,6 @@ export class SecretsService {
 
     async generateAppId(userId: string, name: string) {
         try {
-
-            const existingSecret = await this.prisma.client.cloudSecret.findUnique({
-                where: { userId }
-            })
-
             const appId = randomBytes(32).toString('hex');
             const secret = await this.prisma.client.cloudSecret.update({
                 where: {
@@ -57,7 +52,7 @@ export class SecretsService {
                     }
                 },
                 include: {
-                    app_data: true
+                    app_data: true,
                 }
             })
 
@@ -88,6 +83,8 @@ export class SecretsService {
             if (error instanceof BadRequestException) {
                 throw error
             }
+            console.log(error);
+
             throw new InternalServerErrorException('Failed to fetch secret key')
         }
     }

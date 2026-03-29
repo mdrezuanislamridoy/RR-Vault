@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { GlobalExceptionFilter } from './common/filters/exception.filter';
+import { SwaggerSetting } from './config/swagger/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -20,18 +20,11 @@ async function bootstrap() {
     }),
   );
 
-  const config = new DocumentBuilder()
-    .setTitle('My Cloud API')
-    .setDescription('API documentation for My Cloud App')
-    .setVersion('1.0')
-    .addBearerAuth()
-    .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerSetting(app);
 
   const port = process.env.PORT ?? 8888;
   await app.listen(port);
-  console.log(`Server is listening on port: ${port}`);
+  console.log(`Server is listening on port: ${port}, http://localhost:${process.env.PORT}/docs`);
 }
 bootstrap();
