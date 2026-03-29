@@ -68,6 +68,21 @@ export type ShortenUrl = Prisma.ShortenUrlModel
  */
 export type SubscriptionPlan = Prisma.SubscriptionPlanModel
 /**
+ * Model PackagePricing
+ * 
+ */
+export type PackagePricing = Prisma.PackagePricingModel
+/**
+ * Model SubscriptionPaymentPlanHistory
+ * 
+ */
+export type SubscriptionPaymentPlanHistory = Prisma.SubscriptionPaymentPlanHistoryModel
+/**
+ * Model Subscribed
+ * 
+ */
+export type Subscribed = Prisma.SubscribedModel
+/**
  * Model User
  * 
  */

@@ -707,10 +707,6 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type EnumAccountTypeFieldUpdateOperationsInput = {
   set?: $Enums.AccountType
 }

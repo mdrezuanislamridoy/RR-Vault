@@ -26,28 +26,72 @@ export type AggregateSubscriptionPlan = {
 
 export type SubscriptionPlanMinAggregateOutputType = {
   id: string | null
+  name: string | null
+  description: string | null
+  isPopular: boolean | null
+  autoRenew: boolean | null
+  stripeProductId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type SubscriptionPlanMaxAggregateOutputType = {
   id: string | null
+  name: string | null
+  description: string | null
+  isPopular: boolean | null
+  autoRenew: boolean | null
+  stripeProductId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type SubscriptionPlanCountAggregateOutputType = {
   id: number
+  name: number
+  description: number
+  isPopular: number
+  planIncludes: number
+  autoRenew: number
+  stripeProductId: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
 
 export type SubscriptionPlanMinAggregateInputType = {
   id?: true
+  name?: true
+  description?: true
+  isPopular?: true
+  autoRenew?: true
+  stripeProductId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type SubscriptionPlanMaxAggregateInputType = {
   id?: true
+  name?: true
+  description?: true
+  isPopular?: true
+  autoRenew?: true
+  stripeProductId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type SubscriptionPlanCountAggregateInputType = {
   id?: true
+  name?: true
+  description?: true
+  isPopular?: true
+  planIncludes?: true
+  autoRenew?: true
+  stripeProductId?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -125,6 +169,14 @@ export type SubscriptionPlanGroupByArgs<ExtArgs extends runtime.Types.Extensions
 
 export type SubscriptionPlanGroupByOutputType = {
   id: string
+  name: string
+  description: string
+  isPopular: boolean
+  planIncludes: string[]
+  autoRenew: boolean
+  stripeProductId: string
+  createdAt: Date
+  updatedAt: Date
   _count: SubscriptionPlanCountAggregateOutputType | null
   _min: SubscriptionPlanMinAggregateOutputType | null
   _max: SubscriptionPlanMaxAggregateOutputType | null
@@ -150,10 +202,28 @@ export type SubscriptionPlanWhereInput = {
   OR?: Prisma.SubscriptionPlanWhereInput[]
   NOT?: Prisma.SubscriptionPlanWhereInput | Prisma.SubscriptionPlanWhereInput[]
   id?: Prisma.StringFilter<"SubscriptionPlan"> | string
+  name?: Prisma.StringFilter<"SubscriptionPlan"> | string
+  description?: Prisma.StringFilter<"SubscriptionPlan"> | string
+  isPopular?: Prisma.BoolFilter<"SubscriptionPlan"> | boolean
+  planIncludes?: Prisma.StringNullableListFilter<"SubscriptionPlan">
+  autoRenew?: Prisma.BoolFilter<"SubscriptionPlan"> | boolean
+  stripeProductId?: Prisma.StringFilter<"SubscriptionPlan"> | string
+  createdAt?: Prisma.DateTimeFilter<"SubscriptionPlan"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"SubscriptionPlan"> | Date | string
+  pricings?: Prisma.PackagePricingListRelationFilter
 }
 
 export type SubscriptionPlanOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  isPopular?: Prisma.SortOrder
+  planIncludes?: Prisma.SortOrder
+  autoRenew?: Prisma.SortOrder
+  stripeProductId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  pricings?: Prisma.PackagePricingOrderByRelationAggregateInput
 }
 
 export type SubscriptionPlanWhereUniqueInput = Prisma.AtLeast<{
@@ -161,10 +231,27 @@ export type SubscriptionPlanWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.SubscriptionPlanWhereInput | Prisma.SubscriptionPlanWhereInput[]
   OR?: Prisma.SubscriptionPlanWhereInput[]
   NOT?: Prisma.SubscriptionPlanWhereInput | Prisma.SubscriptionPlanWhereInput[]
+  name?: Prisma.StringFilter<"SubscriptionPlan"> | string
+  description?: Prisma.StringFilter<"SubscriptionPlan"> | string
+  isPopular?: Prisma.BoolFilter<"SubscriptionPlan"> | boolean
+  planIncludes?: Prisma.StringNullableListFilter<"SubscriptionPlan">
+  autoRenew?: Prisma.BoolFilter<"SubscriptionPlan"> | boolean
+  stripeProductId?: Prisma.StringFilter<"SubscriptionPlan"> | string
+  createdAt?: Prisma.DateTimeFilter<"SubscriptionPlan"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"SubscriptionPlan"> | Date | string
+  pricings?: Prisma.PackagePricingListRelationFilter
 }, "id">
 
 export type SubscriptionPlanOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  isPopular?: Prisma.SortOrder
+  planIncludes?: Prisma.SortOrder
+  autoRenew?: Prisma.SortOrder
+  stripeProductId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.SubscriptionPlanCountOrderByAggregateInput
   _max?: Prisma.SubscriptionPlanMaxOrderByAggregateInput
   _min?: Prisma.SubscriptionPlanMinOrderByAggregateInput
@@ -175,73 +262,346 @@ export type SubscriptionPlanScalarWhereWithAggregatesInput = {
   OR?: Prisma.SubscriptionPlanScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SubscriptionPlanScalarWhereWithAggregatesInput | Prisma.SubscriptionPlanScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"SubscriptionPlan"> | string
+  name?: Prisma.StringWithAggregatesFilter<"SubscriptionPlan"> | string
+  description?: Prisma.StringWithAggregatesFilter<"SubscriptionPlan"> | string
+  isPopular?: Prisma.BoolWithAggregatesFilter<"SubscriptionPlan"> | boolean
+  planIncludes?: Prisma.StringNullableListFilter<"SubscriptionPlan">
+  autoRenew?: Prisma.BoolWithAggregatesFilter<"SubscriptionPlan"> | boolean
+  stripeProductId?: Prisma.StringWithAggregatesFilter<"SubscriptionPlan"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"SubscriptionPlan"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SubscriptionPlan"> | Date | string
 }
 
 export type SubscriptionPlanCreateInput = {
   id?: string
+  name: string
+  description: string
+  isPopular?: boolean
+  planIncludes?: Prisma.SubscriptionPlanCreateplanIncludesInput | string[]
+  autoRenew?: boolean
+  stripeProductId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  pricings?: Prisma.PackagePricingCreateNestedManyWithoutSubscriptionPlanInput
 }
 
 export type SubscriptionPlanUncheckedCreateInput = {
   id?: string
+  name: string
+  description: string
+  isPopular?: boolean
+  planIncludes?: Prisma.SubscriptionPlanCreateplanIncludesInput | string[]
+  autoRenew?: boolean
+  stripeProductId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  pricings?: Prisma.PackagePricingUncheckedCreateNestedManyWithoutSubscriptionPlanInput
 }
 
 export type SubscriptionPlanUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  isPopular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planIncludes?: Prisma.SubscriptionPlanUpdateplanIncludesInput | string[]
+  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeProductId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pricings?: Prisma.PackagePricingUpdateManyWithoutSubscriptionPlanNestedInput
 }
 
 export type SubscriptionPlanUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  isPopular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planIncludes?: Prisma.SubscriptionPlanUpdateplanIncludesInput | string[]
+  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeProductId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pricings?: Prisma.PackagePricingUncheckedUpdateManyWithoutSubscriptionPlanNestedInput
 }
 
 export type SubscriptionPlanCreateManyInput = {
   id?: string
+  name: string
+  description: string
+  isPopular?: boolean
+  planIncludes?: Prisma.SubscriptionPlanCreateplanIncludesInput | string[]
+  autoRenew?: boolean
+  stripeProductId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type SubscriptionPlanUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  isPopular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planIncludes?: Prisma.SubscriptionPlanUpdateplanIncludesInput | string[]
+  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeProductId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SubscriptionPlanUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  isPopular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planIncludes?: Prisma.SubscriptionPlanUpdateplanIncludesInput | string[]
+  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeProductId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type SubscriptionPlanCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  isPopular?: Prisma.SortOrder
+  planIncludes?: Prisma.SortOrder
+  autoRenew?: Prisma.SortOrder
+  stripeProductId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type SubscriptionPlanMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  isPopular?: Prisma.SortOrder
+  autoRenew?: Prisma.SortOrder
+  stripeProductId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type SubscriptionPlanMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  isPopular?: Prisma.SortOrder
+  autoRenew?: Prisma.SortOrder
+  stripeProductId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
+export type SubscriptionPlanScalarRelationFilter = {
+  is?: Prisma.SubscriptionPlanWhereInput
+  isNot?: Prisma.SubscriptionPlanWhereInput
+}
+
+export type SubscriptionPlanCreateplanIncludesInput = {
+  set: string[]
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type SubscriptionPlanUpdateplanIncludesInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type SubscriptionPlanCreateNestedOneWithoutPricingsInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionPlanCreateWithoutPricingsInput, Prisma.SubscriptionPlanUncheckedCreateWithoutPricingsInput>
+  connectOrCreate?: Prisma.SubscriptionPlanCreateOrConnectWithoutPricingsInput
+  connect?: Prisma.SubscriptionPlanWhereUniqueInput
+}
+
+export type SubscriptionPlanUpdateOneRequiredWithoutPricingsNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionPlanCreateWithoutPricingsInput, Prisma.SubscriptionPlanUncheckedCreateWithoutPricingsInput>
+  connectOrCreate?: Prisma.SubscriptionPlanCreateOrConnectWithoutPricingsInput
+  upsert?: Prisma.SubscriptionPlanUpsertWithoutPricingsInput
+  connect?: Prisma.SubscriptionPlanWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SubscriptionPlanUpdateToOneWithWhereWithoutPricingsInput, Prisma.SubscriptionPlanUpdateWithoutPricingsInput>, Prisma.SubscriptionPlanUncheckedUpdateWithoutPricingsInput>
+}
+
+export type SubscriptionPlanCreateWithoutPricingsInput = {
+  id?: string
+  name: string
+  description: string
+  isPopular?: boolean
+  planIncludes?: Prisma.SubscriptionPlanCreateplanIncludesInput | string[]
+  autoRenew?: boolean
+  stripeProductId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SubscriptionPlanUncheckedCreateWithoutPricingsInput = {
+  id?: string
+  name: string
+  description: string
+  isPopular?: boolean
+  planIncludes?: Prisma.SubscriptionPlanCreateplanIncludesInput | string[]
+  autoRenew?: boolean
+  stripeProductId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SubscriptionPlanCreateOrConnectWithoutPricingsInput = {
+  where: Prisma.SubscriptionPlanWhereUniqueInput
+  create: Prisma.XOR<Prisma.SubscriptionPlanCreateWithoutPricingsInput, Prisma.SubscriptionPlanUncheckedCreateWithoutPricingsInput>
+}
+
+export type SubscriptionPlanUpsertWithoutPricingsInput = {
+  update: Prisma.XOR<Prisma.SubscriptionPlanUpdateWithoutPricingsInput, Prisma.SubscriptionPlanUncheckedUpdateWithoutPricingsInput>
+  create: Prisma.XOR<Prisma.SubscriptionPlanCreateWithoutPricingsInput, Prisma.SubscriptionPlanUncheckedCreateWithoutPricingsInput>
+  where?: Prisma.SubscriptionPlanWhereInput
+}
+
+export type SubscriptionPlanUpdateToOneWithWhereWithoutPricingsInput = {
+  where?: Prisma.SubscriptionPlanWhereInput
+  data: Prisma.XOR<Prisma.SubscriptionPlanUpdateWithoutPricingsInput, Prisma.SubscriptionPlanUncheckedUpdateWithoutPricingsInput>
+}
+
+export type SubscriptionPlanUpdateWithoutPricingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  isPopular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planIncludes?: Prisma.SubscriptionPlanUpdateplanIncludesInput | string[]
+  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeProductId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SubscriptionPlanUncheckedUpdateWithoutPricingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  isPopular?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planIncludes?: Prisma.SubscriptionPlanUpdateplanIncludesInput | string[]
+  autoRenew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeProductId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type SubscriptionPlanCountOutputType
+ */
+
+export type SubscriptionPlanCountOutputType = {
+  pricings: number
+}
+
+export type SubscriptionPlanCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pricings?: boolean | SubscriptionPlanCountOutputTypeCountPricingsArgs
+}
+
+/**
+ * SubscriptionPlanCountOutputType without action
+ */
+export type SubscriptionPlanCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SubscriptionPlanCountOutputType
+   */
+  select?: Prisma.SubscriptionPlanCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * SubscriptionPlanCountOutputType without action
+ */
+export type SubscriptionPlanCountOutputTypeCountPricingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PackagePricingWhereInput
+}
 
 
 export type SubscriptionPlanSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
+  description?: boolean
+  isPopular?: boolean
+  planIncludes?: boolean
+  autoRenew?: boolean
+  stripeProductId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  pricings?: boolean | Prisma.SubscriptionPlan$pricingsArgs<ExtArgs>
+  _count?: boolean | Prisma.SubscriptionPlanCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subscriptionPlan"]>
 
 export type SubscriptionPlanSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
+  description?: boolean
+  isPopular?: boolean
+  planIncludes?: boolean
+  autoRenew?: boolean
+  stripeProductId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["subscriptionPlan"]>
 
 export type SubscriptionPlanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
+  description?: boolean
+  isPopular?: boolean
+  planIncludes?: boolean
+  autoRenew?: boolean
+  stripeProductId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["subscriptionPlan"]>
 
 export type SubscriptionPlanSelectScalar = {
   id?: boolean
+  name?: boolean
+  description?: boolean
+  isPopular?: boolean
+  planIncludes?: boolean
+  autoRenew?: boolean
+  stripeProductId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type SubscriptionPlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id", ExtArgs["result"]["subscriptionPlan"]>
+export type SubscriptionPlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "isPopular" | "planIncludes" | "autoRenew" | "stripeProductId" | "createdAt" | "updatedAt", ExtArgs["result"]["subscriptionPlan"]>
+export type SubscriptionPlanInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pricings?: boolean | Prisma.SubscriptionPlan$pricingsArgs<ExtArgs>
+  _count?: boolean | Prisma.SubscriptionPlanCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type SubscriptionPlanIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type SubscriptionPlanIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $SubscriptionPlanPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SubscriptionPlan"
-  objects: {}
+  objects: {
+    pricings: Prisma.$PackagePricingPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    name: string
+    description: string
+    isPopular: boolean
+    planIncludes: string[]
+    autoRenew: boolean
+    stripeProductId: string
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["subscriptionPlan"]>
   composites: {}
 }
@@ -636,6 +996,7 @@ readonly fields: SubscriptionPlanFieldRefs;
  */
 export interface Prisma__SubscriptionPlanClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  pricings<T extends Prisma.SubscriptionPlan$pricingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SubscriptionPlan$pricingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PackagePricingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -666,6 +1027,14 @@ export interface Prisma__SubscriptionPlanClient<T, Null = never, ExtArgs extends
  */
 export interface SubscriptionPlanFieldRefs {
   readonly id: Prisma.FieldRef<"SubscriptionPlan", 'String'>
+  readonly name: Prisma.FieldRef<"SubscriptionPlan", 'String'>
+  readonly description: Prisma.FieldRef<"SubscriptionPlan", 'String'>
+  readonly isPopular: Prisma.FieldRef<"SubscriptionPlan", 'Boolean'>
+  readonly planIncludes: Prisma.FieldRef<"SubscriptionPlan", 'String[]'>
+  readonly autoRenew: Prisma.FieldRef<"SubscriptionPlan", 'Boolean'>
+  readonly stripeProductId: Prisma.FieldRef<"SubscriptionPlan", 'String'>
+  readonly createdAt: Prisma.FieldRef<"SubscriptionPlan", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"SubscriptionPlan", 'DateTime'>
 }
     
 
@@ -682,6 +1051,10 @@ export type SubscriptionPlanFindUniqueArgs<ExtArgs extends runtime.Types.Extensi
    * Omit specific fields from the SubscriptionPlan
    */
   omit?: Prisma.SubscriptionPlanOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPlanInclude<ExtArgs> | null
   /**
    * Filter, which SubscriptionPlan to fetch.
    */
@@ -701,6 +1074,10 @@ export type SubscriptionPlanFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.
    */
   omit?: Prisma.SubscriptionPlanOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPlanInclude<ExtArgs> | null
+  /**
    * Filter, which SubscriptionPlan to fetch.
    */
   where: Prisma.SubscriptionPlanWhereUniqueInput
@@ -718,6 +1095,10 @@ export type SubscriptionPlanFindFirstArgs<ExtArgs extends runtime.Types.Extensio
    * Omit specific fields from the SubscriptionPlan
    */
   omit?: Prisma.SubscriptionPlanOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPlanInclude<ExtArgs> | null
   /**
    * Filter, which SubscriptionPlan to fetch.
    */
@@ -767,6 +1148,10 @@ export type SubscriptionPlanFindFirstOrThrowArgs<ExtArgs extends runtime.Types.E
    */
   omit?: Prisma.SubscriptionPlanOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPlanInclude<ExtArgs> | null
+  /**
    * Filter, which SubscriptionPlan to fetch.
    */
   where?: Prisma.SubscriptionPlanWhereInput
@@ -815,6 +1200,10 @@ export type SubscriptionPlanFindManyArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.SubscriptionPlanOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPlanInclude<ExtArgs> | null
+  /**
    * Filter, which SubscriptionPlans to fetch.
    */
   where?: Prisma.SubscriptionPlanWhereInput
@@ -858,9 +1247,13 @@ export type SubscriptionPlanCreateArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.SubscriptionPlanOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPlanInclude<ExtArgs> | null
+  /**
    * The data needed to create a SubscriptionPlan.
    */
-  data?: Prisma.XOR<Prisma.SubscriptionPlanCreateInput, Prisma.SubscriptionPlanUncheckedCreateInput>
+  data: Prisma.XOR<Prisma.SubscriptionPlanCreateInput, Prisma.SubscriptionPlanUncheckedCreateInput>
 }
 
 /**
@@ -905,6 +1298,10 @@ export type SubscriptionPlanUpdateArgs<ExtArgs extends runtime.Types.Extensions.
    * Omit specific fields from the SubscriptionPlan
    */
   omit?: Prisma.SubscriptionPlanOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPlanInclude<ExtArgs> | null
   /**
    * The data needed to update a SubscriptionPlan.
    */
@@ -972,6 +1369,10 @@ export type SubscriptionPlanUpsertArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.SubscriptionPlanOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPlanInclude<ExtArgs> | null
+  /**
    * The filter to search for the SubscriptionPlan to update in case it exists.
    */
   where: Prisma.SubscriptionPlanWhereUniqueInput
@@ -998,6 +1399,10 @@ export type SubscriptionPlanDeleteArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.SubscriptionPlanOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPlanInclude<ExtArgs> | null
+  /**
    * Filter which SubscriptionPlan to delete.
    */
   where: Prisma.SubscriptionPlanWhereUniqueInput
@@ -1018,6 +1423,30 @@ export type SubscriptionPlanDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
 }
 
 /**
+ * SubscriptionPlan.pricings
+ */
+export type SubscriptionPlan$pricingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PackagePricing
+   */
+  select?: Prisma.PackagePricingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PackagePricing
+   */
+  omit?: Prisma.PackagePricingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PackagePricingInclude<ExtArgs> | null
+  where?: Prisma.PackagePricingWhereInput
+  orderBy?: Prisma.PackagePricingOrderByWithRelationInput | Prisma.PackagePricingOrderByWithRelationInput[]
+  cursor?: Prisma.PackagePricingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PackagePricingScalarFieldEnum | Prisma.PackagePricingScalarFieldEnum[]
+}
+
+/**
  * SubscriptionPlan without action
  */
 export type SubscriptionPlanDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1029,4 +1458,8 @@ export type SubscriptionPlanDefaultArgs<ExtArgs extends runtime.Types.Extensions
    * Omit specific fields from the SubscriptionPlan
    */
   omit?: Prisma.SubscriptionPlanOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPlanInclude<ExtArgs> | null
 }

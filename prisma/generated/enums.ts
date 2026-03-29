@@ -19,6 +19,14 @@ export const SubscriptionStatus = {
 export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
 
 
+export const BillingCycle = {
+  MONTHLY: 'MONTHLY',
+  YEARLY: 'YEARLY'
+} as const
+
+export type BillingCycle = (typeof BillingCycle)[keyof typeof BillingCycle]
+
+
 export const UserRoles = {
   ADMIN: 'ADMIN',
   USER: 'USER'

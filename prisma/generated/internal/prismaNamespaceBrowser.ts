@@ -57,6 +57,9 @@ export const ModelName = {
   StoredFile: 'StoredFile',
   ShortenUrl: 'ShortenUrl',
   SubscriptionPlan: 'SubscriptionPlan',
+  PackagePricing: 'PackagePricing',
+  SubscriptionPaymentPlanHistory: 'SubscriptionPaymentPlanHistory',
+  Subscribed: 'Subscribed',
   User: 'User'
 } as const
 
@@ -132,10 +135,57 @@ export type ShortenUrlScalarFieldEnum = (typeof ShortenUrlScalarFieldEnum)[keyof
 
 
 export const SubscriptionPlanScalarFieldEnum = {
-  id: 'id'
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  isPopular: 'isPopular',
+  planIncludes: 'planIncludes',
+  autoRenew: 'autoRenew',
+  stripeProductId: 'stripeProductId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type SubscriptionPlanScalarFieldEnum = (typeof SubscriptionPlanScalarFieldEnum)[keyof typeof SubscriptionPlanScalarFieldEnum]
+
+
+export const PackagePricingScalarFieldEnum = {
+  id: 'id',
+  price: 'price',
+  maxStorage: 'maxStorage',
+  maxFiles: 'maxFiles',
+  stripePriceId: 'stripePriceId',
+  billingCycle: 'billingCycle',
+  subscriptionPlanId: 'subscriptionPlanId'
+} as const
+
+export type PackagePricingScalarFieldEnum = (typeof PackagePricingScalarFieldEnum)[keyof typeof PackagePricingScalarFieldEnum]
+
+
+export const SubscriptionPaymentPlanHistoryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  subscriptionPlanId: 'subscriptionPlanId',
+  packagePricingId: 'packagePricingId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SubscriptionPaymentPlanHistoryScalarFieldEnum = (typeof SubscriptionPaymentPlanHistoryScalarFieldEnum)[keyof typeof SubscriptionPaymentPlanHistoryScalarFieldEnum]
+
+
+export const SubscribedScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  subscriptionPlanId: 'subscriptionPlanId',
+  packagePricingId: 'packagePricingId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SubscribedScalarFieldEnum = (typeof SubscribedScalarFieldEnum)[keyof typeof SubscribedScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {

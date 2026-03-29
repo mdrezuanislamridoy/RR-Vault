@@ -1,5 +1,46 @@
-model SubscriptionPlan{
-    id String @id @default(uuid())
+model SubscriptionPlan {
+    id              String           @id @default(uuid())
+    name            String
+    description     String
+    isPopular       Boolean          @default(false)
+    planIncludes    String[]
+    autoRenew       Boolean          @default(false)
+    pricings        PackagePricing[]
+    stripeProductId String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model PackagePricing {
+    id                 String           @id @default(uuid())
+    price              Float
+    maxStorage         Int
+    maxFiles           Int
+    stripePriceId      String
+    billingCycle       BillingCycle     @default(MONTHLY)
+    subscriptionPlan   SubscriptionPlan @relation(fields: [subscriptionPlanId], references: [id])
+    subscriptionPlanId String
+}
+
+model SubscriptionPaymentPlanHistory {
+    id                 String             @id @default(uuid())
+    userId             String
+    subscriptionPlanId String
+    packagePricingId   String
+    status             SubscriptionStatus
+    createdAt          DateTime           @default(now())
+    updatedAt          DateTime           @updatedAt
+}
+
+model Subscribed {
+    id                 String             @id @default(uuid())
+    userId             String
+    subscriptionPlanId String
+    packagePricingId   String
+    status             SubscriptionStatus
+    createdAt          DateTime           @default(now())
+    updatedAt          DateTime           @updatedAt
 }
 
 enum SubscriptionStatus {
@@ -7,4 +48,9 @@ enum SubscriptionStatus {
     PAID
     CANCELLED
     FAILED
+}
+
+enum BillingCycle {
+    MONTHLY
+    YEARLY
 }
