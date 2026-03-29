@@ -8,16 +8,18 @@ import { CloudModule } from './modules/cloud/cloud.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './common/guards/auth.guard';
 import { JwtModule } from '@nestjs/jwt';
+import { SecretsModule } from './modules/secrets/secrets.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     JwtModule.register({ global: true }),
     AuthModule,
+    SecretsModule,
     PrismaModule,
     CloudModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
 })
-export class AppModule {}
+export class AppModule { }

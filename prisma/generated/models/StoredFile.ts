@@ -351,10 +351,6 @@ export type StoredFileOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type StoredFileCreateNestedOneWithoutShortenUrlInput = {
   create?: Prisma.XOR<Prisma.StoredFileCreateWithoutShortenUrlInput, Prisma.StoredFileUncheckedCreateWithoutShortenUrlInput>
   connectOrCreate?: Prisma.StoredFileCreateOrConnectWithoutShortenUrlInput

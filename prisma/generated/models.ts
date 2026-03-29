@@ -10,6 +10,7 @@
  */
 export type * from './models/CloudData'
 export type * from './models/CloudSecret'
+export type * from './models/AppData'
 export type * from './models/StoredFile'
 export type * from './models/ShortenUrl'
 export type * from './models/SubscriptionPlan'

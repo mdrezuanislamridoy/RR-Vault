@@ -10,7 +10,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
-import { randomInt } from 'crypto';
+import { randomInt, randomBytes } from 'crypto';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { MailService } from '@/modules/mail/mail.service';
 import { RegisterDto } from './dto/register.dto';
@@ -143,374 +143,496 @@ export class AuthService {
   // ─── Verify Email ────────────────────────────────────────────────────────────
 
   async verifyEmail(dto: VerifyEmailDto) {
-    const payload = this.verifyToken(dto.token, 'email-verification');
+    try {
+      const payload = this.verifyToken(dto.token, 'email-verification');
 
-    const user = await this.prisma.client.user.findUnique({
-      where: { id: payload.sub },
-    });
+      const user = await this.prisma.client.user.findUnique({
+        where: { id: payload.sub },
+      });
 
-    if (!user) throw new NotFoundException('User not found');
+      if (!user) throw new NotFoundException('User not found');
 
-    if (user.isEmailVerified) {
-      throw new BadRequestException('Email is already verified');
+      if (user.isEmailVerified) {
+        throw new BadRequestException('Email is already verified');
+      }
+
+      if (!user.verifyCode || !user.verifyCodeExpiry || !user.verifyCodeToken) {
+        throw new BadRequestException(
+          'No pending verification found. Please request a new code.',
+        );
+      }
+
+      if (new Date() > user.verifyCodeExpiry) {
+        throw new BadRequestException(
+          'Verification code has expired. Please request a new one.',
+        );
+      }
+
+      if (user.verifyCodeToken !== dto.token) {
+        throw new BadRequestException(
+          'Token does not match. Please request a new code.',
+        );
+      }
+
+      const isCodeValid = await bcrypt.compare(dto.code, user.verifyCode);
+      if (!isCodeValid)
+        throw new BadRequestException('Invalid verification code');
+
+      await this.prisma.client.user.update({
+        where: { id: user.id },
+        data: {
+          isEmailVerified: true,
+          verifyCode: null,
+          verifyCodeToken: null,
+          verifyCodeExpiry: null,
+        },
+      });
+
+      // a 32 digit unique token
+      const apiKey = randomBytes(32).toString('hex');
+
+      await this.prisma.client.cloudSecret.create({
+        data: {
+          userId: user.id,
+          api_key: `ak_${apiKey}`,
+        },
+      })
+
+      return successResponse('Email verified successfully');
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException ||
+        error instanceof ForbiddenException ||
+        error instanceof UnauthorizedException
+      ) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to verify email');
     }
-
-    if (!user.verifyCode || !user.verifyCodeExpiry || !user.verifyCodeToken) {
-      throw new BadRequestException(
-        'No pending verification found. Please request a new code.',
-      );
-    }
-
-    if (new Date() > user.verifyCodeExpiry) {
-      throw new BadRequestException(
-        'Verification code has expired. Please request a new one.',
-      );
-    }
-
-    if (user.verifyCodeToken !== dto.token) {
-      throw new BadRequestException(
-        'Token does not match. Please request a new code.',
-      );
-    }
-
-    const isCodeValid = await bcrypt.compare(dto.code, user.verifyCode);
-    if (!isCodeValid)
-      throw new BadRequestException('Invalid verification code');
-
-    await this.prisma.client.user.update({
-      where: { id: user.id },
-      data: {
-        isEmailVerified: true,
-        verifyCode: null,
-        verifyCodeToken: null,
-        verifyCodeExpiry: null,
-      },
-    });
-
-    return successResponse('Email verified successfully');
   }
 
   // ─── Resend Verification ─────────────────────────────────────────────────────
 
   async resendVerification(dto: ResendVerificationDto) {
-    const user = await this.prisma.client.user.findUnique({
-      where: { email: dto.email },
-    });
+    try {
+      const user = await this.prisma.client.user.findUnique({
+        where: { email: dto.email },
+      });
 
-    if (!user) throw new NotFoundException('No account found with this email');
+      if (!user) throw new NotFoundException('No account found with this email');
 
-    if (user.isEmailVerified) {
-      throw new BadRequestException('Email is already verified');
+      if (user.isEmailVerified) {
+        throw new BadRequestException('Email is already verified');
+      }
+
+      const { code, token } = await this.generateAndStoreCode(user.id, 'verify');
+
+      await this.mail.sendVerificationCode(user.email, user.name, code);
+
+      return successResponse(
+        'Verification code resent. Please check your email.',
+        { token },
+      );
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException ||
+        error instanceof ForbiddenException ||
+        error instanceof UnauthorizedException
+      ) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to resend verification code');
     }
-
-    const { code, token } = await this.generateAndStoreCode(user.id, 'verify');
-
-    await this.mail.sendVerificationCode(user.email, user.name, code);
-
-    return successResponse(
-      'Verification code resent. Please check your email.',
-      { token },
-    );
   }
 
   // ─── Login ───────────────────────────────────────────────────────────────────
 
   async login(dto: LoginDto) {
-    const user = await this.prisma.client.user.findUnique({
-      where: { email: dto.email },
-    });
+    try {
+      const user = await this.prisma.client.user.findUnique({
+        where: { email: dto.email },
+      });
 
-    if (!user) throw new UnauthorizedException('Invalid credentials');
+      if (!user) throw new UnauthorizedException('Invalid credentials');
 
-    if (user.isDeleted) {
-      throw new UnauthorizedException('This account has been deleted');
-    }
+      if (user.isDeleted) {
+        throw new UnauthorizedException('This account has been deleted');
+      }
 
-    if (user.isBlocked) {
-      throw new ForbiddenException(
-        'Your account has been blocked. Please contact support',
+      if (user.isBlocked) {
+        throw new ForbiddenException(
+          'Your account has been blocked. Please contact support',
+        );
+      }
+
+      const isMatch = await bcrypt.compare(dto.password, user.password as string);
+      if (!isMatch) throw new UnauthorizedException('Invalid credentials');
+
+      if (!user.isEmailVerified) {
+        throw new ForbiddenException(
+          'Please verify your email before logging in',
+        );
+      }
+
+      const accessToken = this.generateAccessToken(
+        user.id,
+        user.email,
+        user.role,
       );
+      const refreshToken = this.generateRefreshToken(user.id);
+
+      const hashedRefresh: string = await bcrypt.hash(refreshToken, 10);
+
+      await this.prisma.client.user.update({
+        where: { id: user.id },
+        data: { refreshToken: hashedRefresh },
+      });
+
+      return successResponse('Login successful', {
+        accessToken,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
+      });
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException ||
+        error instanceof ForbiddenException ||
+        error instanceof UnauthorizedException
+      ) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to login');
     }
-
-    const isMatch = await bcrypt.compare(dto.password, user.password as string);
-    if (!isMatch) throw new UnauthorizedException('Invalid credentials');
-
-    if (!user.isEmailVerified) {
-      throw new ForbiddenException(
-        'Please verify your email before logging in',
-      );
-    }
-
-    const accessToken = this.generateAccessToken(
-      user.id,
-      user.email,
-      user.role,
-    );
-    const refreshToken = this.generateRefreshToken(user.id);
-
-    const hashedRefresh: string = await bcrypt.hash(refreshToken, 10);
-
-    await this.prisma.client.user.update({
-      where: { id: user.id },
-      data: { refreshToken: hashedRefresh },
-    });
-
-    return successResponse('Login successful', {
-      accessToken,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
-    });
   }
 
   // ─── Forgot Password ─────────────────────────────────────────────────────────
 
   async forgotPassword(dto: ForgotPasswordDto) {
-    const user = await this.prisma.client.user.findUnique({
-      where: { email: dto.email },
-    });
+    try {
+      const user = await this.prisma.client.user.findUnique({
+        where: { email: dto.email },
+      });
 
-    // Prevent email enumeration
-    if (!user || !user.isEmailVerified) {
-      return successResponse(
-        'If this email exists, a reset code has been sent',
-      );
+      // Prevent email enumeration
+      if (!user || !user.isEmailVerified) {
+        return successResponse(
+          'If this email exists, a reset code has been sent',
+        );
+      }
+
+      const { code, token } = await this.generateAndStoreCode(user.id, 'reset');
+
+      await this.mail.sendPasswordResetCode(user.email, user.name, code);
+
+      return successResponse('If this email exists, a reset code has been sent', {
+        token,
+      });
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException ||
+        error instanceof ForbiddenException ||
+        error instanceof UnauthorizedException
+      ) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to process forgot password request');
     }
-
-    const { code, token } = await this.generateAndStoreCode(user.id, 'reset');
-
-    await this.mail.sendPasswordResetCode(user.email, user.name, code);
-
-    return successResponse('If this email exists, a reset code has been sent', {
-      token,
-    });
   }
 
   // ─── Reset Password ──────────────────────────────────────────────────────────
 
   async resetPassword(dto: ResetPasswordDto) {
-    const payload = this.verifyToken(dto.token, 'password-reset');
+    try {
+      const payload = this.verifyToken(dto.token, 'password-reset');
 
-    const user = await this.prisma.client.user.findUnique({
-      where: { id: payload.sub },
-    });
+      const user = await this.prisma.client.user.findUnique({
+        where: { id: payload.sub },
+      });
 
-    if (!user || !user.resetCode || !user.resetCodeExpiry) {
-      throw new BadRequestException('Invalid or expired reset request');
+      if (!user || !user.resetCode || !user.resetCodeExpiry) {
+        throw new BadRequestException('Invalid or expired reset request');
+      }
+
+      if (new Date() > user.resetCodeExpiry) {
+        throw new BadRequestException(
+          'Reset code has expired. Please request a new one.',
+        );
+      }
+
+      if (user.resetCodeToken !== dto.token) {
+        throw new BadRequestException(
+          'Token does not match. Please request a new code.',
+        );
+      }
+
+      const isCodeValid = await bcrypt.compare(dto.code, user.resetCode);
+      if (!isCodeValid) throw new BadRequestException('Invalid reset code');
+
+      const hashed = await bcrypt.hash(dto.newPassword, 10);
+
+      await this.prisma.client.user.update({
+        where: { id: user.id },
+        data: {
+          password: hashed,
+          resetCode: null,
+          resetCodeToken: null,
+          resetCodeExpiry: null,
+        },
+      });
+
+      return successResponse('Password reset successfully');
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException ||
+        error instanceof ForbiddenException ||
+        error instanceof UnauthorizedException
+      ) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to reset password');
     }
-
-    if (new Date() > user.resetCodeExpiry) {
-      throw new BadRequestException(
-        'Reset code has expired. Please request a new one.',
-      );
-    }
-
-    if (user.resetCodeToken !== dto.token) {
-      throw new BadRequestException(
-        'Token does not match. Please request a new code.',
-      );
-    }
-
-    const isCodeValid = await bcrypt.compare(dto.code, user.resetCode);
-    if (!isCodeValid) throw new BadRequestException('Invalid reset code');
-
-    const hashed = await bcrypt.hash(dto.newPassword, 10);
-
-    await this.prisma.client.user.update({
-      where: { id: user.id },
-      data: {
-        password: hashed,
-        resetCode: null,
-        resetCodeToken: null,
-        resetCodeExpiry: null,
-      },
-    });
-
-    return successResponse('Password reset successfully');
   }
 
   // ─── Change Password ─────────────────────────────────────────────────────────
 
   async changePassword(userId: string, dto: ChangePasswordDto) {
-    const user = await this.prisma.client.user.findUnique({
-      where: { id: userId },
-    });
+    try {
+      const user = await this.prisma.client.user.findUnique({
+        where: { id: userId },
+      });
 
-    if (!user) throw new NotFoundException('User not found');
+      if (!user) throw new NotFoundException('User not found');
 
-    const isMatch = await bcrypt.compare(
-      dto.oldPassword,
-      user.password as string,
-    );
-    if (!isMatch) throw new BadRequestException('Old password is incorrect');
+      const isMatch = await bcrypt.compare(
+        dto.oldPassword,
+        user.password as string,
+      );
+      if (!isMatch) throw new BadRequestException('Old password is incorrect');
 
-    const hashed = await bcrypt.hash(dto.newPassword, 10);
+      const hashed = await bcrypt.hash(dto.newPassword, 10);
 
-    await this.prisma.client.user.update({
-      where: { id: userId },
-      data: { password: hashed },
-    });
+      await this.prisma.client.user.update({
+        where: { id: userId },
+        data: { password: hashed },
+      });
 
-    return successResponse('Password changed successfully');
+      return successResponse('Password changed successfully');
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException ||
+        error instanceof ForbiddenException ||
+        error instanceof UnauthorizedException
+      ) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to change password');
+    }
   }
 
   // ─── Logout ──────────────────────────────────────────────────────────────────
 
   async logout(userId: string) {
-    await this.prisma.client.user.update({
-      where: { id: userId },
-      data: { refreshToken: null },
-    });
-    return successResponse('Logged out successfully');
+    try {
+      await this.prisma.client.user.update({
+        where: { id: userId },
+        data: { refreshToken: null },
+      });
+      return successResponse('Logged out successfully');
+    } catch (error) {
+      throw new InternalServerErrorException('Failed to logout');
+    }
   }
 
   // ─── Google Login ─────────────────────────────────────────────────────────
 
   async googleLogin(googleUser: GoogleUser) {
-    let user = await this.prisma.client.user.findUnique({
-      where: { email: googleUser.email },
-    });
+    try {
+      let user = await this.prisma.client.user.findUnique({
+        where: { email: googleUser.email },
+      });
 
-    if (user && user.isDeleted) {
-      throw new UnauthorizedException('This account has been deleted');
-    }
+      if (user && user.isDeleted) {
+        throw new UnauthorizedException('This account has been deleted');
+      }
 
-    if (user && user.isBlocked) {
-      throw new ForbiddenException(
-        'Your account has been blocked. Please contact support',
+      if (user && user.isBlocked) {
+        throw new ForbiddenException(
+          'Your account has been blocked. Please contact support',
+        );
+      }
+
+      if (!user) {
+        user = await this.prisma.client.user.create({
+          data: {
+            name: googleUser.name,
+            email: googleUser.email,
+            profilePic: googleUser.profilePic,
+            accountType: 'GOOGLE',
+            isEmailVerified: true,
+          },
+        });
+      } else if (user.accountType !== 'GOOGLE') {
+        throw new ForbiddenException(
+          'This email is registered with a password. Please login with email and password.',
+        );
+      }
+
+      const accessToken = this.generateAccessToken(
+        user.id,
+        user.email,
+        user.role,
       );
-    }
+      const refreshToken = this.generateRefreshToken(user.id);
 
-    if (!user) {
-      user = await this.prisma.client.user.create({
-        data: {
-          name: googleUser.name,
-          email: googleUser.email,
-          profilePic: googleUser.profilePic,
-          accountType: 'GOOGLE',
-          isEmailVerified: true,
+      const hashedRefresh: string = await bcrypt.hash(refreshToken, 10);
+
+      await this.prisma.client.user.update({
+        where: { id: user.id },
+        data: { refreshToken: hashedRefresh },
+      });
+
+      return successResponse('Google login successful', {
+        accessToken,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
         },
       });
-    } else if (user.accountType !== 'GOOGLE') {
-      throw new ForbiddenException(
-        'This email is registered with a password. Please login with email and password.',
-      );
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException ||
+        error instanceof ForbiddenException ||
+        error instanceof UnauthorizedException
+      ) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to process Google login');
     }
-
-    const accessToken = this.generateAccessToken(
-      user.id,
-      user.email,
-      user.role,
-    );
-    const refreshToken = this.generateRefreshToken(user.id);
-
-    const hashedRefresh: string = await bcrypt.hash(refreshToken, 10);
-
-    await this.prisma.client.user.update({
-      where: { id: user.id },
-      data: { refreshToken: hashedRefresh },
-    });
-
-    return successResponse('Google login successful', {
-      accessToken,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
-    });
   }
 
   // ─── Refresh Token ────────────────────────────────────────────────────────────
 
   async refreshAccessToken(userId: string) {
-    // Step 1: Verify the refresh token JWT signature and expiry
-    let payload: { sub: string };
     try {
+      // Step 1: Verify the refresh token JWT signature and expiry
+      let payload: { sub: string };
+      try {
 
+        const user = await this.prisma.client.user.findUnique({
+          where: { id: userId, isBlocked: false, isDeleted: false },
+          select: {
+            id: true,
+            email: true,
+            role: true,
+            refreshToken: true,
+          },
+        });
+
+        if (!user) throw new UnauthorizedException('User not found');
+
+        payload = this.jwt.verify<{ sub: string }>(user.refreshToken as string, {
+          secret: this.config.getOrThrow<string>('JWT_REFRESH_SECRET'),
+        });
+      } catch (err) {
+        // Token expired or invalid — clear it from DB if it exists
+        await this.prisma.client.user.updateMany({
+          where: { id: userId, refreshToken: { not: null } },
+          data: { refreshToken: null },
+        });
+        throw new UnauthorizedException('Session expired. Please login again');
+      }
+
+      // Step 2: Fetch user and validate state
       const user = await this.prisma.client.user.findUnique({
-        where: { id: userId, isBlocked: false, isDeleted: false },
+        where: { id: payload.sub },
         select: {
           id: true,
           email: true,
           role: true,
           refreshToken: true,
+          isDeleted: true,
+          isBlocked: true,
         },
       });
 
-      if (!user) throw new UnauthorizedException('User not found');
+      if (!user || !user.refreshToken) {
+        throw new UnauthorizedException('Session expired. Please login again');
+      }
 
-      payload = this.jwt.verify<{ sub: string }>(user.refreshToken as string, {
-        secret: this.config.getOrThrow<string>('JWT_REFRESH_SECRET'),
-      });
-    } catch {
-      // Token expired or invalid — clear it from DB if it exists
-      await this.prisma.client.user.updateMany({
-        where: { id: userId, refreshToken: { not: null } },
-        data: { refreshToken: null },
-      });
-      throw new UnauthorizedException('Session expired. Please login again');
-    }
+      if (user.isDeleted)
+        throw new UnauthorizedException('This account has been deleted');
+      if (user.isBlocked)
+        throw new ForbiddenException(
+          'Your account has been blocked. Please contact support',
+        );
 
-    // Step 2: Fetch user and validate state
-    const user = await this.prisma.client.user.findUnique({
-      where: { id: payload.sub },
-      select: {
-        id: true,
-        email: true,
-        role: true,
-        refreshToken: true,
-        isDeleted: true,
-        isBlocked: true,
-      },
-    });
 
-    if (!user || !user.refreshToken) {
-      throw new UnauthorizedException('Session expired. Please login again');
-    }
-
-    if (user.isDeleted)
-      throw new UnauthorizedException('This account has been deleted');
-    if (user.isBlocked)
-      throw new ForbiddenException(
-        'Your account has been blocked. Please contact support',
+      const accessToken = this.generateAccessToken(
+        user.id,
+        user.email,
+        user.role,
       );
 
-
-    const accessToken = this.generateAccessToken(
-      user.id,
-      user.email,
-      user.role,
-    );
-
-    return successResponse('Token refreshed successfully', { accessToken });
+      return successResponse('Token refreshed successfully', { accessToken });
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException ||
+        error instanceof ForbiddenException ||
+        error instanceof UnauthorizedException
+      ) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to refresh access token');
+    }
   }
 
   // ─── Get Profile ──────────────────────────────────────────────────────────────
 
   async getProfile(userId: string) {
-    const user = await this.prisma.client.user.findUnique({
-      where: { id: userId },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        role: true,
-        profilePic: true,
-        accountType: true,
-        isEmailVerified: true,
-        created_at: true,
-        refreshToken: true,
-      },
-    });
+    try {
+      const user = await this.prisma.client.user.findUnique({
+        where: { id: userId },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          profilePic: true,
+          accountType: true,
+          isEmailVerified: true,
+          created_at: true,
+          refreshToken: true,
+        },
+      });
 
-    if (!user) throw new NotFoundException('User not found');
+      if (!user) throw new NotFoundException('User not found');
 
-    return successResponse('Profile fetched successfully', user);
+      return successResponse('Profile fetched successfully', user);
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException ||
+        error instanceof ForbiddenException ||
+        error instanceof UnauthorizedException
+      ) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Failed to fetch profile');
+    }
   }
 
   // ─── Token Generators ────────────────────────────────────────────────────────

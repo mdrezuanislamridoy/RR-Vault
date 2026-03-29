@@ -386,6 +386,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   CloudData: 'CloudData',
   CloudSecret: 'CloudSecret',
+  AppData: 'AppData',
   StoredFile: 'StoredFile',
   ShortenUrl: 'ShortenUrl',
   SubscriptionPlan: 'SubscriptionPlan',
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "cloudData" | "cloudSecret" | "storedFile" | "shortenUrl" | "subscriptionPlan" | "user"
+    modelProps: "cloudData" | "cloudSecret" | "appData" | "storedFile" | "shortenUrl" | "subscriptionPlan" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -554,6 +555,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CloudSecretCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CloudSecretCountAggregateOutputType> | number
+        }
+      }
+    }
+    AppData: {
+      payload: Prisma.$AppDataPayload<ExtArgs>
+      fields: Prisma.AppDataFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AppDataFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppDataPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AppDataFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppDataPayload>
+        }
+        findFirst: {
+          args: Prisma.AppDataFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppDataPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AppDataFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppDataPayload>
+        }
+        findMany: {
+          args: Prisma.AppDataFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppDataPayload>[]
+        }
+        create: {
+          args: Prisma.AppDataCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppDataPayload>
+        }
+        createMany: {
+          args: Prisma.AppDataCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AppDataCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppDataPayload>[]
+        }
+        delete: {
+          args: Prisma.AppDataDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppDataPayload>
+        }
+        update: {
+          args: Prisma.AppDataUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppDataPayload>
+        }
+        deleteMany: {
+          args: Prisma.AppDataDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AppDataUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AppDataUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppDataPayload>[]
+        }
+        upsert: {
+          args: Prisma.AppDataUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppDataPayload>
+        }
+        aggregate: {
+          args: Prisma.AppDataAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAppData>
+        }
+        groupBy: {
+          args: Prisma.AppDataGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AppDataGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AppDataCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AppDataCountAggregateOutputType> | number
         }
       }
     }
@@ -907,12 +982,21 @@ export const CloudSecretScalarFieldEnum = {
   id: 'id',
   api_key: 'api_key',
   api_secret: 'api_secret',
-  app_id: 'app_id',
   userId: 'userId',
   created_at: 'created_at'
 } as const
 
 export type CloudSecretScalarFieldEnum = (typeof CloudSecretScalarFieldEnum)[keyof typeof CloudSecretScalarFieldEnum]
+
+
+export const AppDataScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  appId: 'appId',
+  cloudSecretId: 'cloudSecretId'
+} as const
+
+export type AppDataScalarFieldEnum = (typeof AppDataScalarFieldEnum)[keyof typeof AppDataScalarFieldEnum]
 
 
 export const StoredFileScalarFieldEnum = {
@@ -1174,6 +1258,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   cloudData?: Prisma.CloudDataOmit
   cloudSecret?: Prisma.CloudSecretOmit
+  appData?: Prisma.AppDataOmit
   storedFile?: Prisma.StoredFileOmit
   shortenUrl?: Prisma.ShortenUrlOmit
   subscriptionPlan?: Prisma.SubscriptionPlanOmit

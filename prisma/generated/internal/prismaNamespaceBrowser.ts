@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   CloudData: 'CloudData',
   CloudSecret: 'CloudSecret',
+  AppData: 'AppData',
   StoredFile: 'StoredFile',
   ShortenUrl: 'ShortenUrl',
   SubscriptionPlan: 'SubscriptionPlan',
@@ -90,12 +91,21 @@ export const CloudSecretScalarFieldEnum = {
   id: 'id',
   api_key: 'api_key',
   api_secret: 'api_secret',
-  app_id: 'app_id',
   userId: 'userId',
   created_at: 'created_at'
 } as const
 
 export type CloudSecretScalarFieldEnum = (typeof CloudSecretScalarFieldEnum)[keyof typeof CloudSecretScalarFieldEnum]
+
+
+export const AppDataScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  appId: 'appId',
+  cloudSecretId: 'cloudSecretId'
+} as const
+
+export type AppDataScalarFieldEnum = (typeof AppDataScalarFieldEnum)[keyof typeof AppDataScalarFieldEnum]
 
 
 export const StoredFileScalarFieldEnum = {

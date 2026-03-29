@@ -44,7 +44,6 @@ export type CloudSecretCountAggregateOutputType = {
   id: number
   api_key: number
   api_secret: number
-  app_id: number
   userId: number
   created_at: number
   _all: number
@@ -71,7 +70,6 @@ export type CloudSecretCountAggregateInputType = {
   id?: true
   api_key?: true
   api_secret?: true
-  app_id?: true
   userId?: true
   created_at?: true
   _all?: true
@@ -152,8 +150,7 @@ export type CloudSecretGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 export type CloudSecretGroupByOutputType = {
   id: string
   api_key: string
-  api_secret: string
-  app_id: string[]
+  api_secret: string | null
   userId: string
   created_at: Date
   _count: CloudSecretCountAggregateOutputType | null
@@ -182,20 +179,20 @@ export type CloudSecretWhereInput = {
   NOT?: Prisma.CloudSecretWhereInput | Prisma.CloudSecretWhereInput[]
   id?: Prisma.StringFilter<"CloudSecret"> | string
   api_key?: Prisma.StringFilter<"CloudSecret"> | string
-  api_secret?: Prisma.StringFilter<"CloudSecret"> | string
-  app_id?: Prisma.StringNullableListFilter<"CloudSecret">
+  api_secret?: Prisma.StringNullableFilter<"CloudSecret"> | string | null
   userId?: Prisma.StringFilter<"CloudSecret"> | string
   created_at?: Prisma.DateTimeFilter<"CloudSecret"> | Date | string
+  app_data?: Prisma.AppDataListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type CloudSecretOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   api_key?: Prisma.SortOrder
-  api_secret?: Prisma.SortOrder
-  app_id?: Prisma.SortOrder
+  api_secret?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  app_data?: Prisma.AppDataOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -206,17 +203,16 @@ export type CloudSecretWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CloudSecretWhereInput[]
   NOT?: Prisma.CloudSecretWhereInput | Prisma.CloudSecretWhereInput[]
   api_key?: Prisma.StringFilter<"CloudSecret"> | string
-  api_secret?: Prisma.StringFilter<"CloudSecret"> | string
-  app_id?: Prisma.StringNullableListFilter<"CloudSecret">
+  api_secret?: Prisma.StringNullableFilter<"CloudSecret"> | string | null
   created_at?: Prisma.DateTimeFilter<"CloudSecret"> | Date | string
+  app_data?: Prisma.AppDataListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "id" | "userId">
 
 export type CloudSecretOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   api_key?: Prisma.SortOrder
-  api_secret?: Prisma.SortOrder
-  app_id?: Prisma.SortOrder
+  api_secret?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   _count?: Prisma.CloudSecretCountOrderByAggregateInput
@@ -230,8 +226,7 @@ export type CloudSecretScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CloudSecretScalarWhereWithAggregatesInput | Prisma.CloudSecretScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"CloudSecret"> | string
   api_key?: Prisma.StringWithAggregatesFilter<"CloudSecret"> | string
-  api_secret?: Prisma.StringWithAggregatesFilter<"CloudSecret"> | string
-  app_id?: Prisma.StringNullableListFilter<"CloudSecret">
+  api_secret?: Prisma.StringNullableWithAggregatesFilter<"CloudSecret"> | string | null
   userId?: Prisma.StringWithAggregatesFilter<"CloudSecret"> | string
   created_at?: Prisma.DateTimeWithAggregatesFilter<"CloudSecret"> | Date | string
 }
@@ -239,44 +234,43 @@ export type CloudSecretScalarWhereWithAggregatesInput = {
 export type CloudSecretCreateInput = {
   id?: string
   api_key: string
-  api_secret: string
-  app_id?: Prisma.CloudSecretCreateapp_idInput | string[]
+  api_secret?: string | null
   created_at?: Date | string
+  app_data?: Prisma.AppDataCreateNestedManyWithoutCloudSecretInput
   user: Prisma.UserCreateNestedOneWithoutCloudSecretInput
 }
 
 export type CloudSecretUncheckedCreateInput = {
   id?: string
   api_key: string
-  api_secret: string
-  app_id?: Prisma.CloudSecretCreateapp_idInput | string[]
+  api_secret?: string | null
   userId: string
   created_at?: Date | string
+  app_data?: Prisma.AppDataUncheckedCreateNestedManyWithoutCloudSecretInput
 }
 
 export type CloudSecretUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   api_key?: Prisma.StringFieldUpdateOperationsInput | string
-  api_secret?: Prisma.StringFieldUpdateOperationsInput | string
-  app_id?: Prisma.CloudSecretUpdateapp_idInput | string[]
+  api_secret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  app_data?: Prisma.AppDataUpdateManyWithoutCloudSecretNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCloudSecretNestedInput
 }
 
 export type CloudSecretUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   api_key?: Prisma.StringFieldUpdateOperationsInput | string
-  api_secret?: Prisma.StringFieldUpdateOperationsInput | string
-  app_id?: Prisma.CloudSecretUpdateapp_idInput | string[]
+  api_secret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  app_data?: Prisma.AppDataUncheckedUpdateManyWithoutCloudSecretNestedInput
 }
 
 export type CloudSecretCreateManyInput = {
   id?: string
   api_key: string
-  api_secret: string
-  app_id?: Prisma.CloudSecretCreateapp_idInput | string[]
+  api_secret?: string | null
   userId: string
   created_at?: Date | string
 }
@@ -284,33 +278,22 @@ export type CloudSecretCreateManyInput = {
 export type CloudSecretUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   api_key?: Prisma.StringFieldUpdateOperationsInput | string
-  api_secret?: Prisma.StringFieldUpdateOperationsInput | string
-  app_id?: Prisma.CloudSecretUpdateapp_idInput | string[]
+  api_secret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CloudSecretUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   api_key?: Prisma.StringFieldUpdateOperationsInput | string
-  api_secret?: Prisma.StringFieldUpdateOperationsInput | string
-  app_id?: Prisma.CloudSecretUpdateapp_idInput | string[]
+  api_secret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type StringNullableListFilter<$PrismaModel = never> = {
-  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
-  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
-  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
 }
 
 export type CloudSecretCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   api_key?: Prisma.SortOrder
   api_secret?: Prisma.SortOrder
-  app_id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
@@ -331,18 +314,32 @@ export type CloudSecretMinOrderByAggregateInput = {
   created_at?: Prisma.SortOrder
 }
 
+export type CloudSecretScalarRelationFilter = {
+  is?: Prisma.CloudSecretWhereInput
+  isNot?: Prisma.CloudSecretWhereInput
+}
+
 export type CloudSecretNullableScalarRelationFilter = {
   is?: Prisma.CloudSecretWhereInput | null
   isNot?: Prisma.CloudSecretWhereInput | null
 }
 
-export type CloudSecretCreateapp_idInput = {
-  set: string[]
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
-export type CloudSecretUpdateapp_idInput = {
-  set?: string[]
-  push?: string | string[]
+export type CloudSecretCreateNestedOneWithoutApp_dataInput = {
+  create?: Prisma.XOR<Prisma.CloudSecretCreateWithoutApp_dataInput, Prisma.CloudSecretUncheckedCreateWithoutApp_dataInput>
+  connectOrCreate?: Prisma.CloudSecretCreateOrConnectWithoutApp_dataInput
+  connect?: Prisma.CloudSecretWhereUniqueInput
+}
+
+export type CloudSecretUpdateOneRequiredWithoutApp_dataNestedInput = {
+  create?: Prisma.XOR<Prisma.CloudSecretCreateWithoutApp_dataInput, Prisma.CloudSecretUncheckedCreateWithoutApp_dataInput>
+  connectOrCreate?: Prisma.CloudSecretCreateOrConnectWithoutApp_dataInput
+  upsert?: Prisma.CloudSecretUpsertWithoutApp_dataInput
+  connect?: Prisma.CloudSecretWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CloudSecretUpdateToOneWithWhereWithoutApp_dataInput, Prisma.CloudSecretUpdateWithoutApp_dataInput>, Prisma.CloudSecretUncheckedUpdateWithoutApp_dataInput>
 }
 
 export type CloudSecretCreateNestedOneWithoutUserInput = {
@@ -377,20 +374,68 @@ export type CloudSecretUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CloudSecretUpdateToOneWithWhereWithoutUserInput, Prisma.CloudSecretUpdateWithoutUserInput>, Prisma.CloudSecretUncheckedUpdateWithoutUserInput>
 }
 
+export type CloudSecretCreateWithoutApp_dataInput = {
+  id?: string
+  api_key: string
+  api_secret?: string | null
+  created_at?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutCloudSecretInput
+}
+
+export type CloudSecretUncheckedCreateWithoutApp_dataInput = {
+  id?: string
+  api_key: string
+  api_secret?: string | null
+  userId: string
+  created_at?: Date | string
+}
+
+export type CloudSecretCreateOrConnectWithoutApp_dataInput = {
+  where: Prisma.CloudSecretWhereUniqueInput
+  create: Prisma.XOR<Prisma.CloudSecretCreateWithoutApp_dataInput, Prisma.CloudSecretUncheckedCreateWithoutApp_dataInput>
+}
+
+export type CloudSecretUpsertWithoutApp_dataInput = {
+  update: Prisma.XOR<Prisma.CloudSecretUpdateWithoutApp_dataInput, Prisma.CloudSecretUncheckedUpdateWithoutApp_dataInput>
+  create: Prisma.XOR<Prisma.CloudSecretCreateWithoutApp_dataInput, Prisma.CloudSecretUncheckedCreateWithoutApp_dataInput>
+  where?: Prisma.CloudSecretWhereInput
+}
+
+export type CloudSecretUpdateToOneWithWhereWithoutApp_dataInput = {
+  where?: Prisma.CloudSecretWhereInput
+  data: Prisma.XOR<Prisma.CloudSecretUpdateWithoutApp_dataInput, Prisma.CloudSecretUncheckedUpdateWithoutApp_dataInput>
+}
+
+export type CloudSecretUpdateWithoutApp_dataInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  api_key?: Prisma.StringFieldUpdateOperationsInput | string
+  api_secret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutCloudSecretNestedInput
+}
+
+export type CloudSecretUncheckedUpdateWithoutApp_dataInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  api_key?: Prisma.StringFieldUpdateOperationsInput | string
+  api_secret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type CloudSecretCreateWithoutUserInput = {
   id?: string
   api_key: string
-  api_secret: string
-  app_id?: Prisma.CloudSecretCreateapp_idInput | string[]
+  api_secret?: string | null
   created_at?: Date | string
+  app_data?: Prisma.AppDataCreateNestedManyWithoutCloudSecretInput
 }
 
 export type CloudSecretUncheckedCreateWithoutUserInput = {
   id?: string
   api_key: string
-  api_secret: string
-  app_id?: Prisma.CloudSecretCreateapp_idInput | string[]
+  api_secret?: string | null
   created_at?: Date | string
+  app_data?: Prisma.AppDataUncheckedCreateNestedManyWithoutCloudSecretInput
 }
 
 export type CloudSecretCreateOrConnectWithoutUserInput = {
@@ -412,36 +457,65 @@ export type CloudSecretUpdateToOneWithWhereWithoutUserInput = {
 export type CloudSecretUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   api_key?: Prisma.StringFieldUpdateOperationsInput | string
-  api_secret?: Prisma.StringFieldUpdateOperationsInput | string
-  app_id?: Prisma.CloudSecretUpdateapp_idInput | string[]
+  api_secret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  app_data?: Prisma.AppDataUpdateManyWithoutCloudSecretNestedInput
 }
 
 export type CloudSecretUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   api_key?: Prisma.StringFieldUpdateOperationsInput | string
-  api_secret?: Prisma.StringFieldUpdateOperationsInput | string
-  app_id?: Prisma.CloudSecretUpdateapp_idInput | string[]
+  api_secret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  app_data?: Prisma.AppDataUncheckedUpdateManyWithoutCloudSecretNestedInput
 }
 
+
+/**
+ * Count Type CloudSecretCountOutputType
+ */
+
+export type CloudSecretCountOutputType = {
+  app_data: number
+}
+
+export type CloudSecretCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  app_data?: boolean | CloudSecretCountOutputTypeCountApp_dataArgs
+}
+
+/**
+ * CloudSecretCountOutputType without action
+ */
+export type CloudSecretCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CloudSecretCountOutputType
+   */
+  select?: Prisma.CloudSecretCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * CloudSecretCountOutputType without action
+ */
+export type CloudSecretCountOutputTypeCountApp_dataArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AppDataWhereInput
+}
 
 
 export type CloudSecretSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   api_key?: boolean
   api_secret?: boolean
-  app_id?: boolean
   userId?: boolean
   created_at?: boolean
+  app_data?: boolean | Prisma.CloudSecret$app_dataArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.CloudSecretCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cloudSecret"]>
 
 export type CloudSecretSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   api_key?: boolean
   api_secret?: boolean
-  app_id?: boolean
   userId?: boolean
   created_at?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -451,7 +525,6 @@ export type CloudSecretSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   api_key?: boolean
   api_secret?: boolean
-  app_id?: boolean
   userId?: boolean
   created_at?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -461,14 +534,15 @@ export type CloudSecretSelectScalar = {
   id?: boolean
   api_key?: boolean
   api_secret?: boolean
-  app_id?: boolean
   userId?: boolean
   created_at?: boolean
 }
 
-export type CloudSecretOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "api_key" | "api_secret" | "app_id" | "userId" | "created_at", ExtArgs["result"]["cloudSecret"]>
+export type CloudSecretOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "api_key" | "api_secret" | "userId" | "created_at", ExtArgs["result"]["cloudSecret"]>
 export type CloudSecretInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  app_data?: boolean | Prisma.CloudSecret$app_dataArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.CloudSecretCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CloudSecretIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -480,13 +554,13 @@ export type CloudSecretIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.
 export type $CloudSecretPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CloudSecret"
   objects: {
+    app_data: Prisma.$AppDataPayload<ExtArgs>[]
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     api_key: string
-    api_secret: string
-    app_id: string[]
+    api_secret: string | null
     userId: string
     created_at: Date
   }, ExtArgs["result"]["cloudSecret"]>
@@ -883,6 +957,7 @@ readonly fields: CloudSecretFieldRefs;
  */
 export interface Prisma__CloudSecretClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  app_data<T extends Prisma.CloudSecret$app_dataArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CloudSecret$app_dataArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppDataPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -916,7 +991,6 @@ export interface CloudSecretFieldRefs {
   readonly id: Prisma.FieldRef<"CloudSecret", 'String'>
   readonly api_key: Prisma.FieldRef<"CloudSecret", 'String'>
   readonly api_secret: Prisma.FieldRef<"CloudSecret", 'String'>
-  readonly app_id: Prisma.FieldRef<"CloudSecret", 'String[]'>
   readonly userId: Prisma.FieldRef<"CloudSecret", 'String'>
   readonly created_at: Prisma.FieldRef<"CloudSecret", 'DateTime'>
 }
@@ -1312,6 +1386,30 @@ export type CloudSecretDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many CloudSecrets to delete.
    */
   limit?: number
+}
+
+/**
+ * CloudSecret.app_data
+ */
+export type CloudSecret$app_dataArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AppData
+   */
+  select?: Prisma.AppDataSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AppData
+   */
+  omit?: Prisma.AppDataOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AppDataInclude<ExtArgs> | null
+  where?: Prisma.AppDataWhereInput
+  orderBy?: Prisma.AppDataOrderByWithRelationInput | Prisma.AppDataOrderByWithRelationInput[]
+  cursor?: Prisma.AppDataWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AppDataScalarFieldEnum | Prisma.AppDataScalarFieldEnum[]
 }
 
 /**

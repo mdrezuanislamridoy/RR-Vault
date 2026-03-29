@@ -48,6 +48,11 @@ export type CloudData = Prisma.CloudDataModel
  */
 export type CloudSecret = Prisma.CloudSecretModel
 /**
+ * Model AppData
+ * 
+ */
+export type AppData = Prisma.AppDataModel
+/**
  * Model StoredFile
  * 
  */

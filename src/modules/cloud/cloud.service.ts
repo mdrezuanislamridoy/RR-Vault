@@ -1,10 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { successResponse } from '@/common/response';
 
 @Injectable()
 export class CloudService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async getAllFiles(userId: string) {
     const files = await this.prisma.client.cloudData.findMany({
@@ -44,4 +44,5 @@ export class CloudService {
 
     return successResponse('File deleted successfully');
   }
+
 }
