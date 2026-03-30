@@ -2,7 +2,7 @@ model User {
     id String @id @unique @default(uuid())
 
     name          String
-    email         String      @unique
+    email         String  @unique
     password      String?
     profilePic    String?
     profilePicKey String?
@@ -21,14 +21,15 @@ model User {
     accountType AccountType @default(EMAIL)
     role        UserRoles   @default(USER)
 
-    isBlocked Boolean @default(false)
-    isDeleted Boolean @default(false)
+    isBlocked        Boolean @default(false)
+    isDeleted        Boolean @default(false)
     stripeCustomerId String?
 
     // relations
     cloudSecret CloudSecret?
-    StoredFiles   StoredFile[]
-    CloudData     CloudData[]
+    StoredFiles StoredFile[]
+    CloudData   CloudData[]
+    folders     Folder[]
 
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt

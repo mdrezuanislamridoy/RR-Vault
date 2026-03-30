@@ -39,4 +39,17 @@ export class AssetsService {
             throw error;
         }
     }
+
+    async deleteAsset(id: string) {
+        try {
+            const asset = await this.prisma.client.cloudData.delete({
+                where: {
+                    id,
+                },
+            });
+            return successResponse("Asset deleted successfully", asset);
+        } catch (error) {
+            throw error;
+        }
+    }
 }

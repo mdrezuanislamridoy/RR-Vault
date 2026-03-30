@@ -313,6 +313,7 @@ export type UserWhereInput = {
   cloudSecret?: Prisma.XOR<Prisma.CloudSecretNullableScalarRelationFilter, Prisma.CloudSecretWhereInput> | null
   StoredFiles?: Prisma.StoredFileListRelationFilter
   CloudData?: Prisma.CloudDataListRelationFilter
+  folders?: Prisma.FolderListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -340,6 +341,7 @@ export type UserOrderByWithRelationInput = {
   cloudSecret?: Prisma.CloudSecretOrderByWithRelationInput
   StoredFiles?: Prisma.StoredFileOrderByRelationAggregateInput
   CloudData?: Prisma.CloudDataOrderByRelationAggregateInput
+  folders?: Prisma.FolderOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -370,6 +372,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   cloudSecret?: Prisma.XOR<Prisma.CloudSecretNullableScalarRelationFilter, Prisma.CloudSecretWhereInput> | null
   StoredFiles?: Prisma.StoredFileListRelationFilter
   CloudData?: Prisma.CloudDataListRelationFilter
+  folders?: Prisma.FolderListRelationFilter
 }, "id" | "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -451,6 +454,7 @@ export type UserCreateInput = {
   cloudSecret?: Prisma.CloudSecretCreateNestedOneWithoutUserInput
   StoredFiles?: Prisma.StoredFileCreateNestedManyWithoutUserInput
   CloudData?: Prisma.CloudDataCreateNestedManyWithoutUserInput
+  folders?: Prisma.FolderCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -478,6 +482,7 @@ export type UserUncheckedCreateInput = {
   cloudSecret?: Prisma.CloudSecretUncheckedCreateNestedOneWithoutUserInput
   StoredFiles?: Prisma.StoredFileUncheckedCreateNestedManyWithoutUserInput
   CloudData?: Prisma.CloudDataUncheckedCreateNestedManyWithoutUserInput
+  folders?: Prisma.FolderUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -505,6 +510,7 @@ export type UserUpdateInput = {
   cloudSecret?: Prisma.CloudSecretUpdateOneWithoutUserNestedInput
   StoredFiles?: Prisma.StoredFileUpdateManyWithoutUserNestedInput
   CloudData?: Prisma.CloudDataUpdateManyWithoutUserNestedInput
+  folders?: Prisma.FolderUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -532,6 +538,7 @@ export type UserUncheckedUpdateInput = {
   cloudSecret?: Prisma.CloudSecretUncheckedUpdateOneWithoutUserNestedInput
   StoredFiles?: Prisma.StoredFileUncheckedUpdateManyWithoutUserNestedInput
   CloudData?: Prisma.CloudDataUncheckedUpdateManyWithoutUserNestedInput
+  folders?: Prisma.FolderUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -697,6 +704,20 @@ export type UserUpdateOneRequiredWithoutCloudDataNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCloudDataInput, Prisma.UserUpdateWithoutCloudDataInput>, Prisma.UserUncheckedUpdateWithoutCloudDataInput>
 }
 
+export type UserCreateNestedOneWithoutFoldersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFoldersInput, Prisma.UserUncheckedCreateWithoutFoldersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFoldersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFoldersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFoldersInput, Prisma.UserUncheckedCreateWithoutFoldersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFoldersInput
+  upsert?: Prisma.UserUpsertWithoutFoldersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFoldersInput, Prisma.UserUpdateWithoutFoldersInput>, Prisma.UserUncheckedUpdateWithoutFoldersInput>
+}
+
 export type UserCreateNestedOneWithoutCloudSecretInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCloudSecretInput, Prisma.UserUncheckedCreateWithoutCloudSecretInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCloudSecretInput
@@ -761,6 +782,7 @@ export type UserCreateWithoutCloudDataInput = {
   updated_at?: Date | string
   cloudSecret?: Prisma.CloudSecretCreateNestedOneWithoutUserInput
   StoredFiles?: Prisma.StoredFileCreateNestedManyWithoutUserInput
+  folders?: Prisma.FolderCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCloudDataInput = {
@@ -787,6 +809,7 @@ export type UserUncheckedCreateWithoutCloudDataInput = {
   updated_at?: Date | string
   cloudSecret?: Prisma.CloudSecretUncheckedCreateNestedOneWithoutUserInput
   StoredFiles?: Prisma.StoredFileUncheckedCreateNestedManyWithoutUserInput
+  folders?: Prisma.FolderUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCloudDataInput = {
@@ -829,6 +852,7 @@ export type UserUpdateWithoutCloudDataInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cloudSecret?: Prisma.CloudSecretUpdateOneWithoutUserNestedInput
   StoredFiles?: Prisma.StoredFileUpdateManyWithoutUserNestedInput
+  folders?: Prisma.FolderUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCloudDataInput = {
@@ -855,6 +879,131 @@ export type UserUncheckedUpdateWithoutCloudDataInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cloudSecret?: Prisma.CloudSecretUncheckedUpdateOneWithoutUserNestedInput
   StoredFiles?: Prisma.StoredFileUncheckedUpdateManyWithoutUserNestedInput
+  folders?: Prisma.FolderUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutFoldersInput = {
+  id?: string
+  name: string
+  email: string
+  password?: string | null
+  profilePic?: string | null
+  profilePicKey?: string | null
+  refreshToken?: string | null
+  resetCode?: string | null
+  resetCodeToken?: string | null
+  resetCodeExpiry?: Date | string | null
+  verifyCode?: string | null
+  verifyCodeToken?: string | null
+  verifyCodeExpiry?: Date | string | null
+  isEmailVerified?: boolean
+  accountType?: $Enums.AccountType
+  role?: $Enums.UserRoles
+  isBlocked?: boolean
+  isDeleted?: boolean
+  stripeCustomerId?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  cloudSecret?: Prisma.CloudSecretCreateNestedOneWithoutUserInput
+  StoredFiles?: Prisma.StoredFileCreateNestedManyWithoutUserInput
+  CloudData?: Prisma.CloudDataCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFoldersInput = {
+  id?: string
+  name: string
+  email: string
+  password?: string | null
+  profilePic?: string | null
+  profilePicKey?: string | null
+  refreshToken?: string | null
+  resetCode?: string | null
+  resetCodeToken?: string | null
+  resetCodeExpiry?: Date | string | null
+  verifyCode?: string | null
+  verifyCodeToken?: string | null
+  verifyCodeExpiry?: Date | string | null
+  isEmailVerified?: boolean
+  accountType?: $Enums.AccountType
+  role?: $Enums.UserRoles
+  isBlocked?: boolean
+  isDeleted?: boolean
+  stripeCustomerId?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  cloudSecret?: Prisma.CloudSecretUncheckedCreateNestedOneWithoutUserInput
+  StoredFiles?: Prisma.StoredFileUncheckedCreateNestedManyWithoutUserInput
+  CloudData?: Prisma.CloudDataUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFoldersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFoldersInput, Prisma.UserUncheckedCreateWithoutFoldersInput>
+}
+
+export type UserUpsertWithoutFoldersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFoldersInput, Prisma.UserUncheckedUpdateWithoutFoldersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFoldersInput, Prisma.UserUncheckedCreateWithoutFoldersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFoldersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFoldersInput, Prisma.UserUncheckedUpdateWithoutFoldersInput>
+}
+
+export type UserUpdateWithoutFoldersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetCodeToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetCodeExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyCodeToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyCodeExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
+  role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cloudSecret?: Prisma.CloudSecretUpdateOneWithoutUserNestedInput
+  StoredFiles?: Prisma.StoredFileUpdateManyWithoutUserNestedInput
+  CloudData?: Prisma.CloudDataUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFoldersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profilePicKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetCodeToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetCodeExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyCodeToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyCodeExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
+  role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cloudSecret?: Prisma.CloudSecretUncheckedUpdateOneWithoutUserNestedInput
+  StoredFiles?: Prisma.StoredFileUncheckedUpdateManyWithoutUserNestedInput
+  CloudData?: Prisma.CloudDataUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCloudSecretInput = {
@@ -881,6 +1030,7 @@ export type UserCreateWithoutCloudSecretInput = {
   updated_at?: Date | string
   StoredFiles?: Prisma.StoredFileCreateNestedManyWithoutUserInput
   CloudData?: Prisma.CloudDataCreateNestedManyWithoutUserInput
+  folders?: Prisma.FolderCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCloudSecretInput = {
@@ -907,6 +1057,7 @@ export type UserUncheckedCreateWithoutCloudSecretInput = {
   updated_at?: Date | string
   StoredFiles?: Prisma.StoredFileUncheckedCreateNestedManyWithoutUserInput
   CloudData?: Prisma.CloudDataUncheckedCreateNestedManyWithoutUserInput
+  folders?: Prisma.FolderUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCloudSecretInput = {
@@ -949,6 +1100,7 @@ export type UserUpdateWithoutCloudSecretInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   StoredFiles?: Prisma.StoredFileUpdateManyWithoutUserNestedInput
   CloudData?: Prisma.CloudDataUpdateManyWithoutUserNestedInput
+  folders?: Prisma.FolderUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCloudSecretInput = {
@@ -975,6 +1127,7 @@ export type UserUncheckedUpdateWithoutCloudSecretInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   StoredFiles?: Prisma.StoredFileUncheckedUpdateManyWithoutUserNestedInput
   CloudData?: Prisma.CloudDataUncheckedUpdateManyWithoutUserNestedInput
+  folders?: Prisma.FolderUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutStoredFilesInput = {
@@ -1001,6 +1154,7 @@ export type UserCreateWithoutStoredFilesInput = {
   updated_at?: Date | string
   cloudSecret?: Prisma.CloudSecretCreateNestedOneWithoutUserInput
   CloudData?: Prisma.CloudDataCreateNestedManyWithoutUserInput
+  folders?: Prisma.FolderCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStoredFilesInput = {
@@ -1027,6 +1181,7 @@ export type UserUncheckedCreateWithoutStoredFilesInput = {
   updated_at?: Date | string
   cloudSecret?: Prisma.CloudSecretUncheckedCreateNestedOneWithoutUserInput
   CloudData?: Prisma.CloudDataUncheckedCreateNestedManyWithoutUserInput
+  folders?: Prisma.FolderUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStoredFilesInput = {
@@ -1069,6 +1224,7 @@ export type UserUpdateWithoutStoredFilesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cloudSecret?: Prisma.CloudSecretUpdateOneWithoutUserNestedInput
   CloudData?: Prisma.CloudDataUpdateManyWithoutUserNestedInput
+  folders?: Prisma.FolderUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStoredFilesInput = {
@@ -1095,6 +1251,7 @@ export type UserUncheckedUpdateWithoutStoredFilesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cloudSecret?: Prisma.CloudSecretUncheckedUpdateOneWithoutUserNestedInput
   CloudData?: Prisma.CloudDataUncheckedUpdateManyWithoutUserNestedInput
+  folders?: Prisma.FolderUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1105,11 +1262,13 @@ export type UserUncheckedUpdateWithoutStoredFilesInput = {
 export type UserCountOutputType = {
   StoredFiles: number
   CloudData: number
+  folders: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   StoredFiles?: boolean | UserCountOutputTypeCountStoredFilesArgs
   CloudData?: boolean | UserCountOutputTypeCountCloudDataArgs
+  folders?: boolean | UserCountOutputTypeCountFoldersArgs
 }
 
 /**
@@ -1134,6 +1293,13 @@ export type UserCountOutputTypeCountStoredFilesArgs<ExtArgs extends runtime.Type
  */
 export type UserCountOutputTypeCountCloudDataArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CloudDataWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFoldersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FolderWhereInput
 }
 
 
@@ -1162,6 +1328,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   cloudSecret?: boolean | Prisma.User$cloudSecretArgs<ExtArgs>
   StoredFiles?: boolean | Prisma.User$StoredFilesArgs<ExtArgs>
   CloudData?: boolean | Prisma.User$CloudDataArgs<ExtArgs>
+  folders?: boolean | Prisma.User$foldersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1242,6 +1409,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   cloudSecret?: boolean | Prisma.User$cloudSecretArgs<ExtArgs>
   StoredFiles?: boolean | Prisma.User$StoredFilesArgs<ExtArgs>
   CloudData?: boolean | Prisma.User$CloudDataArgs<ExtArgs>
+  folders?: boolean | Prisma.User$foldersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1253,6 +1421,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     cloudSecret: Prisma.$CloudSecretPayload<ExtArgs> | null
     StoredFiles: Prisma.$StoredFilePayload<ExtArgs>[]
     CloudData: Prisma.$CloudDataPayload<ExtArgs>[]
+    folders: Prisma.$FolderPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1673,6 +1842,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   cloudSecret<T extends Prisma.User$cloudSecretArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cloudSecretArgs<ExtArgs>>): Prisma.Prisma__CloudSecretClient<runtime.Types.Result.GetResult<Prisma.$CloudSecretPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   StoredFiles<T extends Prisma.User$StoredFilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$StoredFilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StoredFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   CloudData<T extends Prisma.User$CloudDataArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$CloudDataArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CloudDataPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  folders<T extends Prisma.User$foldersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$foldersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FolderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2175,6 +2345,30 @@ export type User$CloudDataArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.CloudDataScalarFieldEnum | Prisma.CloudDataScalarFieldEnum[]
+}
+
+/**
+ * User.folders
+ */
+export type User$foldersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Folder
+   */
+  select?: Prisma.FolderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Folder
+   */
+  omit?: Prisma.FolderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FolderInclude<ExtArgs> | null
+  where?: Prisma.FolderWhereInput
+  orderBy?: Prisma.FolderOrderByWithRelationInput | Prisma.FolderOrderByWithRelationInput[]
+  cursor?: Prisma.FolderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FolderScalarFieldEnum | Prisma.FolderScalarFieldEnum[]
 }
 
 /**

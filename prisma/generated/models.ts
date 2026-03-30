@@ -9,6 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/CloudData'
+export type * from './models/Folder'
 export type * from './models/CloudSecret'
 export type * from './models/AppData'
 export type * from './models/StoredFile'

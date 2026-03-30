@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   CloudData: 'CloudData',
+  Folder: 'Folder',
   CloudSecret: 'CloudSecret',
   AppData: 'AppData',
   StoredFile: 'StoredFile',
@@ -83,14 +84,25 @@ export const CloudDataScalarFieldEnum = {
   id: 'id',
   data: 'data',
   publicKey: 'publicKey',
-  folder: 'folder',
   fileSize: 'fileSize',
   fileType: 'fileType',
   userId: 'userId',
+  folderId: 'folderId',
   uploaded_at: 'uploaded_at'
 } as const
 
 export type CloudDataScalarFieldEnum = (typeof CloudDataScalarFieldEnum)[keyof typeof CloudDataScalarFieldEnum]
+
+
+export const FolderScalarFieldEnum = {
+  id: 'id',
+  folderName: 'folderName',
+  userId: 'userId',
+  parentFolderId: 'parentFolderId',
+  created_at: 'created_at'
+} as const
+
+export type FolderScalarFieldEnum = (typeof FolderScalarFieldEnum)[keyof typeof FolderScalarFieldEnum]
 
 
 export const CloudSecretScalarFieldEnum = {

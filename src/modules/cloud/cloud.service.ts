@@ -78,15 +78,25 @@ export class CloudService {
       const publicDomain = process.env.CLOUDFLARE_PUBLIC_DOMAIN || process.env.CLOUDFLARE_S3_CLIENT_ENDPOINT;
       const fileUrl = `${publicDomain}/${fileKey}`;
 
+
+
       const savedFile = await this.prisma.client.cloudData.create({
         data: {
           data: fileUrl,
           publicKey: fileKey,
-          userId: userId,
-          folder: folder,
+          user: { connect: { id: userId } },
+          ...(folder && {
+            folder: {
+              create: {
+                folderName: folder,
+                user: { connect: { id: userId } },
+              },
+            },
+          }),
           fileSize: file.size,
           fileType: file.mimetype,
         },
+        include: { folder: true }
       });
 
       return successResponse('File uploaded successfully', {

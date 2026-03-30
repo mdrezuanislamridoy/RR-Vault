@@ -3,12 +3,31 @@ model CloudData {
 
     data      String
     publicKey String
-    folder String?
     shortenUrl ShortenUrl? 
     fileSize Int
     fileType String
     userId     String
     user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+    folderId String?
+    folder   Folder? @relation(fields: [folderId], references: [id], onDelete: Cascade)
+
     uploaded_at DateTime @default(now())
+}
+
+model Folder {
+    id String @id @unique @default(uuid())
+
+    folderName String
+    userId     String
+    user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    parentFolderId String?
+    parentFolder   Folder? @relation("FolderHierarchy", fields: [parentFolderId], references: [id], onDelete: Cascade)
+
+    childFolders Folder[] @relation("FolderHierarchy")
+
+    cloudData CloudData[]
+
+    created_at DateTime @default(now())
 }

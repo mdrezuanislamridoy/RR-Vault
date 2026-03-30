@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   CloudData: 'CloudData',
+  Folder: 'Folder',
   CloudSecret: 'CloudSecret',
   AppData: 'AppData',
   StoredFile: 'StoredFile',
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "cloudData" | "cloudSecret" | "appData" | "storedFile" | "shortenUrl" | "subscriptionPlan" | "packagePricing" | "subscriptionPaymentPlanHistory" | "subscribed" | "user"
+    modelProps: "cloudData" | "folder" | "cloudSecret" | "appData" | "storedFile" | "shortenUrl" | "subscriptionPlan" | "packagePricing" | "subscriptionPaymentPlanHistory" | "subscribed" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -484,6 +485,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CloudDataCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CloudDataCountAggregateOutputType> | number
+        }
+      }
+    }
+    Folder: {
+      payload: Prisma.$FolderPayload<ExtArgs>
+      fields: Prisma.FolderFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FolderFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FolderPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FolderFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FolderPayload>
+        }
+        findFirst: {
+          args: Prisma.FolderFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FolderPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FolderFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FolderPayload>
+        }
+        findMany: {
+          args: Prisma.FolderFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FolderPayload>[]
+        }
+        create: {
+          args: Prisma.FolderCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FolderPayload>
+        }
+        createMany: {
+          args: Prisma.FolderCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FolderCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FolderPayload>[]
+        }
+        delete: {
+          args: Prisma.FolderDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FolderPayload>
+        }
+        update: {
+          args: Prisma.FolderUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FolderPayload>
+        }
+        deleteMany: {
+          args: Prisma.FolderDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FolderUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FolderUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FolderPayload>[]
+        }
+        upsert: {
+          args: Prisma.FolderUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FolderPayload>
+        }
+        aggregate: {
+          args: Prisma.FolderAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFolder>
+        }
+        groupBy: {
+          args: Prisma.FolderGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FolderGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FolderCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FolderCountAggregateOutputType> | number
         }
       }
     }
@@ -1196,14 +1271,25 @@ export const CloudDataScalarFieldEnum = {
   id: 'id',
   data: 'data',
   publicKey: 'publicKey',
-  folder: 'folder',
   fileSize: 'fileSize',
   fileType: 'fileType',
   userId: 'userId',
+  folderId: 'folderId',
   uploaded_at: 'uploaded_at'
 } as const
 
 export type CloudDataScalarFieldEnum = (typeof CloudDataScalarFieldEnum)[keyof typeof CloudDataScalarFieldEnum]
+
+
+export const FolderScalarFieldEnum = {
+  id: 'id',
+  folderName: 'folderName',
+  userId: 'userId',
+  parentFolderId: 'parentFolderId',
+  created_at: 'created_at'
+} as const
+
+export type FolderScalarFieldEnum = (typeof FolderScalarFieldEnum)[keyof typeof FolderScalarFieldEnum]
 
 
 export const CloudSecretScalarFieldEnum = {
@@ -1578,6 +1664,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   cloudData?: Prisma.CloudDataOmit
+  folder?: Prisma.FolderOmit
   cloudSecret?: Prisma.CloudSecretOmit
   appData?: Prisma.AppDataOmit
   storedFile?: Prisma.StoredFileOmit

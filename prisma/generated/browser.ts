@@ -23,6 +23,11 @@ export * from './enums';
  */
 export type CloudData = Prisma.CloudDataModel
 /**
+ * Model Folder
+ * 
+ */
+export type Folder = Prisma.FolderModel
+/**
  * Model CloudSecret
  * 
  */
