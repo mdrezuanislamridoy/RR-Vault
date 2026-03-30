@@ -11,20 +11,26 @@ import { JwtModule } from '@nestjs/jwt';
 import { SecretsModule } from './modules/user-dashboard/secrets/secrets.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { SubscriptionModule } from './modules/subscription/subscription.module';
+import { AppsModule } from './modules/user-dashboard/apps/app.module';
+import { AssetsModule } from './modules/user-dashboard/assets/assets.module';
+import { OverviewModule } from './modules/user-dashboard/overview/overview.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     JwtModule.register({ global: true }),
     AuthModule,
-    SecretsModule,
     PrismaModule,
-    CloudModule,
     SubscriptionModule,
     ThrottlerModule.forRoot([{
       ttl: 60000,
       limit: 10,
     }]),
+    SecretsModule,
+    CloudModule,
+    AppsModule,
+    AssetsModule,
+    OverviewModule
   ],
   controllers: [AppController],
   providers: [
