@@ -83,6 +83,9 @@ export class CloudService {
           data: fileUrl,
           publicKey: fileKey,
           userId: userId,
+          folder: folder,
+          fileSize: file.size,
+          fileType: file.mimetype,
         },
       });
 
@@ -93,6 +96,7 @@ export class CloudService {
         size: file.size,
         mimetype: file.mimetype,
         originalname: file.originalname,
+        folder: savedFile.folder,
       });
     } catch (error) {
       console.error('S3 Upload Error:', error);

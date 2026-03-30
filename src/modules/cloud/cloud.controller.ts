@@ -8,20 +8,22 @@ import { CurrentUser } from '@/common/decorators/current-user.decorator';
 @ApiBearerAuth()
 @Controller('cloud')
 export class CloudController {
-  constructor(private readonly cloudService: CloudService) {}
+  constructor(private readonly cloudService: CloudService) { }
 
   @Get()
+  @Roles('USER')
   getAllFiles(@CurrentUser('sub') userId: string) {
     return this.cloudService.getAllFiles(userId);
   }
 
   @Get(':id')
+  @Roles('USER')
   getFile(@Param('id') id: string, @CurrentUser('sub') userId: string) {
     return this.cloudService.getFile(id, userId);
   }
 
-  @Roles('ADMIN')
   @Delete(':id')
+  @Roles('USER')
   deleteFile(@Param('id') id: string, @CurrentUser('sub') userId: string) {
     return this.cloudService.deleteFile(id, userId);
   }

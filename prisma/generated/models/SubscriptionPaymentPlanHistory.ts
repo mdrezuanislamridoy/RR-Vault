@@ -29,6 +29,7 @@ export type SubscriptionPaymentPlanHistoryMinAggregateOutputType = {
   userId: string | null
   subscriptionPlanId: string | null
   packagePricingId: string | null
+  isActive: boolean | null
   status: $Enums.SubscriptionStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -39,6 +40,7 @@ export type SubscriptionPaymentPlanHistoryMaxAggregateOutputType = {
   userId: string | null
   subscriptionPlanId: string | null
   packagePricingId: string | null
+  isActive: boolean | null
   status: $Enums.SubscriptionStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -49,6 +51,7 @@ export type SubscriptionPaymentPlanHistoryCountAggregateOutputType = {
   userId: number
   subscriptionPlanId: number
   packagePricingId: number
+  isActive: number
   status: number
   createdAt: number
   updatedAt: number
@@ -61,6 +64,7 @@ export type SubscriptionPaymentPlanHistoryMinAggregateInputType = {
   userId?: true
   subscriptionPlanId?: true
   packagePricingId?: true
+  isActive?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -71,6 +75,7 @@ export type SubscriptionPaymentPlanHistoryMaxAggregateInputType = {
   userId?: true
   subscriptionPlanId?: true
   packagePricingId?: true
+  isActive?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -81,6 +86,7 @@ export type SubscriptionPaymentPlanHistoryCountAggregateInputType = {
   userId?: true
   subscriptionPlanId?: true
   packagePricingId?: true
+  isActive?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -164,6 +170,7 @@ export type SubscriptionPaymentPlanHistoryGroupByOutputType = {
   userId: string
   subscriptionPlanId: string
   packagePricingId: string
+  isActive: boolean
   status: $Enums.SubscriptionStatus
   createdAt: Date
   updatedAt: Date
@@ -195,6 +202,7 @@ export type SubscriptionPaymentPlanHistoryWhereInput = {
   userId?: Prisma.StringFilter<"SubscriptionPaymentPlanHistory"> | string
   subscriptionPlanId?: Prisma.StringFilter<"SubscriptionPaymentPlanHistory"> | string
   packagePricingId?: Prisma.StringFilter<"SubscriptionPaymentPlanHistory"> | string
+  isActive?: Prisma.BoolFilter<"SubscriptionPaymentPlanHistory"> | boolean
   status?: Prisma.EnumSubscriptionStatusFilter<"SubscriptionPaymentPlanHistory"> | $Enums.SubscriptionStatus
   createdAt?: Prisma.DateTimeFilter<"SubscriptionPaymentPlanHistory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SubscriptionPaymentPlanHistory"> | Date | string
@@ -205,6 +213,7 @@ export type SubscriptionPaymentPlanHistoryOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   subscriptionPlanId?: Prisma.SortOrder
   packagePricingId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -218,6 +227,7 @@ export type SubscriptionPaymentPlanHistoryWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"SubscriptionPaymentPlanHistory"> | string
   subscriptionPlanId?: Prisma.StringFilter<"SubscriptionPaymentPlanHistory"> | string
   packagePricingId?: Prisma.StringFilter<"SubscriptionPaymentPlanHistory"> | string
+  isActive?: Prisma.BoolFilter<"SubscriptionPaymentPlanHistory"> | boolean
   status?: Prisma.EnumSubscriptionStatusFilter<"SubscriptionPaymentPlanHistory"> | $Enums.SubscriptionStatus
   createdAt?: Prisma.DateTimeFilter<"SubscriptionPaymentPlanHistory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SubscriptionPaymentPlanHistory"> | Date | string
@@ -228,6 +238,7 @@ export type SubscriptionPaymentPlanHistoryOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   subscriptionPlanId?: Prisma.SortOrder
   packagePricingId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -244,6 +255,7 @@ export type SubscriptionPaymentPlanHistoryScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"SubscriptionPaymentPlanHistory"> | string
   subscriptionPlanId?: Prisma.StringWithAggregatesFilter<"SubscriptionPaymentPlanHistory"> | string
   packagePricingId?: Prisma.StringWithAggregatesFilter<"SubscriptionPaymentPlanHistory"> | string
+  isActive?: Prisma.BoolWithAggregatesFilter<"SubscriptionPaymentPlanHistory"> | boolean
   status?: Prisma.EnumSubscriptionStatusWithAggregatesFilter<"SubscriptionPaymentPlanHistory"> | $Enums.SubscriptionStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SubscriptionPaymentPlanHistory"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SubscriptionPaymentPlanHistory"> | Date | string
@@ -254,6 +266,7 @@ export type SubscriptionPaymentPlanHistoryCreateInput = {
   userId: string
   subscriptionPlanId: string
   packagePricingId: string
+  isActive?: boolean
   status: $Enums.SubscriptionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -264,6 +277,7 @@ export type SubscriptionPaymentPlanHistoryUncheckedCreateInput = {
   userId: string
   subscriptionPlanId: string
   packagePricingId: string
+  isActive?: boolean
   status: $Enums.SubscriptionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -274,6 +288,7 @@ export type SubscriptionPaymentPlanHistoryUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionPlanId?: Prisma.StringFieldUpdateOperationsInput | string
   packagePricingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -284,6 +299,7 @@ export type SubscriptionPaymentPlanHistoryUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionPlanId?: Prisma.StringFieldUpdateOperationsInput | string
   packagePricingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -294,6 +310,7 @@ export type SubscriptionPaymentPlanHistoryCreateManyInput = {
   userId: string
   subscriptionPlanId: string
   packagePricingId: string
+  isActive?: boolean
   status: $Enums.SubscriptionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -304,6 +321,7 @@ export type SubscriptionPaymentPlanHistoryUpdateManyMutationInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionPlanId?: Prisma.StringFieldUpdateOperationsInput | string
   packagePricingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -314,6 +332,7 @@ export type SubscriptionPaymentPlanHistoryUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionPlanId?: Prisma.StringFieldUpdateOperationsInput | string
   packagePricingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -324,6 +343,7 @@ export type SubscriptionPaymentPlanHistoryCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   subscriptionPlanId?: Prisma.SortOrder
   packagePricingId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -334,6 +354,7 @@ export type SubscriptionPaymentPlanHistoryMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   subscriptionPlanId?: Prisma.SortOrder
   packagePricingId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -344,6 +365,7 @@ export type SubscriptionPaymentPlanHistoryMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   subscriptionPlanId?: Prisma.SortOrder
   packagePricingId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -360,6 +382,7 @@ export type SubscriptionPaymentPlanHistorySelect<ExtArgs extends runtime.Types.E
   userId?: boolean
   subscriptionPlanId?: boolean
   packagePricingId?: boolean
+  isActive?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -370,6 +393,7 @@ export type SubscriptionPaymentPlanHistorySelectCreateManyAndReturn<ExtArgs exte
   userId?: boolean
   subscriptionPlanId?: boolean
   packagePricingId?: boolean
+  isActive?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -380,6 +404,7 @@ export type SubscriptionPaymentPlanHistorySelectUpdateManyAndReturn<ExtArgs exte
   userId?: boolean
   subscriptionPlanId?: boolean
   packagePricingId?: boolean
+  isActive?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -390,12 +415,13 @@ export type SubscriptionPaymentPlanHistorySelectScalar = {
   userId?: boolean
   subscriptionPlanId?: boolean
   packagePricingId?: boolean
+  isActive?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SubscriptionPaymentPlanHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "subscriptionPlanId" | "packagePricingId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["subscriptionPaymentPlanHistory"]>
+export type SubscriptionPaymentPlanHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "subscriptionPlanId" | "packagePricingId" | "isActive" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["subscriptionPaymentPlanHistory"]>
 
 export type $SubscriptionPaymentPlanHistoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SubscriptionPaymentPlanHistory"
@@ -405,6 +431,7 @@ export type $SubscriptionPaymentPlanHistoryPayload<ExtArgs extends runtime.Types
     userId: string
     subscriptionPlanId: string
     packagePricingId: string
+    isActive: boolean
     status: $Enums.SubscriptionStatus
     createdAt: Date
     updatedAt: Date
@@ -835,6 +862,7 @@ export interface SubscriptionPaymentPlanHistoryFieldRefs {
   readonly userId: Prisma.FieldRef<"SubscriptionPaymentPlanHistory", 'String'>
   readonly subscriptionPlanId: Prisma.FieldRef<"SubscriptionPaymentPlanHistory", 'String'>
   readonly packagePricingId: Prisma.FieldRef<"SubscriptionPaymentPlanHistory", 'String'>
+  readonly isActive: Prisma.FieldRef<"SubscriptionPaymentPlanHistory", 'Boolean'>
   readonly status: Prisma.FieldRef<"SubscriptionPaymentPlanHistory", 'SubscriptionStatus'>
   readonly createdAt: Prisma.FieldRef<"SubscriptionPaymentPlanHistory", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SubscriptionPaymentPlanHistory", 'DateTime'>

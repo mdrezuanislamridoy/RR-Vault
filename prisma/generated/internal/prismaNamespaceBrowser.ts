@@ -83,6 +83,9 @@ export const CloudDataScalarFieldEnum = {
   id: 'id',
   data: 'data',
   publicKey: 'publicKey',
+  folder: 'folder',
+  fileSize: 'fileSize',
+  fileType: 'fileType',
   userId: 'userId',
   uploaded_at: 'uploaded_at'
 } as const
@@ -167,6 +170,7 @@ export const SubscriptionPaymentPlanHistoryScalarFieldEnum = {
   userId: 'userId',
   subscriptionPlanId: 'subscriptionPlanId',
   packagePricingId: 'packagePricingId',
+  isActive: 'isActive',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -180,6 +184,8 @@ export const SubscribedScalarFieldEnum = {
   userId: 'userId',
   subscriptionPlanId: 'subscriptionPlanId',
   packagePricingId: 'packagePricingId',
+  stripeSubscriptionId: 'stripeSubscriptionId',
+  isActive: 'isActive',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -207,6 +213,7 @@ export const UserScalarFieldEnum = {
   role: 'role',
   isBlocked: 'isBlocked',
   isDeleted: 'isDeleted',
+  stripeCustomerId: 'stripeCustomerId',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const

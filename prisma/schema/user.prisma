@@ -23,6 +23,7 @@ model User {
 
     isBlocked Boolean @default(false)
     isDeleted Boolean @default(false)
+    stripeCustomerId String?
 
     // relations
     cloudSecret CloudSecret?

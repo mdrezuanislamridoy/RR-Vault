@@ -35,14 +35,15 @@ model SubscriptionPaymentPlanHistory {
 }
 
 model Subscribed {
-    id                 String             @id @default(uuid())
-    userId             String
-    subscriptionPlanId String
-    packagePricingId   String
-    isActive           Boolean            @default(true)
-    status             SubscriptionStatus
-    createdAt          DateTime           @default(now())
-    updatedAt          DateTime           @updatedAt
+    id                   String             @id @default(uuid())
+    userId               String
+    subscriptionPlanId   String
+    packagePricingId     String
+    stripeSubscriptionId String?            @unique
+    isActive             Boolean            @default(true)
+    status               SubscriptionStatus
+    createdAt            DateTime           @default(now())
+    updatedAt            DateTime           @updatedAt
 }
 
 enum SubscriptionStatus {

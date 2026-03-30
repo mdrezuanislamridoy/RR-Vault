@@ -43,6 +43,7 @@ export type UserMinAggregateOutputType = {
   role: $Enums.UserRoles | null
   isBlocked: boolean | null
   isDeleted: boolean | null
+  stripeCustomerId: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -66,6 +67,7 @@ export type UserMaxAggregateOutputType = {
   role: $Enums.UserRoles | null
   isBlocked: boolean | null
   isDeleted: boolean | null
+  stripeCustomerId: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -89,6 +91,7 @@ export type UserCountAggregateOutputType = {
   role: number
   isBlocked: number
   isDeleted: number
+  stripeCustomerId: number
   created_at: number
   updated_at: number
   _all: number
@@ -114,6 +117,7 @@ export type UserMinAggregateInputType = {
   role?: true
   isBlocked?: true
   isDeleted?: true
+  stripeCustomerId?: true
   created_at?: true
   updated_at?: true
 }
@@ -137,6 +141,7 @@ export type UserMaxAggregateInputType = {
   role?: true
   isBlocked?: true
   isDeleted?: true
+  stripeCustomerId?: true
   created_at?: true
   updated_at?: true
 }
@@ -160,6 +165,7 @@ export type UserCountAggregateInputType = {
   role?: true
   isBlocked?: true
   isDeleted?: true
+  stripeCustomerId?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -256,6 +262,7 @@ export type UserGroupByOutputType = {
   role: $Enums.UserRoles
   isBlocked: boolean
   isDeleted: boolean
+  stripeCustomerId: string | null
   created_at: Date
   updated_at: Date
   _count: UserCountAggregateOutputType | null
@@ -300,6 +307,7 @@ export type UserWhereInput = {
   role?: Prisma.EnumUserRolesFilter<"User"> | $Enums.UserRoles
   isBlocked?: Prisma.BoolFilter<"User"> | boolean
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
+  stripeCustomerId?: Prisma.StringNullableFilter<"User"> | string | null
   created_at?: Prisma.DateTimeFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
   cloudSecret?: Prisma.XOR<Prisma.CloudSecretNullableScalarRelationFilter, Prisma.CloudSecretWhereInput> | null
@@ -326,6 +334,7 @@ export type UserOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   isBlocked?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   cloudSecret?: Prisma.CloudSecretOrderByWithRelationInput
@@ -355,6 +364,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.EnumUserRolesFilter<"User"> | $Enums.UserRoles
   isBlocked?: Prisma.BoolFilter<"User"> | boolean
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
+  stripeCustomerId?: Prisma.StringNullableFilter<"User"> | string | null
   created_at?: Prisma.DateTimeFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
   cloudSecret?: Prisma.XOR<Prisma.CloudSecretNullableScalarRelationFilter, Prisma.CloudSecretWhereInput> | null
@@ -381,6 +391,7 @@ export type UserOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   isBlocked?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -410,6 +421,7 @@ export type UserScalarWhereWithAggregatesInput = {
   role?: Prisma.EnumUserRolesWithAggregatesFilter<"User"> | $Enums.UserRoles
   isBlocked?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   isDeleted?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  stripeCustomerId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -433,6 +445,7 @@ export type UserCreateInput = {
   role?: $Enums.UserRoles
   isBlocked?: boolean
   isDeleted?: boolean
+  stripeCustomerId?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   cloudSecret?: Prisma.CloudSecretCreateNestedOneWithoutUserInput
@@ -459,6 +472,7 @@ export type UserUncheckedCreateInput = {
   role?: $Enums.UserRoles
   isBlocked?: boolean
   isDeleted?: boolean
+  stripeCustomerId?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   cloudSecret?: Prisma.CloudSecretUncheckedCreateNestedOneWithoutUserInput
@@ -485,6 +499,7 @@ export type UserUpdateInput = {
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cloudSecret?: Prisma.CloudSecretUpdateOneWithoutUserNestedInput
@@ -511,6 +526,7 @@ export type UserUncheckedUpdateInput = {
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cloudSecret?: Prisma.CloudSecretUncheckedUpdateOneWithoutUserNestedInput
@@ -537,6 +553,7 @@ export type UserCreateManyInput = {
   role?: $Enums.UserRoles
   isBlocked?: boolean
   isDeleted?: boolean
+  stripeCustomerId?: string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -560,6 +577,7 @@ export type UserUpdateManyMutationInput = {
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -583,6 +601,7 @@ export type UserUncheckedUpdateManyInput = {
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -611,6 +630,7 @@ export type UserCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   isBlocked?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -634,6 +654,7 @@ export type UserMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   isBlocked?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -657,6 +678,7 @@ export type UserMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   isBlocked?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  stripeCustomerId?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -734,6 +756,7 @@ export type UserCreateWithoutCloudDataInput = {
   role?: $Enums.UserRoles
   isBlocked?: boolean
   isDeleted?: boolean
+  stripeCustomerId?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   cloudSecret?: Prisma.CloudSecretCreateNestedOneWithoutUserInput
@@ -759,6 +782,7 @@ export type UserUncheckedCreateWithoutCloudDataInput = {
   role?: $Enums.UserRoles
   isBlocked?: boolean
   isDeleted?: boolean
+  stripeCustomerId?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   cloudSecret?: Prisma.CloudSecretUncheckedCreateNestedOneWithoutUserInput
@@ -800,6 +824,7 @@ export type UserUpdateWithoutCloudDataInput = {
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cloudSecret?: Prisma.CloudSecretUpdateOneWithoutUserNestedInput
@@ -825,6 +850,7 @@ export type UserUncheckedUpdateWithoutCloudDataInput = {
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cloudSecret?: Prisma.CloudSecretUncheckedUpdateOneWithoutUserNestedInput
@@ -850,6 +876,7 @@ export type UserCreateWithoutCloudSecretInput = {
   role?: $Enums.UserRoles
   isBlocked?: boolean
   isDeleted?: boolean
+  stripeCustomerId?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   StoredFiles?: Prisma.StoredFileCreateNestedManyWithoutUserInput
@@ -875,6 +902,7 @@ export type UserUncheckedCreateWithoutCloudSecretInput = {
   role?: $Enums.UserRoles
   isBlocked?: boolean
   isDeleted?: boolean
+  stripeCustomerId?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   StoredFiles?: Prisma.StoredFileUncheckedCreateNestedManyWithoutUserInput
@@ -916,6 +944,7 @@ export type UserUpdateWithoutCloudSecretInput = {
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   StoredFiles?: Prisma.StoredFileUpdateManyWithoutUserNestedInput
@@ -941,6 +970,7 @@ export type UserUncheckedUpdateWithoutCloudSecretInput = {
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   StoredFiles?: Prisma.StoredFileUncheckedUpdateManyWithoutUserNestedInput
@@ -966,6 +996,7 @@ export type UserCreateWithoutStoredFilesInput = {
   role?: $Enums.UserRoles
   isBlocked?: boolean
   isDeleted?: boolean
+  stripeCustomerId?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   cloudSecret?: Prisma.CloudSecretCreateNestedOneWithoutUserInput
@@ -991,6 +1022,7 @@ export type UserUncheckedCreateWithoutStoredFilesInput = {
   role?: $Enums.UserRoles
   isBlocked?: boolean
   isDeleted?: boolean
+  stripeCustomerId?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   cloudSecret?: Prisma.CloudSecretUncheckedCreateNestedOneWithoutUserInput
@@ -1032,6 +1064,7 @@ export type UserUpdateWithoutStoredFilesInput = {
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cloudSecret?: Prisma.CloudSecretUpdateOneWithoutUserNestedInput
@@ -1057,6 +1090,7 @@ export type UserUncheckedUpdateWithoutStoredFilesInput = {
   role?: Prisma.EnumUserRolesFieldUpdateOperationsInput | $Enums.UserRoles
   isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cloudSecret?: Prisma.CloudSecretUncheckedUpdateOneWithoutUserNestedInput
@@ -1122,6 +1156,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   role?: boolean
   isBlocked?: boolean
   isDeleted?: boolean
+  stripeCustomerId?: boolean
   created_at?: boolean
   updated_at?: boolean
   cloudSecret?: boolean | Prisma.User$cloudSecretArgs<ExtArgs>
@@ -1149,6 +1184,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   isBlocked?: boolean
   isDeleted?: boolean
+  stripeCustomerId?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1172,6 +1208,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   isBlocked?: boolean
   isDeleted?: boolean
+  stripeCustomerId?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1195,11 +1232,12 @@ export type UserSelectScalar = {
   role?: boolean
   isBlocked?: boolean
   isDeleted?: boolean
+  stripeCustomerId?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "profilePic" | "profilePicKey" | "refreshToken" | "resetCode" | "resetCodeToken" | "resetCodeExpiry" | "verifyCode" | "verifyCodeToken" | "verifyCodeExpiry" | "isEmailVerified" | "accountType" | "role" | "isBlocked" | "isDeleted" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "profilePic" | "profilePicKey" | "refreshToken" | "resetCode" | "resetCodeToken" | "resetCodeExpiry" | "verifyCode" | "verifyCodeToken" | "verifyCodeExpiry" | "isEmailVerified" | "accountType" | "role" | "isBlocked" | "isDeleted" | "stripeCustomerId" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cloudSecret?: boolean | Prisma.User$cloudSecretArgs<ExtArgs>
   StoredFiles?: boolean | Prisma.User$StoredFilesArgs<ExtArgs>
@@ -1235,6 +1273,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     role: $Enums.UserRoles
     isBlocked: boolean
     isDeleted: boolean
+    stripeCustomerId: string | null
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["user"]>
@@ -1681,6 +1720,7 @@ export interface UserFieldRefs {
   readonly role: Prisma.FieldRef<"User", 'UserRoles'>
   readonly isBlocked: Prisma.FieldRef<"User", 'Boolean'>
   readonly isDeleted: Prisma.FieldRef<"User", 'Boolean'>
+  readonly stripeCustomerId: Prisma.FieldRef<"User", 'String'>
   readonly created_at: Prisma.FieldRef<"User", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"User", 'DateTime'>
 }

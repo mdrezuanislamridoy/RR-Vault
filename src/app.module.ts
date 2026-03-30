@@ -8,8 +8,9 @@ import { CloudModule } from './modules/cloud/cloud.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './common/guards/auth.guard';
 import { JwtModule } from '@nestjs/jwt';
-import { SecretsModule } from './modules/secrets/secrets.module';
+import { SecretsModule } from './modules/user-dashboard/secrets/secrets.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { SubscriptionModule } from './modules/subscription/subscription.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
     SecretsModule,
     PrismaModule,
     CloudModule,
+    SubscriptionModule,
     ThrottlerModule.forRoot([{
       ttl: 60000,
       limit: 10,

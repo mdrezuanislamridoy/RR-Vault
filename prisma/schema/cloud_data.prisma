@@ -3,9 +3,10 @@ model CloudData {
 
     data      String
     publicKey String
-
+    folder String?
     shortenUrl ShortenUrl? 
-
+    fileSize Int
+    fileType String
     userId     String
     user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 

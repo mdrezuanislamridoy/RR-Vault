@@ -324,10 +324,6 @@ export type CloudSecretNullableScalarRelationFilter = {
   isNot?: Prisma.CloudSecretWhereInput | null
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type CloudSecretCreateNestedOneWithoutApp_dataInput = {
   create?: Prisma.XOR<Prisma.CloudSecretCreateWithoutApp_dataInput, Prisma.CloudSecretUncheckedCreateWithoutApp_dataInput>
   connectOrCreate?: Prisma.CloudSecretCreateOrConnectWithoutApp_dataInput
