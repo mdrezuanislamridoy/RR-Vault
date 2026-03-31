@@ -20,8 +20,24 @@ export type SubscribedModel = runtime.Types.Result.DefaultSelection<Prisma.$Subs
 
 export type AggregateSubscribed = {
   _count: SubscribedCountAggregateOutputType | null
+  _avg: SubscribedAvgAggregateOutputType | null
+  _sum: SubscribedSumAggregateOutputType | null
   _min: SubscribedMinAggregateOutputType | null
   _max: SubscribedMaxAggregateOutputType | null
+}
+
+export type SubscribedAvgAggregateOutputType = {
+  storageUsed: number | null
+  storageLimit: number | null
+  fileUploaded: number | null
+  fileLimit: number | null
+}
+
+export type SubscribedSumAggregateOutputType = {
+  storageUsed: number | null
+  storageLimit: number | null
+  fileUploaded: number | null
+  fileLimit: number | null
 }
 
 export type SubscribedMinAggregateOutputType = {
@@ -32,6 +48,11 @@ export type SubscribedMinAggregateOutputType = {
   stripeSubscriptionId: string | null
   isActive: boolean | null
   status: $Enums.SubscriptionStatus | null
+  storageUsed: number | null
+  storageLimit: number | null
+  fileUploaded: number | null
+  fileLimit: number | null
+  billingCycle: $Enums.BillingCycle | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -44,6 +65,11 @@ export type SubscribedMaxAggregateOutputType = {
   stripeSubscriptionId: string | null
   isActive: boolean | null
   status: $Enums.SubscriptionStatus | null
+  storageUsed: number | null
+  storageLimit: number | null
+  fileUploaded: number | null
+  fileLimit: number | null
+  billingCycle: $Enums.BillingCycle | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,11 +82,30 @@ export type SubscribedCountAggregateOutputType = {
   stripeSubscriptionId: number
   isActive: number
   status: number
+  storageUsed: number
+  storageLimit: number
+  fileUploaded: number
+  fileLimit: number
+  billingCycle: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type SubscribedAvgAggregateInputType = {
+  storageUsed?: true
+  storageLimit?: true
+  fileUploaded?: true
+  fileLimit?: true
+}
+
+export type SubscribedSumAggregateInputType = {
+  storageUsed?: true
+  storageLimit?: true
+  fileUploaded?: true
+  fileLimit?: true
+}
 
 export type SubscribedMinAggregateInputType = {
   id?: true
@@ -70,6 +115,11 @@ export type SubscribedMinAggregateInputType = {
   stripeSubscriptionId?: true
   isActive?: true
   status?: true
+  storageUsed?: true
+  storageLimit?: true
+  fileUploaded?: true
+  fileLimit?: true
+  billingCycle?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +132,11 @@ export type SubscribedMaxAggregateInputType = {
   stripeSubscriptionId?: true
   isActive?: true
   status?: true
+  storageUsed?: true
+  storageLimit?: true
+  fileUploaded?: true
+  fileLimit?: true
+  billingCycle?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,6 +149,11 @@ export type SubscribedCountAggregateInputType = {
   stripeSubscriptionId?: true
   isActive?: true
   status?: true
+  storageUsed?: true
+  storageLimit?: true
+  fileUploaded?: true
+  fileLimit?: true
+  billingCycle?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -137,6 +197,18 @@ export type SubscribedAggregateArgs<ExtArgs extends runtime.Types.Extensions.Int
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: SubscribedAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: SubscribedSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: SubscribedMinAggregateInputType
@@ -167,6 +239,8 @@ export type SubscribedGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   _count?: SubscribedCountAggregateInputType | true
+  _avg?: SubscribedAvgAggregateInputType
+  _sum?: SubscribedSumAggregateInputType
   _min?: SubscribedMinAggregateInputType
   _max?: SubscribedMaxAggregateInputType
 }
@@ -179,9 +253,16 @@ export type SubscribedGroupByOutputType = {
   stripeSubscriptionId: string | null
   isActive: boolean
   status: $Enums.SubscriptionStatus
+  storageUsed: number
+  storageLimit: number
+  fileUploaded: number
+  fileLimit: number
+  billingCycle: $Enums.BillingCycle
   createdAt: Date
   updatedAt: Date
   _count: SubscribedCountAggregateOutputType | null
+  _avg: SubscribedAvgAggregateOutputType | null
+  _sum: SubscribedSumAggregateOutputType | null
   _min: SubscribedMinAggregateOutputType | null
   _max: SubscribedMaxAggregateOutputType | null
 }
@@ -212,6 +293,11 @@ export type SubscribedWhereInput = {
   stripeSubscriptionId?: Prisma.StringNullableFilter<"Subscribed"> | string | null
   isActive?: Prisma.BoolFilter<"Subscribed"> | boolean
   status?: Prisma.EnumSubscriptionStatusFilter<"Subscribed"> | $Enums.SubscriptionStatus
+  storageUsed?: Prisma.IntFilter<"Subscribed"> | number
+  storageLimit?: Prisma.IntFilter<"Subscribed"> | number
+  fileUploaded?: Prisma.IntFilter<"Subscribed"> | number
+  fileLimit?: Prisma.IntFilter<"Subscribed"> | number
+  billingCycle?: Prisma.EnumBillingCycleFilter<"Subscribed"> | $Enums.BillingCycle
   createdAt?: Prisma.DateTimeFilter<"Subscribed"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscribed"> | Date | string
 }
@@ -224,6 +310,11 @@ export type SubscribedOrderByWithRelationInput = {
   stripeSubscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  storageUsed?: Prisma.SortOrder
+  storageLimit?: Prisma.SortOrder
+  fileUploaded?: Prisma.SortOrder
+  fileLimit?: Prisma.SortOrder
+  billingCycle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -239,6 +330,11 @@ export type SubscribedWhereUniqueInput = Prisma.AtLeast<{
   packagePricingId?: Prisma.StringFilter<"Subscribed"> | string
   isActive?: Prisma.BoolFilter<"Subscribed"> | boolean
   status?: Prisma.EnumSubscriptionStatusFilter<"Subscribed"> | $Enums.SubscriptionStatus
+  storageUsed?: Prisma.IntFilter<"Subscribed"> | number
+  storageLimit?: Prisma.IntFilter<"Subscribed"> | number
+  fileUploaded?: Prisma.IntFilter<"Subscribed"> | number
+  fileLimit?: Prisma.IntFilter<"Subscribed"> | number
+  billingCycle?: Prisma.EnumBillingCycleFilter<"Subscribed"> | $Enums.BillingCycle
   createdAt?: Prisma.DateTimeFilter<"Subscribed"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscribed"> | Date | string
 }, "id" | "stripeSubscriptionId">
@@ -251,11 +347,18 @@ export type SubscribedOrderByWithAggregationInput = {
   stripeSubscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  storageUsed?: Prisma.SortOrder
+  storageLimit?: Prisma.SortOrder
+  fileUploaded?: Prisma.SortOrder
+  fileLimit?: Prisma.SortOrder
+  billingCycle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SubscribedCountOrderByAggregateInput
+  _avg?: Prisma.SubscribedAvgOrderByAggregateInput
   _max?: Prisma.SubscribedMaxOrderByAggregateInput
   _min?: Prisma.SubscribedMinOrderByAggregateInput
+  _sum?: Prisma.SubscribedSumOrderByAggregateInput
 }
 
 export type SubscribedScalarWhereWithAggregatesInput = {
@@ -269,6 +372,11 @@ export type SubscribedScalarWhereWithAggregatesInput = {
   stripeSubscriptionId?: Prisma.StringNullableWithAggregatesFilter<"Subscribed"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Subscribed"> | boolean
   status?: Prisma.EnumSubscriptionStatusWithAggregatesFilter<"Subscribed"> | $Enums.SubscriptionStatus
+  storageUsed?: Prisma.IntWithAggregatesFilter<"Subscribed"> | number
+  storageLimit?: Prisma.IntWithAggregatesFilter<"Subscribed"> | number
+  fileUploaded?: Prisma.IntWithAggregatesFilter<"Subscribed"> | number
+  fileLimit?: Prisma.IntWithAggregatesFilter<"Subscribed"> | number
+  billingCycle?: Prisma.EnumBillingCycleWithAggregatesFilter<"Subscribed"> | $Enums.BillingCycle
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Subscribed"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Subscribed"> | Date | string
 }
@@ -281,6 +389,11 @@ export type SubscribedCreateInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
+  storageUsed?: number
+  storageLimit?: number
+  fileUploaded?: number
+  fileLimit?: number
+  billingCycle?: $Enums.BillingCycle
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -293,6 +406,11 @@ export type SubscribedUncheckedCreateInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
+  storageUsed?: number
+  storageLimit?: number
+  fileUploaded?: number
+  fileLimit?: number
+  billingCycle?: $Enums.BillingCycle
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -305,6 +423,11 @@ export type SubscribedUpdateInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
+  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
+  fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -317,6 +440,11 @@ export type SubscribedUncheckedUpdateInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
+  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
+  fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -329,6 +457,11 @@ export type SubscribedCreateManyInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
+  storageUsed?: number
+  storageLimit?: number
+  fileUploaded?: number
+  fileLimit?: number
+  billingCycle?: $Enums.BillingCycle
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -341,6 +474,11 @@ export type SubscribedUpdateManyMutationInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
+  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
+  fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -353,6 +491,11 @@ export type SubscribedUncheckedUpdateManyInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
+  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
+  fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -365,8 +508,20 @@ export type SubscribedCountOrderByAggregateInput = {
   stripeSubscriptionId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  storageUsed?: Prisma.SortOrder
+  storageLimit?: Prisma.SortOrder
+  fileUploaded?: Prisma.SortOrder
+  fileLimit?: Prisma.SortOrder
+  billingCycle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type SubscribedAvgOrderByAggregateInput = {
+  storageUsed?: Prisma.SortOrder
+  storageLimit?: Prisma.SortOrder
+  fileUploaded?: Prisma.SortOrder
+  fileLimit?: Prisma.SortOrder
 }
 
 export type SubscribedMaxOrderByAggregateInput = {
@@ -377,6 +532,11 @@ export type SubscribedMaxOrderByAggregateInput = {
   stripeSubscriptionId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  storageUsed?: Prisma.SortOrder
+  storageLimit?: Prisma.SortOrder
+  fileUploaded?: Prisma.SortOrder
+  fileLimit?: Prisma.SortOrder
+  billingCycle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -389,8 +549,20 @@ export type SubscribedMinOrderByAggregateInput = {
   stripeSubscriptionId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  storageUsed?: Prisma.SortOrder
+  storageLimit?: Prisma.SortOrder
+  fileUploaded?: Prisma.SortOrder
+  fileLimit?: Prisma.SortOrder
+  billingCycle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type SubscribedSumOrderByAggregateInput = {
+  storageUsed?: Prisma.SortOrder
+  storageLimit?: Prisma.SortOrder
+  fileUploaded?: Prisma.SortOrder
+  fileLimit?: Prisma.SortOrder
 }
 
 
@@ -403,6 +575,11 @@ export type SubscribedSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   stripeSubscriptionId?: boolean
   isActive?: boolean
   status?: boolean
+  storageUsed?: boolean
+  storageLimit?: boolean
+  fileUploaded?: boolean
+  fileLimit?: boolean
+  billingCycle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["subscribed"]>
@@ -415,6 +592,11 @@ export type SubscribedSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   stripeSubscriptionId?: boolean
   isActive?: boolean
   status?: boolean
+  storageUsed?: boolean
+  storageLimit?: boolean
+  fileUploaded?: boolean
+  fileLimit?: boolean
+  billingCycle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["subscribed"]>
@@ -427,6 +609,11 @@ export type SubscribedSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   stripeSubscriptionId?: boolean
   isActive?: boolean
   status?: boolean
+  storageUsed?: boolean
+  storageLimit?: boolean
+  fileUploaded?: boolean
+  fileLimit?: boolean
+  billingCycle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["subscribed"]>
@@ -439,11 +626,16 @@ export type SubscribedSelectScalar = {
   stripeSubscriptionId?: boolean
   isActive?: boolean
   status?: boolean
+  storageUsed?: boolean
+  storageLimit?: boolean
+  fileUploaded?: boolean
+  fileLimit?: boolean
+  billingCycle?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SubscribedOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "subscriptionPlanId" | "packagePricingId" | "stripeSubscriptionId" | "isActive" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["subscribed"]>
+export type SubscribedOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "subscriptionPlanId" | "packagePricingId" | "stripeSubscriptionId" | "isActive" | "status" | "storageUsed" | "storageLimit" | "fileUploaded" | "fileLimit" | "billingCycle" | "createdAt" | "updatedAt", ExtArgs["result"]["subscribed"]>
 
 export type $SubscribedPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Subscribed"
@@ -456,6 +648,11 @@ export type $SubscribedPayload<ExtArgs extends runtime.Types.Extensions.Internal
     stripeSubscriptionId: string | null
     isActive: boolean
     status: $Enums.SubscriptionStatus
+    storageUsed: number
+    storageLimit: number
+    fileUploaded: number
+    fileLimit: number
+    billingCycle: $Enums.BillingCycle
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["subscribed"]>
@@ -888,6 +1085,11 @@ export interface SubscribedFieldRefs {
   readonly stripeSubscriptionId: Prisma.FieldRef<"Subscribed", 'String'>
   readonly isActive: Prisma.FieldRef<"Subscribed", 'Boolean'>
   readonly status: Prisma.FieldRef<"Subscribed", 'SubscriptionStatus'>
+  readonly storageUsed: Prisma.FieldRef<"Subscribed", 'Int'>
+  readonly storageLimit: Prisma.FieldRef<"Subscribed", 'Int'>
+  readonly fileUploaded: Prisma.FieldRef<"Subscribed", 'Int'>
+  readonly fileLimit: Prisma.FieldRef<"Subscribed", 'Int'>
+  readonly billingCycle: Prisma.FieldRef<"Subscribed", 'BillingCycle'>
   readonly createdAt: Prisma.FieldRef<"Subscribed", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Subscribed", 'DateTime'>
 }

@@ -1,6 +1,6 @@
 import { successResponse } from "@/common/response";
 import { PrismaService } from "@/lib/prisma/prisma.service";
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 
 @Injectable()
 export class OverviewService {
@@ -99,6 +99,39 @@ export class OverviewService {
             }
 
             return successResponse("Analytics fetched successfully", { monthlyData, monthlyStorageUses });
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getResentUploads(userId: string) {
+        try {
+            const resentUploads = await this.prisma.client.cloudData.findMany({
+                where: {
+                    userId,
+                },
+                take: 5,
+                orderBy: {
+                    uploaded_at: 'desc',
+                },
+                include: { folder: true }
+            });
+
+            if (!resentUploads) throw new NotFoundException('Resent uploads not found');
+
+            const normalizedRecentUploads = resentUploads.map((item) => {
+                return {
+                    id: item.id,
+                    name: item.name,
+                    fileSize: item.fileSize,
+                    uploaded_at: item.uploaded_at,
+                    url: item.data,
+                    type: item.fileType,
+                    folder: item.folder?.folderName || null,
+                };
+            });
+
+            return successResponse("Resent uploads fetched successfully", normalizedRecentUploads);
         } catch (error) {
             throw error;
         }

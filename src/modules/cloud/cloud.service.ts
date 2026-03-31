@@ -14,6 +14,7 @@ export class CloudService {
       where: { userId },
       select: {
         id: true,
+        name: true,
         data: true,
         publicKey: true,
         uploaded_at: true,
@@ -56,6 +57,14 @@ export class CloudService {
 
     await this.prisma.client.cloudData.delete({ where: { id } });
 
+    await this.prisma.client.subscribed.updateMany({
+      where: { userId },
+      data: {
+        storageUsed: { decrement: file.fileSize || 0 }, // Adjust field name based on your schema (usually fileSize is saved)
+        fileUploaded: { decrement: 1 }
+      }
+    });
+
     return successResponse('File deleted successfully');
   }
 
@@ -64,6 +73,26 @@ export class CloudService {
     const bucketName = process.env.BUCKET_NAME;
 
     try {
+
+      const subscription = await this.prisma.client.subscribed.findFirst({
+        where: { userId },
+      });
+
+      if (!subscription) {
+        throw new BadRequestException('Subscription not found');
+      }
+
+      // Convert storageLimit from GB to Bytes (1 GB = 1073741824 Bytes)
+      const storageLimitInBytes = subscription.storageLimit * 1024 * 1024 * 1024;
+
+      if (subscription.storageUsed + file.size > storageLimitInBytes) {
+        throw new BadRequestException('Storage limit exceeded');
+      }
+
+      if (subscription.fileUploaded + 1 > subscription.fileLimit) {
+        throw new BadRequestException('File limit exceeded');
+      }
+
       if (!bucketName) {
         throw new BadRequestException('S3 bucket name is not configured');
       }
@@ -78,11 +107,10 @@ export class CloudService {
       const publicDomain = process.env.CLOUDFLARE_PUBLIC_DOMAIN || process.env.CLOUDFLARE_S3_CLIENT_ENDPOINT;
       const fileUrl = `${publicDomain}/${fileKey}`;
 
-
-
       const savedFile = await this.prisma.client.cloudData.create({
         data: {
           data: fileUrl,
+          name: file.originalname,
           publicKey: fileKey,
           user: { connect: { id: userId } },
           ...(folder && {
@@ -99,13 +127,21 @@ export class CloudService {
         include: { folder: true }
       });
 
+      // Update the user's subscription usage
+      await this.prisma.client.subscribed.update({
+        where: { id: subscription.id },
+        data: {
+          storageUsed: { increment: file.size },
+          fileUploaded: { increment: 1 }
+        }
+      });
+
       return successResponse('File uploaded successfully', {
         id: savedFile.id,
         url: fileUrl,
         key: fileKey,
         size: file.size,
-        mimetype: file.mimetype,
-        originalname: file.originalname,
+        name: file.originalname,
         folder: savedFile.folder,
       });
     } catch (error) {

@@ -3,20 +3,24 @@ import { FoldersService } from "./folders.service";
 import { CurrentUser } from "@/common/decorators/current-user.decorator";
 import { Roles } from "@/common/decorators/roles.decorator";
 import { UserRoles } from "@prisma";
-import { ApiParam, ApiProperty } from "@nestjs/swagger";
+import { ApiParam, ApiProperty, ApiOperation, ApiTags, ApiBearerAuth } from "@nestjs/swagger";
 
+@ApiTags('User Dashboard: Folders')
+@ApiBearerAuth()
 @Controller("folders")
 export class FoldersController {
     constructor(private readonly foldersService: FoldersService) { }
 
     @Get()
     @Roles(UserRoles.USER)
+    @ApiOperation({ summary: "Get all folders", description: "Role: USER" })
     async getFolders(@CurrentUser() user: { id: string }) {
         return this.foldersService.getFolders(user.id);
     }
 
     @Get(":id")
     @Roles(UserRoles.USER)
+    @ApiOperation({ summary: "Get folder data by ID", description: "Role: USER" })
     @ApiParam({
         name: "id",
         type: "string",
@@ -28,6 +32,7 @@ export class FoldersController {
 
     @Post()
     @Roles(UserRoles.USER)
+    @ApiOperation({ summary: "Create a new folder", description: "Role: USER" })
     @ApiProperty({
         type: "object",
         properties: {
@@ -41,6 +46,7 @@ export class FoldersController {
 
     @Put(":id")
     @Roles(UserRoles.USER)
+    @ApiOperation({ summary: "Update a folder", description: "Role: USER" })
     @ApiParam({
         name: "id",
         type: "string",
@@ -57,12 +63,13 @@ export class FoldersController {
     }
 
     @Delete(":id")
+    @Roles(UserRoles.USER)
+    @ApiOperation({ summary: "Delete a folder", description: "Role: USER" })
     @ApiParam({
         name: "id",
         type: "string",
         description: "Folder id",
     })
-    @Roles(UserRoles.USER)
     async deleteFolder(@CurrentUser() user: { id: string }, @Param("id") folderId: string) {
         return this.foldersService.deleteFolder(folderId);
     }

@@ -42,6 +42,11 @@ model Subscribed {
     stripeSubscriptionId String?            @unique
     isActive             Boolean            @default(true)
     status               SubscriptionStatus
+    storageUsed          Int                @default(0)
+    storageLimit         Int                @default(0)
+    fileUploaded         Int                @default(0)
+    fileLimit            Int                @default(0)
+    billingCycle         BillingCycle       @default(MONTHLY)
     createdAt            DateTime           @default(now())
     updatedAt            DateTime           @updatedAt
 }

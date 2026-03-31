@@ -36,6 +36,7 @@ export type CloudDataSumAggregateOutputType = {
 
 export type CloudDataMinAggregateOutputType = {
   id: string | null
+  name: string | null
   data: string | null
   publicKey: string | null
   fileSize: number | null
@@ -47,6 +48,7 @@ export type CloudDataMinAggregateOutputType = {
 
 export type CloudDataMaxAggregateOutputType = {
   id: string | null
+  name: string | null
   data: string | null
   publicKey: string | null
   fileSize: number | null
@@ -58,6 +60,7 @@ export type CloudDataMaxAggregateOutputType = {
 
 export type CloudDataCountAggregateOutputType = {
   id: number
+  name: number
   data: number
   publicKey: number
   fileSize: number
@@ -79,6 +82,7 @@ export type CloudDataSumAggregateInputType = {
 
 export type CloudDataMinAggregateInputType = {
   id?: true
+  name?: true
   data?: true
   publicKey?: true
   fileSize?: true
@@ -90,6 +94,7 @@ export type CloudDataMinAggregateInputType = {
 
 export type CloudDataMaxAggregateInputType = {
   id?: true
+  name?: true
   data?: true
   publicKey?: true
   fileSize?: true
@@ -101,6 +106,7 @@ export type CloudDataMaxAggregateInputType = {
 
 export type CloudDataCountAggregateInputType = {
   id?: true
+  name?: true
   data?: true
   publicKey?: true
   fileSize?: true
@@ -199,6 +205,7 @@ export type CloudDataGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type CloudDataGroupByOutputType = {
   id: string
+  name: string | null
   data: string
   publicKey: string
   fileSize: number
@@ -233,6 +240,7 @@ export type CloudDataWhereInput = {
   OR?: Prisma.CloudDataWhereInput[]
   NOT?: Prisma.CloudDataWhereInput | Prisma.CloudDataWhereInput[]
   id?: Prisma.StringFilter<"CloudData"> | string
+  name?: Prisma.StringNullableFilter<"CloudData"> | string | null
   data?: Prisma.StringFilter<"CloudData"> | string
   publicKey?: Prisma.StringFilter<"CloudData"> | string
   fileSize?: Prisma.IntFilter<"CloudData"> | number
@@ -247,6 +255,7 @@ export type CloudDataWhereInput = {
 
 export type CloudDataOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
   data?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
@@ -264,6 +273,7 @@ export type CloudDataWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.CloudDataWhereInput | Prisma.CloudDataWhereInput[]
   OR?: Prisma.CloudDataWhereInput[]
   NOT?: Prisma.CloudDataWhereInput | Prisma.CloudDataWhereInput[]
+  name?: Prisma.StringNullableFilter<"CloudData"> | string | null
   data?: Prisma.StringFilter<"CloudData"> | string
   publicKey?: Prisma.StringFilter<"CloudData"> | string
   fileSize?: Prisma.IntFilter<"CloudData"> | number
@@ -278,6 +288,7 @@ export type CloudDataWhereUniqueInput = Prisma.AtLeast<{
 
 export type CloudDataOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
   data?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
@@ -297,6 +308,7 @@ export type CloudDataScalarWhereWithAggregatesInput = {
   OR?: Prisma.CloudDataScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CloudDataScalarWhereWithAggregatesInput | Prisma.CloudDataScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"CloudData"> | string
+  name?: Prisma.StringNullableWithAggregatesFilter<"CloudData"> | string | null
   data?: Prisma.StringWithAggregatesFilter<"CloudData"> | string
   publicKey?: Prisma.StringWithAggregatesFilter<"CloudData"> | string
   fileSize?: Prisma.IntWithAggregatesFilter<"CloudData"> | number
@@ -308,6 +320,7 @@ export type CloudDataScalarWhereWithAggregatesInput = {
 
 export type CloudDataCreateInput = {
   id?: string
+  name?: string | null
   data: string
   publicKey: string
   fileSize: number
@@ -320,6 +333,7 @@ export type CloudDataCreateInput = {
 
 export type CloudDataUncheckedCreateInput = {
   id?: string
+  name?: string | null
   data: string
   publicKey: string
   fileSize: number
@@ -332,6 +346,7 @@ export type CloudDataUncheckedCreateInput = {
 
 export type CloudDataUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
@@ -344,6 +359,7 @@ export type CloudDataUpdateInput = {
 
 export type CloudDataUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
@@ -356,6 +372,7 @@ export type CloudDataUncheckedUpdateInput = {
 
 export type CloudDataCreateManyInput = {
   id?: string
+  name?: string | null
   data: string
   publicKey: string
   fileSize: number
@@ -367,6 +384,7 @@ export type CloudDataCreateManyInput = {
 
 export type CloudDataUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
@@ -376,6 +394,7 @@ export type CloudDataUpdateManyMutationInput = {
 
 export type CloudDataUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
@@ -387,6 +406,7 @@ export type CloudDataUncheckedUpdateManyInput = {
 
 export type CloudDataCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   data?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
@@ -402,6 +422,7 @@ export type CloudDataAvgOrderByAggregateInput = {
 
 export type CloudDataMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   data?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
@@ -413,6 +434,7 @@ export type CloudDataMaxOrderByAggregateInput = {
 
 export type CloudDataMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   data?: Prisma.SortOrder
   publicKey?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
@@ -445,6 +467,10 @@ export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -455,10 +481,6 @@ export type IntFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
 }
 
 export type CloudDataCreateNestedManyWithoutFolderInput = {
@@ -561,6 +583,7 @@ export type CloudDataUncheckedUpdateManyWithoutUserNestedInput = {
 
 export type CloudDataCreateWithoutFolderInput = {
   id?: string
+  name?: string | null
   data: string
   publicKey: string
   fileSize: number
@@ -572,6 +595,7 @@ export type CloudDataCreateWithoutFolderInput = {
 
 export type CloudDataUncheckedCreateWithoutFolderInput = {
   id?: string
+  name?: string | null
   data: string
   publicKey: string
   fileSize: number
@@ -612,6 +636,7 @@ export type CloudDataScalarWhereInput = {
   OR?: Prisma.CloudDataScalarWhereInput[]
   NOT?: Prisma.CloudDataScalarWhereInput | Prisma.CloudDataScalarWhereInput[]
   id?: Prisma.StringFilter<"CloudData"> | string
+  name?: Prisma.StringNullableFilter<"CloudData"> | string | null
   data?: Prisma.StringFilter<"CloudData"> | string
   publicKey?: Prisma.StringFilter<"CloudData"> | string
   fileSize?: Prisma.IntFilter<"CloudData"> | number
@@ -623,6 +648,7 @@ export type CloudDataScalarWhereInput = {
 
 export type CloudDataCreateWithoutShortenUrlInput = {
   id?: string
+  name?: string | null
   data: string
   publicKey: string
   fileSize: number
@@ -634,6 +660,7 @@ export type CloudDataCreateWithoutShortenUrlInput = {
 
 export type CloudDataUncheckedCreateWithoutShortenUrlInput = {
   id?: string
+  name?: string | null
   data: string
   publicKey: string
   fileSize: number
@@ -661,6 +688,7 @@ export type CloudDataUpdateToOneWithWhereWithoutShortenUrlInput = {
 
 export type CloudDataUpdateWithoutShortenUrlInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
@@ -672,6 +700,7 @@ export type CloudDataUpdateWithoutShortenUrlInput = {
 
 export type CloudDataUncheckedUpdateWithoutShortenUrlInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
@@ -683,6 +712,7 @@ export type CloudDataUncheckedUpdateWithoutShortenUrlInput = {
 
 export type CloudDataCreateWithoutUserInput = {
   id?: string
+  name?: string | null
   data: string
   publicKey: string
   fileSize: number
@@ -694,6 +724,7 @@ export type CloudDataCreateWithoutUserInput = {
 
 export type CloudDataUncheckedCreateWithoutUserInput = {
   id?: string
+  name?: string | null
   data: string
   publicKey: string
   fileSize: number
@@ -731,6 +762,7 @@ export type CloudDataUpdateManyWithWhereWithoutUserInput = {
 
 export type CloudDataCreateManyFolderInput = {
   id?: string
+  name?: string | null
   data: string
   publicKey: string
   fileSize: number
@@ -741,6 +773,7 @@ export type CloudDataCreateManyFolderInput = {
 
 export type CloudDataUpdateWithoutFolderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
@@ -752,6 +785,7 @@ export type CloudDataUpdateWithoutFolderInput = {
 
 export type CloudDataUncheckedUpdateWithoutFolderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
@@ -763,6 +797,7 @@ export type CloudDataUncheckedUpdateWithoutFolderInput = {
 
 export type CloudDataUncheckedUpdateManyWithoutFolderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
@@ -773,6 +808,7 @@ export type CloudDataUncheckedUpdateManyWithoutFolderInput = {
 
 export type CloudDataCreateManyUserInput = {
   id?: string
+  name?: string | null
   data: string
   publicKey: string
   fileSize: number
@@ -783,6 +819,7 @@ export type CloudDataCreateManyUserInput = {
 
 export type CloudDataUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
@@ -794,6 +831,7 @@ export type CloudDataUpdateWithoutUserInput = {
 
 export type CloudDataUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
@@ -805,6 +843,7 @@ export type CloudDataUncheckedUpdateWithoutUserInput = {
 
 export type CloudDataUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   data?: Prisma.StringFieldUpdateOperationsInput | string
   publicKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
@@ -817,6 +856,7 @@ export type CloudDataUncheckedUpdateManyWithoutUserInput = {
 
 export type CloudDataSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
   data?: boolean
   publicKey?: boolean
   fileSize?: boolean
@@ -831,6 +871,7 @@ export type CloudDataSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type CloudDataSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
   data?: boolean
   publicKey?: boolean
   fileSize?: boolean
@@ -844,6 +885,7 @@ export type CloudDataSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
 
 export type CloudDataSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
   data?: boolean
   publicKey?: boolean
   fileSize?: boolean
@@ -857,6 +899,7 @@ export type CloudDataSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 
 export type CloudDataSelectScalar = {
   id?: boolean
+  name?: boolean
   data?: boolean
   publicKey?: boolean
   fileSize?: boolean
@@ -866,7 +909,7 @@ export type CloudDataSelectScalar = {
   uploaded_at?: boolean
 }
 
-export type CloudDataOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "data" | "publicKey" | "fileSize" | "fileType" | "userId" | "folderId" | "uploaded_at", ExtArgs["result"]["cloudData"]>
+export type CloudDataOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "data" | "publicKey" | "fileSize" | "fileType" | "userId" | "folderId" | "uploaded_at", ExtArgs["result"]["cloudData"]>
 export type CloudDataInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   shortenUrl?: boolean | Prisma.CloudData$shortenUrlArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -890,6 +933,7 @@ export type $CloudDataPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    name: string | null
     data: string
     publicKey: string
     fileSize: number
@@ -1324,6 +1368,7 @@ export interface Prisma__CloudDataClient<T, Null = never, ExtArgs extends runtim
  */
 export interface CloudDataFieldRefs {
   readonly id: Prisma.FieldRef<"CloudData", 'String'>
+  readonly name: Prisma.FieldRef<"CloudData", 'String'>
   readonly data: Prisma.FieldRef<"CloudData", 'String'>
   readonly publicKey: Prisma.FieldRef<"CloudData", 'String'>
   readonly fileSize: Prisma.FieldRef<"CloudData", 'Int'>

@@ -1,6 +1,7 @@
 model CloudData {
     id String @id @unique @default(uuid())
 
+    name      String?
     data      String
     publicKey String
     shortenUrl ShortenUrl? 

@@ -1269,6 +1269,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const CloudDataScalarFieldEnum = {
   id: 'id',
+  name: 'name',
   data: 'data',
   publicKey: 'publicKey',
   fileSize: 'fileSize',
@@ -1386,6 +1387,11 @@ export const SubscribedScalarFieldEnum = {
   stripeSubscriptionId: 'stripeSubscriptionId',
   isActive: 'isActive',
   status: 'status',
+  storageUsed: 'storageUsed',
+  storageLimit: 'storageLimit',
+  fileUploaded: 'fileUploaded',
+  fileLimit: 'fileLimit',
+  billingCycle: 'billingCycle',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "Subscribed" ADD COLUMN     "billingCycle" "BillingCycle" NOT NULL DEFAULT 'MONTHLY',
+ADD COLUMN     "fileLimit" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "fileUploaded" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "storageLimit" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "storageUsed" INTEGER NOT NULL DEFAULT 0;

@@ -401,15 +401,7 @@ export class SubscriptionService {
                 },
             });
 
-            const subscribedRecord = await this.prisma.client.subscribed.create({
-                data: {
-                    userId: user.id,
-                    subscriptionPlanId: subscriptionPlan.id,
-                    packagePricingId: pricing.id,
-                    isActive: false,
-                    status: 'PENDING',
-                },
-            });
+
 
             const session = await this.stripeService.stripe.checkout.sessions.create({
                 customer: stripeCustomerId,
@@ -427,7 +419,6 @@ export class SubscriptionService {
                     userId: user.id,
                     planId: subscriptionPlan.id,
                     pricingId: pricing.id,
-                    subscribedId: subscribedRecord.id,
                     historyId: historyRecord.id,
                 },
             });
