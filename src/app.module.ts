@@ -14,6 +14,7 @@ import { SubscriptionModule } from './modules/subscription/subscription.module';
 import { AppsModule } from './modules/user-dashboard/apps/app.module';
 import { AssetsModule } from './modules/user-dashboard/assets/assets.module';
 import { OverviewModule } from './modules/user-dashboard/overview/overview.module';
+import { AdminDashboardModule } from './modules/admin-dashboard/admin-dashboard.module';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { OverviewModule } from './modules/user-dashboard/overview/overview.modul
     CloudModule,
     AppsModule,
     AssetsModule,
-    OverviewModule
+    OverviewModule,
+    AdminDashboardModule
   ],
   controllers: [AppController],
   providers: [
