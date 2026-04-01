@@ -3,7 +3,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 export const SwaggerSetting = (app: INestApplication) => {
   const config = new DocumentBuilder()
-    .setTitle(' Coolex API Documentation ')
+    .setTitle('RR Vault API Documentation ')
     .setDescription('API documentation')
     .setVersion('1.0')
     .addBearerAuth(
