@@ -149,7 +149,7 @@ export class AuthController {
     }
 
     return res.redirect(
-      `${frontendUrl}/auth/callback?accessToken=${accessToken}&refreshToken=${refreshToken}`,
+      `${frontendUrl}/auth/callback?accessToken=${encodeURIComponent(accessToken)}&refreshToken=${encodeURIComponent(refreshToken ?? '')}`,
     );
   }
 }

@@ -33,7 +33,7 @@ export class AuthService {
     private readonly config: ConfigService,
     private readonly mail: MailService,
     private readonly crypto: CryptoService,
-  ) { }
+  ) {}
 
   // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -78,25 +78,25 @@ export class AuthService {
       type === 'verify'
         ? this.generateVerifyToken(userId)
         : this.jwt.sign(
-          { sub: userId, purpose: 'password-reset' },
-          {
-            secret: this.config.getOrThrow('JWT_RESET_SECRET'),
-            expiresIn: '15m',
-          },
-        );
+            { sub: userId, purpose: 'password-reset' },
+            {
+              secret: this.config.getOrThrow('JWT_RESET_SECRET'),
+              expiresIn: '15m',
+            },
+          );
 
     const data =
       type === 'verify'
         ? {
-          verifyCode: hashedCode,
-          verifyCodeToken: token,
-          verifyCodeExpiry: expiry,
-        }
+            verifyCode: hashedCode,
+            verifyCodeToken: token,
+            verifyCodeExpiry: expiry,
+          }
         : {
-          resetCode: hashedCode,
-          resetCodeToken: token,
-          resetCodeExpiry: expiry,
-        };
+            resetCode: hashedCode,
+            resetCodeToken: token,
+            resetCodeExpiry: expiry,
+          };
 
     await this.prisma.client.user.update({ where: { id: userId }, data });
 
@@ -516,6 +516,15 @@ export class AuthService {
             profilePic: googleUser.profilePic,
             accountType: 'GOOGLE',
             isEmailVerified: true,
+          },
+        });
+
+        // Create CloudSecret (api_key) for new Google user
+        const apiKey = randomBytes(32).toString('hex');
+        await this.prisma.client.cloudSecret.create({
+          data: {
+            userId: user.id,
+            api_key: this.crypto.encrypt(`ak_${apiKey}`),
           },
         });
       } else if (user.accountType !== 'GOOGLE') {
