@@ -74,7 +74,7 @@ export class CloudService {
     await this.prisma.client.subscribed.updateMany({
       where: { userId },
       data: {
-        storageUsed: { decrement: file.fileSize || 0 }, // Adjust field name based on your schema (usually fileSize is saved)
+        storageUsed: { decrement: BigInt(file.fileSize || 0) },
         fileUploaded: { decrement: 1 },
       },
     });
@@ -125,13 +125,13 @@ export class CloudService {
         );
       }
 
-      // storageLimit is stored in bytes (from PackagePricing.maxStorage)
-      const storageLimit = subscription.storageLimit;
+      // storageLimit and storageUsed are BigInt from DB
+      const storageLimit = BigInt(subscription.storageLimit);
       const fileLimit = subscription.fileLimit;
-      const storageUsed = subscription.storageUsed;
+      const storageUsed = BigInt(subscription.storageUsed);
       const fileUploaded = subscription.fileUploaded;
 
-      if (storageUsed + file.size > storageLimit) {
+      if (storageUsed + BigInt(file.size) > storageLimit) {
         throw new BadRequestException(
           'Storage limit exceeded. Please upgrade your plan.',
         );
@@ -185,7 +185,7 @@ export class CloudService {
       await this.prisma.client.subscribed.update({
         where: { id: subscription.id },
         data: {
-          storageUsed: { increment: file.size },
+          storageUsed: { increment: BigInt(file.size) },
           fileUploaded: { increment: 1 },
         },
       });
@@ -201,6 +201,7 @@ export class CloudService {
     } catch (error) {
       if (error instanceof BadRequestException) throw error;
       console.error('S3 Upload Error:', error);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       throw new BadRequestException(`Upload failed: ${error.message}`);
     }
   }

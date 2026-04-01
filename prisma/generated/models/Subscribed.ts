@@ -34,8 +34,8 @@ export type SubscribedAvgAggregateOutputType = {
 }
 
 export type SubscribedSumAggregateOutputType = {
-  storageUsed: number | null
-  storageLimit: number | null
+  storageUsed: bigint | null
+  storageLimit: bigint | null
   fileUploaded: number | null
   fileLimit: number | null
 }
@@ -48,8 +48,8 @@ export type SubscribedMinAggregateOutputType = {
   stripeSubscriptionId: string | null
   isActive: boolean | null
   status: $Enums.SubscriptionStatus | null
-  storageUsed: number | null
-  storageLimit: number | null
+  storageUsed: bigint | null
+  storageLimit: bigint | null
   fileUploaded: number | null
   fileLimit: number | null
   billingCycle: $Enums.BillingCycle | null
@@ -65,8 +65,8 @@ export type SubscribedMaxAggregateOutputType = {
   stripeSubscriptionId: string | null
   isActive: boolean | null
   status: $Enums.SubscriptionStatus | null
-  storageUsed: number | null
-  storageLimit: number | null
+  storageUsed: bigint | null
+  storageLimit: bigint | null
   fileUploaded: number | null
   fileLimit: number | null
   billingCycle: $Enums.BillingCycle | null
@@ -253,8 +253,8 @@ export type SubscribedGroupByOutputType = {
   stripeSubscriptionId: string | null
   isActive: boolean
   status: $Enums.SubscriptionStatus
-  storageUsed: number
-  storageLimit: number
+  storageUsed: bigint
+  storageLimit: bigint
   fileUploaded: number
   fileLimit: number
   billingCycle: $Enums.BillingCycle
@@ -293,8 +293,8 @@ export type SubscribedWhereInput = {
   stripeSubscriptionId?: Prisma.StringNullableFilter<"Subscribed"> | string | null
   isActive?: Prisma.BoolFilter<"Subscribed"> | boolean
   status?: Prisma.EnumSubscriptionStatusFilter<"Subscribed"> | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFilter<"Subscribed"> | number
-  storageLimit?: Prisma.IntFilter<"Subscribed"> | number
+  storageUsed?: Prisma.BigIntFilter<"Subscribed"> | bigint | number
+  storageLimit?: Prisma.BigIntFilter<"Subscribed"> | bigint | number
   fileUploaded?: Prisma.IntFilter<"Subscribed"> | number
   fileLimit?: Prisma.IntFilter<"Subscribed"> | number
   billingCycle?: Prisma.EnumBillingCycleFilter<"Subscribed"> | $Enums.BillingCycle
@@ -336,8 +336,8 @@ export type SubscribedWhereUniqueInput = Prisma.AtLeast<{
   packagePricingId?: Prisma.StringFilter<"Subscribed"> | string
   isActive?: Prisma.BoolFilter<"Subscribed"> | boolean
   status?: Prisma.EnumSubscriptionStatusFilter<"Subscribed"> | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFilter<"Subscribed"> | number
-  storageLimit?: Prisma.IntFilter<"Subscribed"> | number
+  storageUsed?: Prisma.BigIntFilter<"Subscribed"> | bigint | number
+  storageLimit?: Prisma.BigIntFilter<"Subscribed"> | bigint | number
   fileUploaded?: Prisma.IntFilter<"Subscribed"> | number
   fileLimit?: Prisma.IntFilter<"Subscribed"> | number
   billingCycle?: Prisma.EnumBillingCycleFilter<"Subscribed"> | $Enums.BillingCycle
@@ -381,8 +381,8 @@ export type SubscribedScalarWhereWithAggregatesInput = {
   stripeSubscriptionId?: Prisma.StringNullableWithAggregatesFilter<"Subscribed"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Subscribed"> | boolean
   status?: Prisma.EnumSubscriptionStatusWithAggregatesFilter<"Subscribed"> | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntWithAggregatesFilter<"Subscribed"> | number
-  storageLimit?: Prisma.IntWithAggregatesFilter<"Subscribed"> | number
+  storageUsed?: Prisma.BigIntWithAggregatesFilter<"Subscribed"> | bigint | number
+  storageLimit?: Prisma.BigIntWithAggregatesFilter<"Subscribed"> | bigint | number
   fileUploaded?: Prisma.IntWithAggregatesFilter<"Subscribed"> | number
   fileLimit?: Prisma.IntWithAggregatesFilter<"Subscribed"> | number
   billingCycle?: Prisma.EnumBillingCycleWithAggregatesFilter<"Subscribed"> | $Enums.BillingCycle
@@ -395,8 +395,8 @@ export type SubscribedCreateInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
-  storageUsed?: number
-  storageLimit?: number
+  storageUsed?: bigint | number
+  storageLimit?: bigint | number
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
@@ -415,8 +415,8 @@ export type SubscribedUncheckedCreateInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
-  storageUsed?: number
-  storageLimit?: number
+  storageUsed?: bigint | number
+  storageLimit?: bigint | number
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
@@ -429,8 +429,8 @@ export type SubscribedUpdateInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
-  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  storageUsed?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  storageLimit?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
@@ -449,8 +449,8 @@ export type SubscribedUncheckedUpdateInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
-  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  storageUsed?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  storageLimit?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
@@ -466,8 +466,8 @@ export type SubscribedCreateManyInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
-  storageUsed?: number
-  storageLimit?: number
+  storageUsed?: bigint | number
+  storageLimit?: bigint | number
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
@@ -480,8 +480,8 @@ export type SubscribedUpdateManyMutationInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
-  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  storageUsed?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  storageLimit?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
@@ -497,8 +497,8 @@ export type SubscribedUncheckedUpdateManyInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
-  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  storageUsed?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  storageLimit?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
@@ -712,8 +712,8 @@ export type SubscribedCreateWithoutPlanInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
-  storageUsed?: number
-  storageLimit?: number
+  storageUsed?: bigint | number
+  storageLimit?: bigint | number
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
@@ -730,8 +730,8 @@ export type SubscribedUncheckedCreateWithoutPlanInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
-  storageUsed?: number
-  storageLimit?: number
+  storageUsed?: bigint | number
+  storageLimit?: bigint | number
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
@@ -776,8 +776,8 @@ export type SubscribedScalarWhereInput = {
   stripeSubscriptionId?: Prisma.StringNullableFilter<"Subscribed"> | string | null
   isActive?: Prisma.BoolFilter<"Subscribed"> | boolean
   status?: Prisma.EnumSubscriptionStatusFilter<"Subscribed"> | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFilter<"Subscribed"> | number
-  storageLimit?: Prisma.IntFilter<"Subscribed"> | number
+  storageUsed?: Prisma.BigIntFilter<"Subscribed"> | bigint | number
+  storageLimit?: Prisma.BigIntFilter<"Subscribed"> | bigint | number
   fileUploaded?: Prisma.IntFilter<"Subscribed"> | number
   fileLimit?: Prisma.IntFilter<"Subscribed"> | number
   billingCycle?: Prisma.EnumBillingCycleFilter<"Subscribed"> | $Enums.BillingCycle
@@ -790,8 +790,8 @@ export type SubscribedCreateWithoutPackageInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
-  storageUsed?: number
-  storageLimit?: number
+  storageUsed?: bigint | number
+  storageLimit?: bigint | number
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
@@ -808,8 +808,8 @@ export type SubscribedUncheckedCreateWithoutPackageInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
-  storageUsed?: number
-  storageLimit?: number
+  storageUsed?: bigint | number
+  storageLimit?: bigint | number
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
@@ -848,8 +848,8 @@ export type SubscribedCreateWithoutUserInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
-  storageUsed?: number
-  storageLimit?: number
+  storageUsed?: bigint | number
+  storageLimit?: bigint | number
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
@@ -866,8 +866,8 @@ export type SubscribedUncheckedCreateWithoutUserInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
-  storageUsed?: number
-  storageLimit?: number
+  storageUsed?: bigint | number
+  storageLimit?: bigint | number
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
@@ -908,8 +908,8 @@ export type SubscribedCreateManyPlanInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
-  storageUsed?: number
-  storageLimit?: number
+  storageUsed?: bigint | number
+  storageLimit?: bigint | number
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
@@ -922,8 +922,8 @@ export type SubscribedUpdateWithoutPlanInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
-  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  storageUsed?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  storageLimit?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
@@ -940,8 +940,8 @@ export type SubscribedUncheckedUpdateWithoutPlanInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
-  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  storageUsed?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  storageLimit?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
@@ -956,8 +956,8 @@ export type SubscribedUncheckedUpdateManyWithoutPlanInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
-  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  storageUsed?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  storageLimit?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
@@ -972,8 +972,8 @@ export type SubscribedCreateManyPackageInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
-  storageUsed?: number
-  storageLimit?: number
+  storageUsed?: bigint | number
+  storageLimit?: bigint | number
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
@@ -986,8 +986,8 @@ export type SubscribedUpdateWithoutPackageInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
-  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  storageUsed?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  storageLimit?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
@@ -1004,8 +1004,8 @@ export type SubscribedUncheckedUpdateWithoutPackageInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
-  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  storageUsed?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  storageLimit?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
@@ -1020,8 +1020,8 @@ export type SubscribedUncheckedUpdateManyWithoutPackageInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
-  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  storageUsed?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  storageLimit?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
@@ -1036,8 +1036,8 @@ export type SubscribedCreateManyUserInput = {
   stripeSubscriptionId?: string | null
   isActive?: boolean
   status: $Enums.SubscriptionStatus
-  storageUsed?: number
-  storageLimit?: number
+  storageUsed?: bigint | number
+  storageLimit?: bigint | number
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
@@ -1050,8 +1050,8 @@ export type SubscribedUpdateWithoutUserInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
-  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  storageUsed?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  storageLimit?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
@@ -1068,8 +1068,8 @@ export type SubscribedUncheckedUpdateWithoutUserInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
-  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  storageUsed?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  storageLimit?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
@@ -1084,8 +1084,8 @@ export type SubscribedUncheckedUpdateManyWithoutUserInput = {
   stripeSubscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
-  storageUsed?: Prisma.IntFieldUpdateOperationsInput | number
-  storageLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  storageUsed?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  storageLimit?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
@@ -1204,8 +1204,8 @@ export type $SubscribedPayload<ExtArgs extends runtime.Types.Extensions.Internal
     stripeSubscriptionId: string | null
     isActive: boolean
     status: $Enums.SubscriptionStatus
-    storageUsed: number
-    storageLimit: number
+    storageUsed: bigint
+    storageLimit: bigint
     fileUploaded: number
     fileLimit: number
     billingCycle: $Enums.BillingCycle
@@ -1644,8 +1644,8 @@ export interface SubscribedFieldRefs {
   readonly stripeSubscriptionId: Prisma.FieldRef<"Subscribed", 'String'>
   readonly isActive: Prisma.FieldRef<"Subscribed", 'Boolean'>
   readonly status: Prisma.FieldRef<"Subscribed", 'SubscriptionStatus'>
-  readonly storageUsed: Prisma.FieldRef<"Subscribed", 'Int'>
-  readonly storageLimit: Prisma.FieldRef<"Subscribed", 'Int'>
+  readonly storageUsed: Prisma.FieldRef<"Subscribed", 'BigInt'>
+  readonly storageLimit: Prisma.FieldRef<"Subscribed", 'BigInt'>
   readonly fileUploaded: Prisma.FieldRef<"Subscribed", 'Int'>
   readonly fileLimit: Prisma.FieldRef<"Subscribed", 'Int'>
   readonly billingCycle: Prisma.FieldRef<"Subscribed", 'BillingCycle'>

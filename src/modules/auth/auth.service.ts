@@ -23,6 +23,7 @@ import {
 import { ResendVerificationDto, VerifyEmailDto } from './dto/verify.dto';
 import { GoogleUser } from './strategies/google.strategy';
 import { successResponse } from '@/common/response/index';
+import { CryptoService } from '@/common/crypto/crypto.service';
 
 @Injectable()
 export class AuthService {
@@ -31,6 +32,7 @@ export class AuthService {
     private readonly jwt: JwtService,
     private readonly config: ConfigService,
     private readonly mail: MailService,
+    private readonly crypto: CryptoService,
   ) {}
 
   // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -197,7 +199,7 @@ export class AuthService {
       await this.prisma.client.cloudSecret.create({
         data: {
           userId: user.id,
-          api_key: `ak_${apiKey}`,
+          api_key: this.crypto.encrypt(`ak_${apiKey}`),
         },
       });
 
@@ -276,10 +278,16 @@ export class AuthService {
         );
       }
 
-      const isMatch = await bcrypt.compare(
-        dto.password,
-        user.password as string,
-      );
+      if (!user.password) {
+        if (user.accountType === 'GOOGLE') {
+          throw new ForbiddenException(
+            'This account is registered with Google. Please use Google Login.',
+          );
+        }
+        throw new UnauthorizedException('Invalid credentials');
+      }
+
+      const isMatch = await bcrypt.compare(dto.password, user.password);
       if (!isMatch) throw new UnauthorizedException('Invalid credentials');
 
       if (!user.isEmailVerified) {
@@ -433,10 +441,16 @@ export class AuthService {
 
       if (!user) throw new NotFoundException('User not found');
 
-      const isMatch = await bcrypt.compare(
-        dto.oldPassword,
-        user.password as string,
-      );
+      if (!user.password) {
+        if (user.accountType === 'GOOGLE') {
+          throw new ForbiddenException(
+            'This account is registered with Google. You cannot change your password here.',
+          );
+        }
+        throw new NotFoundException('User password record not found');
+      }
+
+      const isMatch = await bcrypt.compare(dto.oldPassword, user.password);
       if (!isMatch) throw new BadRequestException('Old password is incorrect');
 
       const hashed = await bcrypt.hash(dto.newPassword, 10);

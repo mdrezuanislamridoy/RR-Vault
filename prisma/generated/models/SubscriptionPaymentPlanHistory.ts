@@ -206,6 +206,9 @@ export type SubscriptionPaymentPlanHistoryWhereInput = {
   status?: Prisma.EnumSubscriptionStatusFilter<"SubscriptionPaymentPlanHistory"> | $Enums.SubscriptionStatus
   createdAt?: Prisma.DateTimeFilter<"SubscriptionPaymentPlanHistory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SubscriptionPaymentPlanHistory"> | Date | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  plan?: Prisma.XOR<Prisma.SubscriptionPlanScalarRelationFilter, Prisma.SubscriptionPlanWhereInput>
+  packagePricing?: Prisma.XOR<Prisma.PackagePricingScalarRelationFilter, Prisma.PackagePricingWhereInput>
 }
 
 export type SubscriptionPaymentPlanHistoryOrderByWithRelationInput = {
@@ -217,6 +220,9 @@ export type SubscriptionPaymentPlanHistoryOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  user?: Prisma.UserOrderByWithRelationInput
+  plan?: Prisma.SubscriptionPlanOrderByWithRelationInput
+  packagePricing?: Prisma.PackagePricingOrderByWithRelationInput
 }
 
 export type SubscriptionPaymentPlanHistoryWhereUniqueInput = Prisma.AtLeast<{
@@ -231,6 +237,9 @@ export type SubscriptionPaymentPlanHistoryWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumSubscriptionStatusFilter<"SubscriptionPaymentPlanHistory"> | $Enums.SubscriptionStatus
   createdAt?: Prisma.DateTimeFilter<"SubscriptionPaymentPlanHistory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SubscriptionPaymentPlanHistory"> | Date | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  plan?: Prisma.XOR<Prisma.SubscriptionPlanScalarRelationFilter, Prisma.SubscriptionPlanWhereInput>
+  packagePricing?: Prisma.XOR<Prisma.PackagePricingScalarRelationFilter, Prisma.PackagePricingWhereInput>
 }, "id">
 
 export type SubscriptionPaymentPlanHistoryOrderByWithAggregationInput = {
@@ -263,13 +272,13 @@ export type SubscriptionPaymentPlanHistoryScalarWhereWithAggregatesInput = {
 
 export type SubscriptionPaymentPlanHistoryCreateInput = {
   id?: string
-  userId: string
-  subscriptionPlanId: string
-  packagePricingId: string
   isActive?: boolean
   status: $Enums.SubscriptionStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutHistoriesInput
+  plan: Prisma.SubscriptionPlanCreateNestedOneWithoutHistoriesInput
+  packagePricing: Prisma.PackagePricingCreateNestedOneWithoutHistoriesInput
 }
 
 export type SubscriptionPaymentPlanHistoryUncheckedCreateInput = {
@@ -285,13 +294,13 @@ export type SubscriptionPaymentPlanHistoryUncheckedCreateInput = {
 
 export type SubscriptionPaymentPlanHistoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionPlanId?: Prisma.StringFieldUpdateOperationsInput | string
-  packagePricingId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutHistoriesNestedInput
+  plan?: Prisma.SubscriptionPlanUpdateOneRequiredWithoutHistoriesNestedInput
+  packagePricing?: Prisma.PackagePricingUpdateOneRequiredWithoutHistoriesNestedInput
 }
 
 export type SubscriptionPaymentPlanHistoryUncheckedUpdateInput = {
@@ -318,9 +327,6 @@ export type SubscriptionPaymentPlanHistoryCreateManyInput = {
 
 export type SubscriptionPaymentPlanHistoryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionPlanId?: Prisma.StringFieldUpdateOperationsInput | string
-  packagePricingId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -336,6 +342,16 @@ export type SubscriptionPaymentPlanHistoryUncheckedUpdateManyInput = {
   status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SubscriptionPaymentPlanHistoryListRelationFilter = {
+  every?: Prisma.SubscriptionPaymentPlanHistoryWhereInput
+  some?: Prisma.SubscriptionPaymentPlanHistoryWhereInput
+  none?: Prisma.SubscriptionPaymentPlanHistoryWhereInput
+}
+
+export type SubscriptionPaymentPlanHistoryOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type SubscriptionPaymentPlanHistoryCountOrderByAggregateInput = {
@@ -371,8 +387,406 @@ export type SubscriptionPaymentPlanHistoryMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type SubscriptionPaymentPlanHistoryCreateNestedManyWithoutPlanInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPlanInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPlanInput> | Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPlanInput[] | Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPlanInput[]
+  connectOrCreate?: Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPlanInput | Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPlanInput[]
+  createMany?: Prisma.SubscriptionPaymentPlanHistoryCreateManyPlanInputEnvelope
+  connect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedCreateNestedManyWithoutPlanInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPlanInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPlanInput> | Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPlanInput[] | Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPlanInput[]
+  connectOrCreate?: Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPlanInput | Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPlanInput[]
+  createMany?: Prisma.SubscriptionPaymentPlanHistoryCreateManyPlanInputEnvelope
+  connect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+}
+
+export type SubscriptionPaymentPlanHistoryUpdateManyWithoutPlanNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPlanInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPlanInput> | Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPlanInput[] | Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPlanInput[]
+  connectOrCreate?: Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPlanInput | Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPlanInput[]
+  upsert?: Prisma.SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutPlanInput | Prisma.SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutPlanInput[]
+  createMany?: Prisma.SubscriptionPaymentPlanHistoryCreateManyPlanInputEnvelope
+  set?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  disconnect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  delete?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  connect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  update?: Prisma.SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutPlanInput | Prisma.SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutPlanInput[]
+  updateMany?: Prisma.SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutPlanInput | Prisma.SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutPlanInput[]
+  deleteMany?: Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput | Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput[]
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedUpdateManyWithoutPlanNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPlanInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPlanInput> | Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPlanInput[] | Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPlanInput[]
+  connectOrCreate?: Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPlanInput | Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPlanInput[]
+  upsert?: Prisma.SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutPlanInput | Prisma.SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutPlanInput[]
+  createMany?: Prisma.SubscriptionPaymentPlanHistoryCreateManyPlanInputEnvelope
+  set?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  disconnect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  delete?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  connect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  update?: Prisma.SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutPlanInput | Prisma.SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutPlanInput[]
+  updateMany?: Prisma.SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutPlanInput | Prisma.SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutPlanInput[]
+  deleteMany?: Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput | Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput[]
+}
+
+export type SubscriptionPaymentPlanHistoryCreateNestedManyWithoutPackagePricingInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPackagePricingInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPackagePricingInput> | Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPackagePricingInput[] | Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPackagePricingInput[]
+  connectOrCreate?: Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPackagePricingInput | Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPackagePricingInput[]
+  createMany?: Prisma.SubscriptionPaymentPlanHistoryCreateManyPackagePricingInputEnvelope
+  connect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedCreateNestedManyWithoutPackagePricingInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPackagePricingInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPackagePricingInput> | Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPackagePricingInput[] | Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPackagePricingInput[]
+  connectOrCreate?: Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPackagePricingInput | Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPackagePricingInput[]
+  createMany?: Prisma.SubscriptionPaymentPlanHistoryCreateManyPackagePricingInputEnvelope
+  connect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+}
+
+export type SubscriptionPaymentPlanHistoryUpdateManyWithoutPackagePricingNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPackagePricingInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPackagePricingInput> | Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPackagePricingInput[] | Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPackagePricingInput[]
+  connectOrCreate?: Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPackagePricingInput | Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPackagePricingInput[]
+  upsert?: Prisma.SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutPackagePricingInput | Prisma.SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutPackagePricingInput[]
+  createMany?: Prisma.SubscriptionPaymentPlanHistoryCreateManyPackagePricingInputEnvelope
+  set?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  disconnect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  delete?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  connect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  update?: Prisma.SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutPackagePricingInput | Prisma.SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutPackagePricingInput[]
+  updateMany?: Prisma.SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutPackagePricingInput | Prisma.SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutPackagePricingInput[]
+  deleteMany?: Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput | Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput[]
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedUpdateManyWithoutPackagePricingNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPackagePricingInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPackagePricingInput> | Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPackagePricingInput[] | Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPackagePricingInput[]
+  connectOrCreate?: Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPackagePricingInput | Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPackagePricingInput[]
+  upsert?: Prisma.SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutPackagePricingInput | Prisma.SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutPackagePricingInput[]
+  createMany?: Prisma.SubscriptionPaymentPlanHistoryCreateManyPackagePricingInputEnvelope
+  set?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  disconnect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  delete?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  connect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  update?: Prisma.SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutPackagePricingInput | Prisma.SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutPackagePricingInput[]
+  updateMany?: Prisma.SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutPackagePricingInput | Prisma.SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutPackagePricingInput[]
+  deleteMany?: Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput | Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput[]
+}
+
 export type EnumSubscriptionStatusFieldUpdateOperationsInput = {
   set?: $Enums.SubscriptionStatus
+}
+
+export type SubscriptionPaymentPlanHistoryCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutUserInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutUserInput> | Prisma.SubscriptionPaymentPlanHistoryCreateWithoutUserInput[] | Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutUserInput | Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.SubscriptionPaymentPlanHistoryCreateManyUserInputEnvelope
+  connect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutUserInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutUserInput> | Prisma.SubscriptionPaymentPlanHistoryCreateWithoutUserInput[] | Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutUserInput | Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.SubscriptionPaymentPlanHistoryCreateManyUserInputEnvelope
+  connect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+}
+
+export type SubscriptionPaymentPlanHistoryUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutUserInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutUserInput> | Prisma.SubscriptionPaymentPlanHistoryCreateWithoutUserInput[] | Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutUserInput | Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutUserInput | Prisma.SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.SubscriptionPaymentPlanHistoryCreateManyUserInputEnvelope
+  set?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  disconnect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  delete?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  connect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  update?: Prisma.SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutUserInput | Prisma.SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutUserInput | Prisma.SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput | Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput[]
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutUserInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutUserInput> | Prisma.SubscriptionPaymentPlanHistoryCreateWithoutUserInput[] | Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutUserInput | Prisma.SubscriptionPaymentPlanHistoryCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutUserInput | Prisma.SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.SubscriptionPaymentPlanHistoryCreateManyUserInputEnvelope
+  set?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  disconnect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  delete?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  connect?: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput | Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput[]
+  update?: Prisma.SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutUserInput | Prisma.SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutUserInput | Prisma.SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput | Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput[]
+}
+
+export type SubscriptionPaymentPlanHistoryCreateWithoutPlanInput = {
+  id?: string
+  isActive?: boolean
+  status: $Enums.SubscriptionStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutHistoriesInput
+  packagePricing: Prisma.PackagePricingCreateNestedOneWithoutHistoriesInput
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPlanInput = {
+  id?: string
+  userId: string
+  packagePricingId: string
+  isActive?: boolean
+  status: $Enums.SubscriptionStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPlanInput = {
+  where: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPlanInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPlanInput>
+}
+
+export type SubscriptionPaymentPlanHistoryCreateManyPlanInputEnvelope = {
+  data: Prisma.SubscriptionPaymentPlanHistoryCreateManyPlanInput | Prisma.SubscriptionPaymentPlanHistoryCreateManyPlanInput[]
+  skipDuplicates?: boolean
+}
+
+export type SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutPlanInput = {
+  where: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput
+  update: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryUpdateWithoutPlanInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedUpdateWithoutPlanInput>
+  create: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPlanInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPlanInput>
+}
+
+export type SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutPlanInput = {
+  where: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput
+  data: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryUpdateWithoutPlanInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedUpdateWithoutPlanInput>
+}
+
+export type SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutPlanInput = {
+  where: Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput
+  data: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryUpdateManyMutationInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedUpdateManyWithoutPlanInput>
+}
+
+export type SubscriptionPaymentPlanHistoryScalarWhereInput = {
+  AND?: Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput | Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput[]
+  OR?: Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput[]
+  NOT?: Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput | Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput[]
+  id?: Prisma.StringFilter<"SubscriptionPaymentPlanHistory"> | string
+  userId?: Prisma.StringFilter<"SubscriptionPaymentPlanHistory"> | string
+  subscriptionPlanId?: Prisma.StringFilter<"SubscriptionPaymentPlanHistory"> | string
+  packagePricingId?: Prisma.StringFilter<"SubscriptionPaymentPlanHistory"> | string
+  isActive?: Prisma.BoolFilter<"SubscriptionPaymentPlanHistory"> | boolean
+  status?: Prisma.EnumSubscriptionStatusFilter<"SubscriptionPaymentPlanHistory"> | $Enums.SubscriptionStatus
+  createdAt?: Prisma.DateTimeFilter<"SubscriptionPaymentPlanHistory"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"SubscriptionPaymentPlanHistory"> | Date | string
+}
+
+export type SubscriptionPaymentPlanHistoryCreateWithoutPackagePricingInput = {
+  id?: string
+  isActive?: boolean
+  status: $Enums.SubscriptionStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutHistoriesInput
+  plan: Prisma.SubscriptionPlanCreateNestedOneWithoutHistoriesInput
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPackagePricingInput = {
+  id?: string
+  userId: string
+  subscriptionPlanId: string
+  isActive?: boolean
+  status: $Enums.SubscriptionStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SubscriptionPaymentPlanHistoryCreateOrConnectWithoutPackagePricingInput = {
+  where: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPackagePricingInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPackagePricingInput>
+}
+
+export type SubscriptionPaymentPlanHistoryCreateManyPackagePricingInputEnvelope = {
+  data: Prisma.SubscriptionPaymentPlanHistoryCreateManyPackagePricingInput | Prisma.SubscriptionPaymentPlanHistoryCreateManyPackagePricingInput[]
+  skipDuplicates?: boolean
+}
+
+export type SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutPackagePricingInput = {
+  where: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput
+  update: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryUpdateWithoutPackagePricingInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedUpdateWithoutPackagePricingInput>
+  create: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutPackagePricingInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutPackagePricingInput>
+}
+
+export type SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutPackagePricingInput = {
+  where: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput
+  data: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryUpdateWithoutPackagePricingInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedUpdateWithoutPackagePricingInput>
+}
+
+export type SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutPackagePricingInput = {
+  where: Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput
+  data: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryUpdateManyMutationInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedUpdateManyWithoutPackagePricingInput>
+}
+
+export type SubscriptionPaymentPlanHistoryCreateWithoutUserInput = {
+  id?: string
+  isActive?: boolean
+  status: $Enums.SubscriptionStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  plan: Prisma.SubscriptionPlanCreateNestedOneWithoutHistoriesInput
+  packagePricing: Prisma.PackagePricingCreateNestedOneWithoutHistoriesInput
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedCreateWithoutUserInput = {
+  id?: string
+  subscriptionPlanId: string
+  packagePricingId: string
+  isActive?: boolean
+  status: $Enums.SubscriptionStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SubscriptionPaymentPlanHistoryCreateOrConnectWithoutUserInput = {
+  where: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutUserInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutUserInput>
+}
+
+export type SubscriptionPaymentPlanHistoryCreateManyUserInputEnvelope = {
+  data: Prisma.SubscriptionPaymentPlanHistoryCreateManyUserInput | Prisma.SubscriptionPaymentPlanHistoryCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type SubscriptionPaymentPlanHistoryUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput
+  update: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryUpdateWithoutUserInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateWithoutUserInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateWithoutUserInput>
+}
+
+export type SubscriptionPaymentPlanHistoryUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput
+  data: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryUpdateWithoutUserInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedUpdateWithoutUserInput>
+}
+
+export type SubscriptionPaymentPlanHistoryUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.SubscriptionPaymentPlanHistoryScalarWhereInput
+  data: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryUpdateManyMutationInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedUpdateManyWithoutUserInput>
+}
+
+export type SubscriptionPaymentPlanHistoryCreateManyPlanInput = {
+  id?: string
+  userId: string
+  packagePricingId: string
+  isActive?: boolean
+  status: $Enums.SubscriptionStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SubscriptionPaymentPlanHistoryUpdateWithoutPlanInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutHistoriesNestedInput
+  packagePricing?: Prisma.PackagePricingUpdateOneRequiredWithoutHistoriesNestedInput
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedUpdateWithoutPlanInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  packagePricingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedUpdateManyWithoutPlanInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  packagePricingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SubscriptionPaymentPlanHistoryCreateManyPackagePricingInput = {
+  id?: string
+  userId: string
+  subscriptionPlanId: string
+  isActive?: boolean
+  status: $Enums.SubscriptionStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SubscriptionPaymentPlanHistoryUpdateWithoutPackagePricingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutHistoriesNestedInput
+  plan?: Prisma.SubscriptionPlanUpdateOneRequiredWithoutHistoriesNestedInput
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedUpdateWithoutPackagePricingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriptionPlanId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedUpdateManyWithoutPackagePricingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriptionPlanId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SubscriptionPaymentPlanHistoryCreateManyUserInput = {
+  id?: string
+  subscriptionPlanId: string
+  packagePricingId: string
+  isActive?: boolean
+  status: $Enums.SubscriptionStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SubscriptionPaymentPlanHistoryUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.SubscriptionPlanUpdateOneRequiredWithoutHistoriesNestedInput
+  packagePricing?: Prisma.PackagePricingUpdateOneRequiredWithoutHistoriesNestedInput
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriptionPlanId?: Prisma.StringFieldUpdateOperationsInput | string
+  packagePricingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SubscriptionPaymentPlanHistoryUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriptionPlanId?: Prisma.StringFieldUpdateOperationsInput | string
+  packagePricingId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSubscriptionStatusFieldUpdateOperationsInput | $Enums.SubscriptionStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -386,6 +800,9 @@ export type SubscriptionPaymentPlanHistorySelect<ExtArgs extends runtime.Types.E
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  plan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
+  packagePricing?: boolean | Prisma.PackagePricingDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subscriptionPaymentPlanHistory"]>
 
 export type SubscriptionPaymentPlanHistorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -397,6 +814,9 @@ export type SubscriptionPaymentPlanHistorySelectCreateManyAndReturn<ExtArgs exte
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  plan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
+  packagePricing?: boolean | Prisma.PackagePricingDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subscriptionPaymentPlanHistory"]>
 
 export type SubscriptionPaymentPlanHistorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -408,6 +828,9 @@ export type SubscriptionPaymentPlanHistorySelectUpdateManyAndReturn<ExtArgs exte
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  plan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
+  packagePricing?: boolean | Prisma.PackagePricingDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subscriptionPaymentPlanHistory"]>
 
 export type SubscriptionPaymentPlanHistorySelectScalar = {
@@ -422,10 +845,29 @@ export type SubscriptionPaymentPlanHistorySelectScalar = {
 }
 
 export type SubscriptionPaymentPlanHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "subscriptionPlanId" | "packagePricingId" | "isActive" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["subscriptionPaymentPlanHistory"]>
+export type SubscriptionPaymentPlanHistoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  plan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
+  packagePricing?: boolean | Prisma.PackagePricingDefaultArgs<ExtArgs>
+}
+export type SubscriptionPaymentPlanHistoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  plan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
+  packagePricing?: boolean | Prisma.PackagePricingDefaultArgs<ExtArgs>
+}
+export type SubscriptionPaymentPlanHistoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  plan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
+  packagePricing?: boolean | Prisma.PackagePricingDefaultArgs<ExtArgs>
+}
 
 export type $SubscriptionPaymentPlanHistoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SubscriptionPaymentPlanHistory"
-  objects: {}
+  objects: {
+    user: Prisma.$UserPayload<ExtArgs>
+    plan: Prisma.$SubscriptionPlanPayload<ExtArgs>
+    packagePricing: Prisma.$PackagePricingPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
@@ -829,6 +1271,9 @@ readonly fields: SubscriptionPaymentPlanHistoryFieldRefs;
  */
 export interface Prisma__SubscriptionPaymentPlanHistoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  plan<T extends Prisma.SubscriptionPlanDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SubscriptionPlanDefaultArgs<ExtArgs>>): Prisma.Prisma__SubscriptionPlanClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPlanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  packagePricing<T extends Prisma.PackagePricingDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PackagePricingDefaultArgs<ExtArgs>>): Prisma.Prisma__PackagePricingClient<runtime.Types.Result.GetResult<Prisma.$PackagePricingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -883,6 +1328,10 @@ export type SubscriptionPaymentPlanHistoryFindUniqueArgs<ExtArgs extends runtime
    */
   omit?: Prisma.SubscriptionPaymentPlanHistoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPaymentPlanHistoryInclude<ExtArgs> | null
+  /**
    * Filter, which SubscriptionPaymentPlanHistory to fetch.
    */
   where: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput
@@ -901,6 +1350,10 @@ export type SubscriptionPaymentPlanHistoryFindUniqueOrThrowArgs<ExtArgs extends 
    */
   omit?: Prisma.SubscriptionPaymentPlanHistoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPaymentPlanHistoryInclude<ExtArgs> | null
+  /**
    * Filter, which SubscriptionPaymentPlanHistory to fetch.
    */
   where: Prisma.SubscriptionPaymentPlanHistoryWhereUniqueInput
@@ -918,6 +1371,10 @@ export type SubscriptionPaymentPlanHistoryFindFirstArgs<ExtArgs extends runtime.
    * Omit specific fields from the SubscriptionPaymentPlanHistory
    */
   omit?: Prisma.SubscriptionPaymentPlanHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPaymentPlanHistoryInclude<ExtArgs> | null
   /**
    * Filter, which SubscriptionPaymentPlanHistory to fetch.
    */
@@ -967,6 +1424,10 @@ export type SubscriptionPaymentPlanHistoryFindFirstOrThrowArgs<ExtArgs extends r
    */
   omit?: Prisma.SubscriptionPaymentPlanHistoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPaymentPlanHistoryInclude<ExtArgs> | null
+  /**
    * Filter, which SubscriptionPaymentPlanHistory to fetch.
    */
   where?: Prisma.SubscriptionPaymentPlanHistoryWhereInput
@@ -1015,6 +1476,10 @@ export type SubscriptionPaymentPlanHistoryFindManyArgs<ExtArgs extends runtime.T
    */
   omit?: Prisma.SubscriptionPaymentPlanHistoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPaymentPlanHistoryInclude<ExtArgs> | null
+  /**
    * Filter, which SubscriptionPaymentPlanHistories to fetch.
    */
   where?: Prisma.SubscriptionPaymentPlanHistoryWhereInput
@@ -1058,6 +1523,10 @@ export type SubscriptionPaymentPlanHistoryCreateArgs<ExtArgs extends runtime.Typ
    */
   omit?: Prisma.SubscriptionPaymentPlanHistoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPaymentPlanHistoryInclude<ExtArgs> | null
+  /**
    * The data needed to create a SubscriptionPaymentPlanHistory.
    */
   data: Prisma.XOR<Prisma.SubscriptionPaymentPlanHistoryCreateInput, Prisma.SubscriptionPaymentPlanHistoryUncheckedCreateInput>
@@ -1091,6 +1560,10 @@ export type SubscriptionPaymentPlanHistoryCreateManyAndReturnArgs<ExtArgs extend
    */
   data: Prisma.SubscriptionPaymentPlanHistoryCreateManyInput | Prisma.SubscriptionPaymentPlanHistoryCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPaymentPlanHistoryIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1105,6 +1578,10 @@ export type SubscriptionPaymentPlanHistoryUpdateArgs<ExtArgs extends runtime.Typ
    * Omit specific fields from the SubscriptionPaymentPlanHistory
    */
   omit?: Prisma.SubscriptionPaymentPlanHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPaymentPlanHistoryInclude<ExtArgs> | null
   /**
    * The data needed to update a SubscriptionPaymentPlanHistory.
    */
@@ -1157,6 +1634,10 @@ export type SubscriptionPaymentPlanHistoryUpdateManyAndReturnArgs<ExtArgs extend
    * Limit how many SubscriptionPaymentPlanHistories to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPaymentPlanHistoryIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1171,6 +1652,10 @@ export type SubscriptionPaymentPlanHistoryUpsertArgs<ExtArgs extends runtime.Typ
    * Omit specific fields from the SubscriptionPaymentPlanHistory
    */
   omit?: Prisma.SubscriptionPaymentPlanHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPaymentPlanHistoryInclude<ExtArgs> | null
   /**
    * The filter to search for the SubscriptionPaymentPlanHistory to update in case it exists.
    */
@@ -1197,6 +1682,10 @@ export type SubscriptionPaymentPlanHistoryDeleteArgs<ExtArgs extends runtime.Typ
    * Omit specific fields from the SubscriptionPaymentPlanHistory
    */
   omit?: Prisma.SubscriptionPaymentPlanHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPaymentPlanHistoryInclude<ExtArgs> | null
   /**
    * Filter which SubscriptionPaymentPlanHistory to delete.
    */
@@ -1229,4 +1718,8 @@ export type SubscriptionPaymentPlanHistoryDefaultArgs<ExtArgs extends runtime.Ty
    * Omit specific fields from the SubscriptionPaymentPlanHistory
    */
   omit?: Prisma.SubscriptionPaymentPlanHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPaymentPlanHistoryInclude<ExtArgs> | null
 }

@@ -1,216 +1,171 @@
-import { successResponse } from "@/common/response";
-import { PrismaService } from "@/lib/prisma/prisma.service";
-import { BadRequestException, Injectable, InternalServerErrorException } from "@nestjs/common";
-import { randomBytes } from "crypto";
+import { successResponse } from '@/common/response';
+import { CryptoService } from '@/common/crypto/crypto.service';
+import { PrismaService } from '@/lib/prisma/prisma.service';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { randomBytes } from 'crypto';
 
 @Injectable()
 export class SecretsService {
-    constructor(private readonly prisma: PrismaService) { }
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly crypto: CryptoService,
+  ) {}
 
-    async generateSecretKey(userId: string) {
-        try {
-            const existingSecret = await this.prisma.client.cloudSecret.findUnique({
-                where: { userId }
-            })
+  async generateSecretKey(userId: string) {
+    const existingSecret = await this.prisma.client.cloudSecret.findUnique({
+      where: { userId },
+    });
 
-            if (existingSecret?.api_secret) {
-                throw new BadRequestException('Secret key already exists')
-            }
-
-            const secretKey = randomBytes(32).toString('hex');
-            const secret = await this.prisma.client.cloudSecret.update({
-                where: {
-                    userId
-                },
-                data: {
-                    api_secret: `sk_${secretKey}`
-                }
-            })
-
-            return successResponse('Secret key generated successfully', secret)
-        } catch (error) {
-            if (error instanceof BadRequestException) {
-                throw error
-            }
-            throw new InternalServerErrorException('Failed to generate secret key')
-        }
+    if (existingSecret?.api_secret) {
+      throw new BadRequestException('Secret key already exists');
     }
 
-    async generateAppId(userId: string, name: string) {
-        try {
-            const appId = randomBytes(32).toString('hex');
-            const secret = await this.prisma.client.cloudSecret.update({
-                where: {
-                    userId
-                },
-                data: {
-                    app_data: {
-                        create: {
-                            appId: `app_${appId}`,
-                            name
-                        }
-                    }
-                },
-                include: {
-                    app_data: true,
-                }
-            })
+    const secretKey = `sk_${randomBytes(32).toString('hex')}`;
+    await this.prisma.client.cloudSecret.update({
+      where: { userId },
+      data: { api_secret: this.crypto.encrypt(secretKey) },
+    });
 
-            return successResponse('App id generated successfully', { appIds: secret.app_data })
-        } catch (error) {
-            if (error instanceof BadRequestException) {
-                throw error
-            }
-            throw new InternalServerErrorException('Failed to generate app id')
-        }
+    return successResponse('Secret key generated successfully', { secretKey });
+  }
+
+  async generateAppId(userId: string, name: string) {
+    const appId = `app_${randomBytes(32).toString('hex')}`;
+    const secret = await this.prisma.client.cloudSecret.update({
+      where: { userId },
+      data: {
+        app_data: {
+          create: { appId: this.crypto.encrypt(appId), name },
+        },
+      },
+      include: { app_data: true },
+    });
+
+    const decryptedAppData = secret.app_data.map((a) => ({
+      ...a,
+      appId: this.crypto.decrypt(a.appId),
+    }));
+
+    return successResponse('App id generated successfully', {
+      appIds: decryptedAppData,
+    });
+  }
+
+  async getSecretKey(userId: string) {
+    const existingSecret = await this.prisma.client.cloudSecret.findUnique({
+      where: { userId },
+      select: { api_secret: true },
+    });
+
+    const secretKey = existingSecret?.api_secret
+      ? this.crypto.decrypt(existingSecret.api_secret)
+      : null;
+
+    return successResponse('Secret key fetched successfully', { secretKey });
+  }
+
+  async getAppIds(userId: string) {
+    const existingSecret = await this.prisma.client.cloudSecret.findUnique({
+      where: { userId },
+      include: { app_data: true },
+    });
+
+    const appIds = (existingSecret?.app_data ?? []).map((a) => ({
+      ...a,
+      appId: this.crypto.decrypt(a.appId),
+    }));
+
+    return successResponse('App ids fetched successfully', { appIds });
+  }
+
+  async appDetails(userId: string, appId: string) {
+    const existingSecret = await this.prisma.client.cloudSecret.findUnique({
+      where: { userId },
+      include: { app_data: true },
+    });
+
+    if (!existingSecret?.app_data.length) {
+      throw new BadRequestException('No app id found');
     }
 
-    async getSecretKey(userId: string) {
-        try {
-            const existingSecret = await this.prisma.client.cloudSecret.findUnique({
-                where: { userId },
-                select: { api_secret: true }
-            })
+    const appData = existingSecret.app_data.find(
+      (a) => this.crypto.decrypt(a.appId) === appId || a.id === appId,
+    );
 
-            return successResponse('Secret key fetched successfully', {
-                secretKey: existingSecret?.api_secret ?? null
-            })
-        } catch (error) {
-            throw new InternalServerErrorException('Failed to fetch secret key')
-        }
+    if (!appData) {
+      throw new BadRequestException('App id not found');
     }
 
-    async getAppIds(userId: string) {
-        try {
-            const existingSecret = await this.prisma.client.cloudSecret.findUnique({
-                where: { userId },
-                include: { app_data: true }
-            })
+    return successResponse('App details fetched successfully', {
+      appData: { ...appData, appId: this.crypto.decrypt(appData.appId) },
+    });
+  }
 
-            return successResponse('App ids fetched successfully', {
-                appIds: existingSecret?.app_data ?? []
-            })
-        } catch (error) {
-            throw new InternalServerErrorException('Failed to fetch app ids')
-        }
+  async getApiKey(userId: string) {
+    const existingSecret = await this.prisma.client.cloudSecret.findUnique({
+      where: { userId },
+      select: { api_key: true },
+    });
+
+    if (!existingSecret?.api_key) {
+      throw new BadRequestException('No api key found');
     }
 
-    async appDetails(userId: string, appId: string) {
-        try {
-            const existingSecret = await this.prisma.client.cloudSecret.findUnique({
-                where: { userId },
-                include: {
-                    app_data: true
-                }
-            })
+    const apiKey = this.crypto.decrypt(existingSecret.api_key);
 
-            if (!existingSecret?.app_data.length) {
-                throw new BadRequestException('No app id found')
-            }
+    return successResponse('Api key fetched successfully', { apiKey });
+  }
 
-            const appData = existingSecret.app_data.find((app) => app.id === appId || app.appId === appId);
+  async deleteAppId(userId: string, appId: string) {
+    const existingSecret = await this.prisma.client.cloudSecret.findUnique({
+      where: { userId },
+      include: { app_data: true },
+    });
 
-            if (!appData) {
-                throw new BadRequestException('App id not found')
-            }
-
-            return successResponse('App details fetched successfully', { appData })
-        } catch (error) {
-            if (error instanceof BadRequestException) {
-                throw error
-            }
-            throw new InternalServerErrorException('Failed to fetch app details')
-        }
-    }
-    async getApiKey(userId: string) {
-        try {
-            const existingSecret = await this.prisma.client.cloudSecret.findUnique({
-                where: { userId },
-                select: {
-                    api_key: true
-                }
-            })
-
-            if (!existingSecret?.api_key) {
-                throw new BadRequestException('No api key found')
-            }
-
-            return successResponse('Api key fetched successfully', { apiKey: existingSecret.api_key })
-        } catch (error) {
-            if (error instanceof BadRequestException) {
-                throw error
-            }
-            throw new InternalServerErrorException('Failed to fetch api key')
-        }
+    if (!existingSecret?.app_data.length) {
+      throw new BadRequestException('No app id found');
     }
 
-    async deleteAppId(userId: string, appId: string) {
-        try {
-            const existingSecret = await this.prisma.client.cloudSecret.findUnique({
-                where: { userId },
-                include: {
-                    app_data: true
-                }
-            })
+    const appDataToDelete = existingSecret.app_data.find(
+      (a) => this.crypto.decrypt(a.appId) === appId || a.id === appId,
+    );
 
-            if (!existingSecret?.app_data.length) {
-                throw new BadRequestException('No app id found')
-            }
-
-            const appDataToDelete = existingSecret.app_data.find((app) => app.id === appId || app.appId === appId);
-
-            if (!appDataToDelete) {
-                throw new BadRequestException('App id not found')
-            }
-
-            await this.prisma.client.appData.delete({
-                where: {
-                    id: appDataToDelete.id
-                }
-            });
-
-            const updatedSecret = await this.prisma.client.cloudSecret.findUnique({
-                where: { userId },
-                include: {
-                    app_data: true
-                }
-            });
-
-            return successResponse('App id deleted successfully', { appIds: updatedSecret?.app_data || [] })
-        } catch (error) {
-            if (error instanceof BadRequestException) {
-                throw error
-            }
-            throw new InternalServerErrorException('Failed to delete app id')
-        }
+    if (!appDataToDelete) {
+      throw new BadRequestException('App id not found');
     }
 
-    async updateApiSecret(userId: string) {
-        try {
-            const existingSecret = await this.prisma.client.cloudSecret.findUnique({
-                where: { userId }
-            })
+    await this.prisma.client.appData.delete({
+      where: { id: appDataToDelete.id },
+    });
 
-            if (!existingSecret) {
-                throw new BadRequestException('Secret key not found')
-            }
+    const updatedSecret = await this.prisma.client.cloudSecret.findUnique({
+      where: { userId },
+      include: { app_data: true },
+    });
 
-            const secretKey = randomBytes(32).toString('hex');
-            await this.prisma.client.cloudSecret.update({
-                where: {
-                    userId
-                },
-                data: {
-                    api_secret: `sk_${secretKey}`
-                }
-            })
+    const appIds = (updatedSecret?.app_data ?? []).map((a) => ({
+      ...a,
+      appId: this.crypto.decrypt(a.appId),
+    }));
 
-            return successResponse('Api secret updated successfully', { secretKey: `sk_${secretKey}` })
-        } catch (error) {
-            if (error instanceof BadRequestException) {
-                throw error
-            }
-            throw new InternalServerErrorException('Failed to update api secret')
-        }
+    return successResponse('App id deleted successfully', { appIds });
+  }
+
+  async updateApiSecret(userId: string) {
+    const existingSecret = await this.prisma.client.cloudSecret.findUnique({
+      where: { userId },
+    });
+
+    if (!existingSecret) {
+      throw new BadRequestException('Secret key not found');
     }
+
+    const secretKey = `sk_${randomBytes(32).toString('hex')}`;
+    await this.prisma.client.cloudSecret.update({
+      where: { userId },
+      data: { api_secret: this.crypto.encrypt(secretKey) },
+    });
+
+    return successResponse('Api secret updated successfully', { secretKey });
+  }
 }

@@ -16,6 +16,7 @@ import { AssetsModule } from './modules/user-dashboard/assets/assets.module';
 import { OverviewModule } from './modules/user-dashboard/overview/overview.module';
 import { FoldersModule } from './modules/user-dashboard/folders/folders.module';
 import { AdminDashboardModule } from './modules/admin-dashboard/admin-dashboard.module';
+import { CryptoModule } from './common/crypto/crypto.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { AdminDashboardModule } from './modules/admin-dashboard/admin-dashboard.
     OverviewModule,
     FoldersModule,
     AdminDashboardModule,
+    CryptoModule,
   ],
   controllers: [AppController],
   providers: [

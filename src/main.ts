@@ -5,6 +5,11 @@ import { AppModule } from './app.module';
 import { GlobalExceptionFilter } from './common/filters/exception.filter';
 import { SwaggerSetting } from './config/swagger/swagger';
 
+// BigInt JSON serialization fix
+(BigInt.prototype as any).toJSON = function () {
+  return this.toString();
+};
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -20,11 +25,12 @@ async function bootstrap() {
     }),
   );
 
-
   SwaggerSetting(app);
 
   const port = process.env.PORT ?? 8888;
   await app.listen(port);
-  console.log(`Server is listening on port: ${port}, http://localhost:${process.env.PORT}/docs`);
+  console.log(
+    `Server is listening on port: ${port}, http://localhost:${process.env.PORT}/docs`,
+  );
 }
 bootstrap();

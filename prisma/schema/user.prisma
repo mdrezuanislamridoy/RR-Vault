@@ -31,6 +31,7 @@ model User {
     CloudData     CloudData[]
     folders       Folder[]
     subscriptions Subscribed[]
+    histories     SubscriptionPaymentPlanHistory[]
 
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt

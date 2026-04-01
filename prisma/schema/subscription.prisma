@@ -12,12 +12,14 @@ model SubscriptionPlan {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    histories SubscriptionPaymentPlanHistory[]
 }
 
 model PackagePricing {
     id                 String           @id @default(uuid())
     price              Float
-    maxStorage         Int
+    maxStorage         BigInt
     maxFiles           Int
     stripePriceId      String
     billingCycle       BillingCycle     @default(MONTHLY)
@@ -25,6 +27,7 @@ model PackagePricing {
     subscriptionPlanId String
 
     subscriptions Subscribed[]
+    histories     SubscriptionPaymentPlanHistory[]
 }
 
 model SubscriptionPaymentPlanHistory {
@@ -36,6 +39,10 @@ model SubscriptionPaymentPlanHistory {
     status             SubscriptionStatus
     createdAt          DateTime           @default(now())
     updatedAt          DateTime           @updatedAt
+
+    user           User             @relation(fields: [userId], references: [id])
+    plan           SubscriptionPlan @relation(fields: [subscriptionPlanId], references: [id])
+    packagePricing PackagePricing   @relation(fields: [packagePricingId], references: [id])
 }
 
 model Subscribed {
@@ -46,8 +53,8 @@ model Subscribed {
     stripeSubscriptionId String?            @unique
     isActive             Boolean            @default(true)
     status               SubscriptionStatus
-    storageUsed          Int                @default(0)
-    storageLimit         Int                @default(0)
+    storageUsed          BigInt             @default(0)
+    storageLimit         BigInt             @default(0)
     fileUploaded         Int                @default(0)
     fileLimit            Int                @default(0)
     billingCycle         BillingCycle       @default(MONTHLY)
