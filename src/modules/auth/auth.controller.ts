@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
@@ -11,6 +18,7 @@ import {
   ResetPasswordDto,
 } from './dto/password.dto';
 import { ResendVerificationDto, VerifyEmailDto } from './dto/verify.dto';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { Public } from '@/common/decorators/public.decorator';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
 import { GoogleAuthGuard } from './strategies/google.guard';
@@ -25,7 +33,7 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly config: ConfigService,
-  ) { }
+  ) {}
 
   @Public()
   @Post('register')
@@ -72,7 +80,10 @@ export class AuthController {
   @Post('change-password')
   @Roles(UserRoles.USER, UserRoles.ADMIN)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Change password from settings', description: 'Requires Authentication' })
+  @ApiOperation({
+    summary: 'Change password from settings',
+    description: 'Requires Authentication',
+  })
   changePassword(
     @Body() dto: ChangePasswordDto,
     @CurrentUser('sub') userId: string,
@@ -83,23 +94,28 @@ export class AuthController {
   @Post('logout')
   @Roles(UserRoles.USER, UserRoles.ADMIN)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Logout user', description: 'Requires Authentication' })
+  @ApiOperation({
+    summary: 'Logout user',
+    description: 'Requires Authentication',
+  })
   logout(@CurrentUser('sub') userId: string) {
     return this.authService.logout(userId);
   }
 
+  @Public()
   @Post('refresh-token')
-  @Roles(UserRoles.USER, UserRoles.ADMIN)
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Refresh JWT access token', description: 'Requires Authentication' })
-  refreshToken(@CurrentUser('sub') userId: string) {
-    return this.authService.refreshAccessToken(userId);
+  @ApiOperation({ summary: 'Refresh JWT access token' })
+  refreshToken(@Body() dto: RefreshTokenDto) {
+    return this.authService.refreshAccessToken(dto.refreshToken);
   }
 
   @Get('profile')
   @Roles(UserRoles.USER, UserRoles.ADMIN)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get logged in user profile', description: 'Requires Authentication' })
+  @ApiOperation({
+    summary: 'Get logged in user profile',
+    description: 'Requires Authentication',
+  })
   getProfile(@CurrentUser('sub') userId: string) {
     return this.authService.getProfile(userId);
   }
@@ -118,15 +134,22 @@ export class AuthController {
   @UseGuards(GoogleAuthGuard)
   @Get('google/callback')
   @ApiOperation({ summary: 'Google OAuth callback handler' })
-  async googleCallback(@GoogleUser() user: GoogleUserType, @Res() res: Response) {
+  async googleCallback(
+    @GoogleUser() user: GoogleUserType,
+    @Res() res: Response,
+  ) {
     const result = await this.authService.googleLogin(user);
-    const token = result.data?.accessToken;
-    const frontendUrl = this.config.get('FRONTEND_URL') || 'http://localhost:5173';
+    const frontendUrl =
+      this.config.get('FRONTEND_URL') || 'http://localhost:5173';
+    const accessToken = result.data?.accessToken;
+    const refreshToken = result.data?.refreshToken;
 
-    if (!token) {
+    if (!accessToken) {
       return res.redirect(`${frontendUrl}/auth/error`);
     }
 
-    return res.redirect(`${frontendUrl}/auth/success?token=${token}`);
+    return res.redirect(
+      `${frontendUrl}/auth/callback?accessToken=${accessToken}&refreshToken=${refreshToken}`,
+    );
   }
 }

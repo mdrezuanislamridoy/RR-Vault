@@ -121,7 +121,8 @@ export const AppDataScalarFieldEnum = {
   id: 'id',
   name: 'name',
   appId: 'appId',
-  cloudSecretId: 'cloudSecretId'
+  cloudSecretId: 'cloudSecretId',
+  createdAt: 'createdAt'
 } as const
 
 export type AppDataScalarFieldEnum = (typeof AppDataScalarFieldEnum)[keyof typeof AppDataScalarFieldEnum]

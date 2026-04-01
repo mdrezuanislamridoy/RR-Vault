@@ -8,6 +8,8 @@ model SubscriptionPlan {
     pricings        PackagePricing[]
     stripeProductId String
 
+    subscriptions Subscribed[]
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
@@ -21,6 +23,8 @@ model PackagePricing {
     billingCycle       BillingCycle     @default(MONTHLY)
     subscriptionPlan   SubscriptionPlan @relation(fields: [subscriptionPlanId], references: [id])
     subscriptionPlanId String
+
+    subscriptions Subscribed[]
 }
 
 model SubscriptionPaymentPlanHistory {
@@ -49,6 +53,11 @@ model Subscribed {
     billingCycle         BillingCycle       @default(MONTHLY)
     createdAt            DateTime           @default(now())
     updatedAt            DateTime           @updatedAt
+
+    // relations
+    user    User             @relation(fields: [userId], references: [id])
+    plan    SubscriptionPlan @relation(fields: [subscriptionPlanId], references: [id])
+    package PackagePricing   @relation(fields: [packagePricingId], references: [id])
 }
 
 enum SubscriptionStatus {

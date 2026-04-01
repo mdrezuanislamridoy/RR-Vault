@@ -29,6 +29,7 @@ export type AppDataMinAggregateOutputType = {
   name: string | null
   appId: string | null
   cloudSecretId: string | null
+  createdAt: Date | null
 }
 
 export type AppDataMaxAggregateOutputType = {
@@ -36,6 +37,7 @@ export type AppDataMaxAggregateOutputType = {
   name: string | null
   appId: string | null
   cloudSecretId: string | null
+  createdAt: Date | null
 }
 
 export type AppDataCountAggregateOutputType = {
@@ -43,6 +45,7 @@ export type AppDataCountAggregateOutputType = {
   name: number
   appId: number
   cloudSecretId: number
+  createdAt: number
   _all: number
 }
 
@@ -52,6 +55,7 @@ export type AppDataMinAggregateInputType = {
   name?: true
   appId?: true
   cloudSecretId?: true
+  createdAt?: true
 }
 
 export type AppDataMaxAggregateInputType = {
@@ -59,6 +63,7 @@ export type AppDataMaxAggregateInputType = {
   name?: true
   appId?: true
   cloudSecretId?: true
+  createdAt?: true
 }
 
 export type AppDataCountAggregateInputType = {
@@ -66,6 +71,7 @@ export type AppDataCountAggregateInputType = {
   name?: true
   appId?: true
   cloudSecretId?: true
+  createdAt?: true
   _all?: true
 }
 
@@ -146,6 +152,7 @@ export type AppDataGroupByOutputType = {
   name: string
   appId: string
   cloudSecretId: string
+  createdAt: Date
   _count: AppDataCountAggregateOutputType | null
   _min: AppDataMinAggregateOutputType | null
   _max: AppDataMaxAggregateOutputType | null
@@ -174,6 +181,7 @@ export type AppDataWhereInput = {
   name?: Prisma.StringFilter<"AppData"> | string
   appId?: Prisma.StringFilter<"AppData"> | string
   cloudSecretId?: Prisma.StringFilter<"AppData"> | string
+  createdAt?: Prisma.DateTimeFilter<"AppData"> | Date | string
   cloudSecret?: Prisma.XOR<Prisma.CloudSecretScalarRelationFilter, Prisma.CloudSecretWhereInput>
 }
 
@@ -182,6 +190,7 @@ export type AppDataOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   appId?: Prisma.SortOrder
   cloudSecretId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   cloudSecret?: Prisma.CloudSecretOrderByWithRelationInput
 }
 
@@ -193,6 +202,7 @@ export type AppDataWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"AppData"> | string
   appId?: Prisma.StringFilter<"AppData"> | string
   cloudSecretId?: Prisma.StringFilter<"AppData"> | string
+  createdAt?: Prisma.DateTimeFilter<"AppData"> | Date | string
   cloudSecret?: Prisma.XOR<Prisma.CloudSecretScalarRelationFilter, Prisma.CloudSecretWhereInput>
 }, "id" | "id">
 
@@ -201,6 +211,7 @@ export type AppDataOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   appId?: Prisma.SortOrder
   cloudSecretId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   _count?: Prisma.AppDataCountOrderByAggregateInput
   _max?: Prisma.AppDataMaxOrderByAggregateInput
   _min?: Prisma.AppDataMinOrderByAggregateInput
@@ -214,12 +225,14 @@ export type AppDataScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"AppData"> | string
   appId?: Prisma.StringWithAggregatesFilter<"AppData"> | string
   cloudSecretId?: Prisma.StringWithAggregatesFilter<"AppData"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"AppData"> | Date | string
 }
 
 export type AppDataCreateInput = {
   id?: string
   name: string
   appId: string
+  createdAt?: Date | string
   cloudSecret: Prisma.CloudSecretCreateNestedOneWithoutApp_dataInput
 }
 
@@ -228,12 +241,14 @@ export type AppDataUncheckedCreateInput = {
   name: string
   appId: string
   cloudSecretId: string
+  createdAt?: Date | string
 }
 
 export type AppDataUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   appId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cloudSecret?: Prisma.CloudSecretUpdateOneRequiredWithoutApp_dataNestedInput
 }
 
@@ -242,6 +257,7 @@ export type AppDataUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   appId?: Prisma.StringFieldUpdateOperationsInput | string
   cloudSecretId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AppDataCreateManyInput = {
@@ -249,12 +265,14 @@ export type AppDataCreateManyInput = {
   name: string
   appId: string
   cloudSecretId: string
+  createdAt?: Date | string
 }
 
 export type AppDataUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   appId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AppDataUncheckedUpdateManyInput = {
@@ -262,6 +280,7 @@ export type AppDataUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   appId?: Prisma.StringFieldUpdateOperationsInput | string
   cloudSecretId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AppDataListRelationFilter = {
@@ -279,6 +298,7 @@ export type AppDataCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   appId?: Prisma.SortOrder
   cloudSecretId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type AppDataMaxOrderByAggregateInput = {
@@ -286,6 +306,7 @@ export type AppDataMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   appId?: Prisma.SortOrder
   cloudSecretId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type AppDataMinOrderByAggregateInput = {
@@ -293,6 +314,7 @@ export type AppDataMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   appId?: Prisma.SortOrder
   cloudSecretId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type AppDataCreateNestedManyWithoutCloudSecretInput = {
@@ -341,12 +363,14 @@ export type AppDataCreateWithoutCloudSecretInput = {
   id?: string
   name: string
   appId: string
+  createdAt?: Date | string
 }
 
 export type AppDataUncheckedCreateWithoutCloudSecretInput = {
   id?: string
   name: string
   appId: string
+  createdAt?: Date | string
 }
 
 export type AppDataCreateOrConnectWithoutCloudSecretInput = {
@@ -383,30 +407,35 @@ export type AppDataScalarWhereInput = {
   name?: Prisma.StringFilter<"AppData"> | string
   appId?: Prisma.StringFilter<"AppData"> | string
   cloudSecretId?: Prisma.StringFilter<"AppData"> | string
+  createdAt?: Prisma.DateTimeFilter<"AppData"> | Date | string
 }
 
 export type AppDataCreateManyCloudSecretInput = {
   id?: string
   name: string
   appId: string
+  createdAt?: Date | string
 }
 
 export type AppDataUpdateWithoutCloudSecretInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   appId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AppDataUncheckedUpdateWithoutCloudSecretInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   appId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AppDataUncheckedUpdateManyWithoutCloudSecretInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   appId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -416,6 +445,7 @@ export type AppDataSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name?: boolean
   appId?: boolean
   cloudSecretId?: boolean
+  createdAt?: boolean
   cloudSecret?: boolean | Prisma.CloudSecretDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["appData"]>
 
@@ -424,6 +454,7 @@ export type AppDataSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   appId?: boolean
   cloudSecretId?: boolean
+  createdAt?: boolean
   cloudSecret?: boolean | Prisma.CloudSecretDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["appData"]>
 
@@ -432,6 +463,7 @@ export type AppDataSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   appId?: boolean
   cloudSecretId?: boolean
+  createdAt?: boolean
   cloudSecret?: boolean | Prisma.CloudSecretDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["appData"]>
 
@@ -440,9 +472,10 @@ export type AppDataSelectScalar = {
   name?: boolean
   appId?: boolean
   cloudSecretId?: boolean
+  createdAt?: boolean
 }
 
-export type AppDataOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "appId" | "cloudSecretId", ExtArgs["result"]["appData"]>
+export type AppDataOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "appId" | "cloudSecretId" | "createdAt", ExtArgs["result"]["appData"]>
 export type AppDataInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cloudSecret?: boolean | Prisma.CloudSecretDefaultArgs<ExtArgs>
 }
@@ -463,6 +496,7 @@ export type $AppDataPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     name: string
     appId: string
     cloudSecretId: string
+    createdAt: Date
   }, ExtArgs["result"]["appData"]>
   composites: {}
 }
@@ -891,6 +925,7 @@ export interface AppDataFieldRefs {
   readonly name: Prisma.FieldRef<"AppData", 'String'>
   readonly appId: Prisma.FieldRef<"AppData", 'String'>
   readonly cloudSecretId: Prisma.FieldRef<"AppData", 'String'>
+  readonly createdAt: Prisma.FieldRef<"AppData", 'DateTime'>
 }
     
 

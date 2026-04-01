@@ -31,7 +31,7 @@ export class AuthService {
     private readonly jwt: JwtService,
     private readonly config: ConfigService,
     private readonly mail: MailService,
-  ) { }
+  ) {}
 
   // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -76,25 +76,25 @@ export class AuthService {
       type === 'verify'
         ? this.generateVerifyToken(userId)
         : this.jwt.sign(
-          { sub: userId, purpose: 'password-reset' },
-          {
-            secret: this.config.getOrThrow('JWT_RESET_SECRET'),
-            expiresIn: '15m',
-          },
-        );
+            { sub: userId, purpose: 'password-reset' },
+            {
+              secret: this.config.getOrThrow('JWT_RESET_SECRET'),
+              expiresIn: '15m',
+            },
+          );
 
     const data =
       type === 'verify'
         ? {
-          verifyCode: hashedCode,
-          verifyCodeToken: token,
-          verifyCodeExpiry: expiry,
-        }
+            verifyCode: hashedCode,
+            verifyCodeToken: token,
+            verifyCodeExpiry: expiry,
+          }
         : {
-          resetCode: hashedCode,
-          resetCodeToken: token,
-          resetCodeExpiry: expiry,
-        };
+            resetCode: hashedCode,
+            resetCodeToken: token,
+            resetCodeExpiry: expiry,
+          };
 
     await this.prisma.client.user.update({ where: { id: userId }, data });
 
@@ -124,7 +124,10 @@ export class AuthService {
         data: { name: dto.name, email: dto.email, password: hashed },
       });
 
-      const { code, token } = await this.generateAndStoreCode(user.id, 'verify');
+      const { code, token } = await this.generateAndStoreCode(
+        user.id,
+        'verify',
+      );
 
       await this.mail.sendVerificationCode(user.email, user.name, code);
 
@@ -196,7 +199,7 @@ export class AuthService {
           userId: user.id,
           api_key: `ak_${apiKey}`,
         },
-      })
+      });
 
       return successResponse('Email verified successfully');
     } catch (error) {
@@ -220,13 +223,17 @@ export class AuthService {
         where: { email: dto.email },
       });
 
-      if (!user) throw new NotFoundException('No account found with this email');
+      if (!user)
+        throw new NotFoundException('No account found with this email');
 
       if (user.isEmailVerified) {
         throw new BadRequestException('Email is already verified');
       }
 
-      const { code, token } = await this.generateAndStoreCode(user.id, 'verify');
+      const { code, token } = await this.generateAndStoreCode(
+        user.id,
+        'verify',
+      );
 
       await this.mail.sendVerificationCode(user.email, user.name, code);
 
@@ -243,7 +250,9 @@ export class AuthService {
       ) {
         throw error;
       }
-      throw new InternalServerErrorException('Failed to resend verification code');
+      throw new InternalServerErrorException(
+        'Failed to resend verification code',
+      );
     }
   }
 
@@ -267,7 +276,10 @@ export class AuthService {
         );
       }
 
-      const isMatch = await bcrypt.compare(dto.password, user.password as string);
+      const isMatch = await bcrypt.compare(
+        dto.password,
+        user.password as string,
+      );
       if (!isMatch) throw new UnauthorizedException('Invalid credentials');
 
       if (!user.isEmailVerified) {
@@ -297,6 +309,9 @@ export class AuthService {
           name: user.name,
           email: user.email,
           role: user.role,
+          isEmailVerified: user.isEmailVerified,
+          accountType: user.accountType,
+          created_at: user.created_at,
         },
       });
     } catch (error) {
@@ -332,9 +347,12 @@ export class AuthService {
 
       await this.mail.sendPasswordResetCode(user.email, user.name, code);
 
-      return successResponse('If this email exists, a reset code has been sent', {
-        token,
-      });
+      return successResponse(
+        'If this email exists, a reset code has been sent',
+        {
+          token,
+        },
+      );
     } catch (error) {
       if (
         error instanceof NotFoundException ||
@@ -344,7 +362,9 @@ export class AuthService {
       ) {
         throw error;
       }
-      throw new InternalServerErrorException('Failed to process forgot password request');
+      throw new InternalServerErrorException(
+        'Failed to process forgot password request',
+      );
     }
   }
 
@@ -450,6 +470,8 @@ export class AuthService {
       });
       return successResponse('Logged out successfully');
     } catch (error) {
+      console.log('', error);
+
       throw new InternalServerErrorException('Failed to logout');
     }
   }
@@ -504,11 +526,15 @@ export class AuthService {
 
       return successResponse('Google login successful', {
         accessToken,
+        refreshToken,
         user: {
           id: user.id,
           name: user.name,
           email: user.email,
           role: user.role,
+          isEmailVerified: user.isEmailVerified,
+          accountType: user.accountType,
+          created_at: user.created_at,
         },
       });
     } catch (error) {
@@ -526,33 +552,15 @@ export class AuthService {
 
   // ─── Refresh Token ────────────────────────────────────────────────────────────
 
-  async refreshAccessToken(userId: string) {
+  async refreshAccessToken(rawRefreshToken: string) {
     try {
-      // Step 1: Verify the refresh token JWT signature and expiry
+      // Step 1: Verify JWT signature and expiry
       let payload: { sub: string };
       try {
-
-        const user = await this.prisma.client.user.findUnique({
-          where: { id: userId, isBlocked: false, isDeleted: false },
-          select: {
-            id: true,
-            email: true,
-            role: true,
-            refreshToken: true,
-          },
-        });
-
-        if (!user) throw new UnauthorizedException('User not found');
-
-        payload = this.jwt.verify<{ sub: string }>(user.refreshToken as string, {
+        payload = this.jwt.verify<{ sub: string }>(rawRefreshToken, {
           secret: this.config.getOrThrow<string>('JWT_REFRESH_SECRET'),
         });
-      } catch (err) {
-        // Token expired or invalid — clear it from DB if it exists
-        await this.prisma.client.user.updateMany({
-          where: { id: userId, refreshToken: { not: null } },
-          data: { refreshToken: null },
-        });
+      } catch {
         throw new UnauthorizedException('Session expired. Please login again');
       }
 
@@ -580,6 +588,15 @@ export class AuthService {
           'Your account has been blocked. Please contact support',
         );
 
+      // Step 3: Compare raw token with stored hash
+      const isValid = await bcrypt.compare(rawRefreshToken, user.refreshToken);
+      if (!isValid) {
+        await this.prisma.client.user.update({
+          where: { id: user.id },
+          data: { refreshToken: null },
+        });
+        throw new UnauthorizedException('Session expired. Please login again');
+      }
 
       const accessToken = this.generateAccessToken(
         user.id,
@@ -616,7 +633,6 @@ export class AuthService {
           accountType: true,
           isEmailVerified: true,
           created_at: true,
-          refreshToken: true,
         },
       });
 

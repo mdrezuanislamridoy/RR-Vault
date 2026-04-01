@@ -241,6 +241,7 @@ export type PackagePricingWhereInput = {
   billingCycle?: Prisma.EnumBillingCycleFilter<"PackagePricing"> | $Enums.BillingCycle
   subscriptionPlanId?: Prisma.StringFilter<"PackagePricing"> | string
   subscriptionPlan?: Prisma.XOR<Prisma.SubscriptionPlanScalarRelationFilter, Prisma.SubscriptionPlanWhereInput>
+  subscriptions?: Prisma.SubscribedListRelationFilter
 }
 
 export type PackagePricingOrderByWithRelationInput = {
@@ -252,6 +253,7 @@ export type PackagePricingOrderByWithRelationInput = {
   billingCycle?: Prisma.SortOrder
   subscriptionPlanId?: Prisma.SortOrder
   subscriptionPlan?: Prisma.SubscriptionPlanOrderByWithRelationInput
+  subscriptions?: Prisma.SubscribedOrderByRelationAggregateInput
 }
 
 export type PackagePricingWhereUniqueInput = Prisma.AtLeast<{
@@ -266,6 +268,7 @@ export type PackagePricingWhereUniqueInput = Prisma.AtLeast<{
   billingCycle?: Prisma.EnumBillingCycleFilter<"PackagePricing"> | $Enums.BillingCycle
   subscriptionPlanId?: Prisma.StringFilter<"PackagePricing"> | string
   subscriptionPlan?: Prisma.XOR<Prisma.SubscriptionPlanScalarRelationFilter, Prisma.SubscriptionPlanWhereInput>
+  subscriptions?: Prisma.SubscribedListRelationFilter
 }, "id">
 
 export type PackagePricingOrderByWithAggregationInput = {
@@ -304,6 +307,7 @@ export type PackagePricingCreateInput = {
   stripePriceId: string
   billingCycle?: $Enums.BillingCycle
   subscriptionPlan: Prisma.SubscriptionPlanCreateNestedOneWithoutPricingsInput
+  subscriptions?: Prisma.SubscribedCreateNestedManyWithoutPackageInput
 }
 
 export type PackagePricingUncheckedCreateInput = {
@@ -314,6 +318,7 @@ export type PackagePricingUncheckedCreateInput = {
   stripePriceId: string
   billingCycle?: $Enums.BillingCycle
   subscriptionPlanId: string
+  subscriptions?: Prisma.SubscribedUncheckedCreateNestedManyWithoutPackageInput
 }
 
 export type PackagePricingUpdateInput = {
@@ -324,6 +329,7 @@ export type PackagePricingUpdateInput = {
   stripePriceId?: Prisma.StringFieldUpdateOperationsInput | string
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
   subscriptionPlan?: Prisma.SubscriptionPlanUpdateOneRequiredWithoutPricingsNestedInput
+  subscriptions?: Prisma.SubscribedUpdateManyWithoutPackageNestedInput
 }
 
 export type PackagePricingUncheckedUpdateInput = {
@@ -334,6 +340,7 @@ export type PackagePricingUncheckedUpdateInput = {
   stripePriceId?: Prisma.StringFieldUpdateOperationsInput | string
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
   subscriptionPlanId?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriptions?: Prisma.SubscribedUncheckedUpdateManyWithoutPackageNestedInput
 }
 
 export type PackagePricingCreateManyInput = {
@@ -417,6 +424,11 @@ export type PackagePricingSumOrderByAggregateInput = {
   maxFiles?: Prisma.SortOrder
 }
 
+export type PackagePricingScalarRelationFilter = {
+  is?: Prisma.PackagePricingWhereInput
+  isNot?: Prisma.PackagePricingWhereInput
+}
+
 export type PackagePricingCreateNestedManyWithoutSubscriptionPlanInput = {
   create?: Prisma.XOR<Prisma.PackagePricingCreateWithoutSubscriptionPlanInput, Prisma.PackagePricingUncheckedCreateWithoutSubscriptionPlanInput> | Prisma.PackagePricingCreateWithoutSubscriptionPlanInput[] | Prisma.PackagePricingUncheckedCreateWithoutSubscriptionPlanInput[]
   connectOrCreate?: Prisma.PackagePricingCreateOrConnectWithoutSubscriptionPlanInput | Prisma.PackagePricingCreateOrConnectWithoutSubscriptionPlanInput[]
@@ -471,6 +483,20 @@ export type EnumBillingCycleFieldUpdateOperationsInput = {
   set?: $Enums.BillingCycle
 }
 
+export type PackagePricingCreateNestedOneWithoutSubscriptionsInput = {
+  create?: Prisma.XOR<Prisma.PackagePricingCreateWithoutSubscriptionsInput, Prisma.PackagePricingUncheckedCreateWithoutSubscriptionsInput>
+  connectOrCreate?: Prisma.PackagePricingCreateOrConnectWithoutSubscriptionsInput
+  connect?: Prisma.PackagePricingWhereUniqueInput
+}
+
+export type PackagePricingUpdateOneRequiredWithoutSubscriptionsNestedInput = {
+  create?: Prisma.XOR<Prisma.PackagePricingCreateWithoutSubscriptionsInput, Prisma.PackagePricingUncheckedCreateWithoutSubscriptionsInput>
+  connectOrCreate?: Prisma.PackagePricingCreateOrConnectWithoutSubscriptionsInput
+  upsert?: Prisma.PackagePricingUpsertWithoutSubscriptionsInput
+  connect?: Prisma.PackagePricingWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PackagePricingUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.PackagePricingUpdateWithoutSubscriptionsInput>, Prisma.PackagePricingUncheckedUpdateWithoutSubscriptionsInput>
+}
+
 export type PackagePricingCreateWithoutSubscriptionPlanInput = {
   id?: string
   price: number
@@ -478,6 +504,7 @@ export type PackagePricingCreateWithoutSubscriptionPlanInput = {
   maxFiles: number
   stripePriceId: string
   billingCycle?: $Enums.BillingCycle
+  subscriptions?: Prisma.SubscribedCreateNestedManyWithoutPackageInput
 }
 
 export type PackagePricingUncheckedCreateWithoutSubscriptionPlanInput = {
@@ -487,6 +514,7 @@ export type PackagePricingUncheckedCreateWithoutSubscriptionPlanInput = {
   maxFiles: number
   stripePriceId: string
   billingCycle?: $Enums.BillingCycle
+  subscriptions?: Prisma.SubscribedUncheckedCreateNestedManyWithoutPackageInput
 }
 
 export type PackagePricingCreateOrConnectWithoutSubscriptionPlanInput = {
@@ -528,6 +556,62 @@ export type PackagePricingScalarWhereInput = {
   subscriptionPlanId?: Prisma.StringFilter<"PackagePricing"> | string
 }
 
+export type PackagePricingCreateWithoutSubscriptionsInput = {
+  id?: string
+  price: number
+  maxStorage: number
+  maxFiles: number
+  stripePriceId: string
+  billingCycle?: $Enums.BillingCycle
+  subscriptionPlan: Prisma.SubscriptionPlanCreateNestedOneWithoutPricingsInput
+}
+
+export type PackagePricingUncheckedCreateWithoutSubscriptionsInput = {
+  id?: string
+  price: number
+  maxStorage: number
+  maxFiles: number
+  stripePriceId: string
+  billingCycle?: $Enums.BillingCycle
+  subscriptionPlanId: string
+}
+
+export type PackagePricingCreateOrConnectWithoutSubscriptionsInput = {
+  where: Prisma.PackagePricingWhereUniqueInput
+  create: Prisma.XOR<Prisma.PackagePricingCreateWithoutSubscriptionsInput, Prisma.PackagePricingUncheckedCreateWithoutSubscriptionsInput>
+}
+
+export type PackagePricingUpsertWithoutSubscriptionsInput = {
+  update: Prisma.XOR<Prisma.PackagePricingUpdateWithoutSubscriptionsInput, Prisma.PackagePricingUncheckedUpdateWithoutSubscriptionsInput>
+  create: Prisma.XOR<Prisma.PackagePricingCreateWithoutSubscriptionsInput, Prisma.PackagePricingUncheckedCreateWithoutSubscriptionsInput>
+  where?: Prisma.PackagePricingWhereInput
+}
+
+export type PackagePricingUpdateToOneWithWhereWithoutSubscriptionsInput = {
+  where?: Prisma.PackagePricingWhereInput
+  data: Prisma.XOR<Prisma.PackagePricingUpdateWithoutSubscriptionsInput, Prisma.PackagePricingUncheckedUpdateWithoutSubscriptionsInput>
+}
+
+export type PackagePricingUpdateWithoutSubscriptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.FloatFieldUpdateOperationsInput | number
+  maxStorage?: Prisma.IntFieldUpdateOperationsInput | number
+  maxFiles?: Prisma.IntFieldUpdateOperationsInput | number
+  stripePriceId?: Prisma.StringFieldUpdateOperationsInput | string
+  billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  subscriptionPlan?: Prisma.SubscriptionPlanUpdateOneRequiredWithoutPricingsNestedInput
+}
+
+export type PackagePricingUncheckedUpdateWithoutSubscriptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.FloatFieldUpdateOperationsInput | number
+  maxStorage?: Prisma.IntFieldUpdateOperationsInput | number
+  maxFiles?: Prisma.IntFieldUpdateOperationsInput | number
+  stripePriceId?: Prisma.StringFieldUpdateOperationsInput | string
+  billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  subscriptionPlanId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
 export type PackagePricingCreateManySubscriptionPlanInput = {
   id?: string
   price: number
@@ -544,6 +628,7 @@ export type PackagePricingUpdateWithoutSubscriptionPlanInput = {
   maxFiles?: Prisma.IntFieldUpdateOperationsInput | number
   stripePriceId?: Prisma.StringFieldUpdateOperationsInput | string
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  subscriptions?: Prisma.SubscribedUpdateManyWithoutPackageNestedInput
 }
 
 export type PackagePricingUncheckedUpdateWithoutSubscriptionPlanInput = {
@@ -553,6 +638,7 @@ export type PackagePricingUncheckedUpdateWithoutSubscriptionPlanInput = {
   maxFiles?: Prisma.IntFieldUpdateOperationsInput | number
   stripePriceId?: Prisma.StringFieldUpdateOperationsInput | string
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  subscriptions?: Prisma.SubscribedUncheckedUpdateManyWithoutPackageNestedInput
 }
 
 export type PackagePricingUncheckedUpdateManyWithoutSubscriptionPlanInput = {
@@ -565,6 +651,35 @@ export type PackagePricingUncheckedUpdateManyWithoutSubscriptionPlanInput = {
 }
 
 
+/**
+ * Count Type PackagePricingCountOutputType
+ */
+
+export type PackagePricingCountOutputType = {
+  subscriptions: number
+}
+
+export type PackagePricingCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  subscriptions?: boolean | PackagePricingCountOutputTypeCountSubscriptionsArgs
+}
+
+/**
+ * PackagePricingCountOutputType without action
+ */
+export type PackagePricingCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PackagePricingCountOutputType
+   */
+  select?: Prisma.PackagePricingCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PackagePricingCountOutputType without action
+ */
+export type PackagePricingCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SubscribedWhereInput
+}
+
 
 export type PackagePricingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -575,6 +690,8 @@ export type PackagePricingSelect<ExtArgs extends runtime.Types.Extensions.Intern
   billingCycle?: boolean
   subscriptionPlanId?: boolean
   subscriptionPlan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
+  subscriptions?: boolean | Prisma.PackagePricing$subscriptionsArgs<ExtArgs>
+  _count?: boolean | Prisma.PackagePricingCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["packagePricing"]>
 
 export type PackagePricingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -612,6 +729,8 @@ export type PackagePricingSelectScalar = {
 export type PackagePricingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "price" | "maxStorage" | "maxFiles" | "stripePriceId" | "billingCycle" | "subscriptionPlanId", ExtArgs["result"]["packagePricing"]>
 export type PackagePricingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   subscriptionPlan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
+  subscriptions?: boolean | Prisma.PackagePricing$subscriptionsArgs<ExtArgs>
+  _count?: boolean | Prisma.PackagePricingCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PackagePricingIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   subscriptionPlan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
@@ -624,6 +743,7 @@ export type $PackagePricingPayload<ExtArgs extends runtime.Types.Extensions.Inte
   name: "PackagePricing"
   objects: {
     subscriptionPlan: Prisma.$SubscriptionPlanPayload<ExtArgs>
+    subscriptions: Prisma.$SubscribedPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1028,6 +1148,7 @@ readonly fields: PackagePricingFieldRefs;
 export interface Prisma__PackagePricingClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   subscriptionPlan<T extends Prisma.SubscriptionPlanDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SubscriptionPlanDefaultArgs<ExtArgs>>): Prisma.Prisma__SubscriptionPlanClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPlanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  subscriptions<T extends Prisma.PackagePricing$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PackagePricing$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscribedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1457,6 +1578,30 @@ export type PackagePricingDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many PackagePricings to delete.
    */
   limit?: number
+}
+
+/**
+ * PackagePricing.subscriptions
+ */
+export type PackagePricing$subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Subscribed
+   */
+  select?: Prisma.SubscribedSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Subscribed
+   */
+  omit?: Prisma.SubscribedOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscribedInclude<ExtArgs> | null
+  where?: Prisma.SubscribedWhereInput
+  orderBy?: Prisma.SubscribedOrderByWithRelationInput | Prisma.SubscribedOrderByWithRelationInput[]
+  cursor?: Prisma.SubscribedWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SubscribedScalarFieldEnum | Prisma.SubscribedScalarFieldEnum[]
 }
 
 /**

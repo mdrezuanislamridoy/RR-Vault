@@ -14,6 +14,7 @@ import { SubscriptionModule } from './modules/subscription/subscription.module';
 import { AppsModule } from './modules/user-dashboard/apps/app.module';
 import { AssetsModule } from './modules/user-dashboard/assets/assets.module';
 import { OverviewModule } from './modules/user-dashboard/overview/overview.module';
+import { FoldersModule } from './modules/user-dashboard/folders/folders.module';
 import { AdminDashboardModule } from './modules/admin-dashboard/admin-dashboard.module';
 
 @Module({
@@ -23,16 +24,19 @@ import { AdminDashboardModule } from './modules/admin-dashboard/admin-dashboard.
     AuthModule,
     PrismaModule,
     SubscriptionModule,
-    ThrottlerModule.forRoot([{
-      ttl: 60000,
-      limit: 10,
-    }]),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 100,
+      },
+    ]),
     SecretsModule,
     CloudModule,
     AppsModule,
     AssetsModule,
     OverviewModule,
-    AdminDashboardModule
+    FoldersModule,
+    AdminDashboardModule,
   ],
   controllers: [AppController],
   providers: [
@@ -41,4 +45,4 @@ import { AdminDashboardModule } from './modules/admin-dashboard/admin-dashboard.
     { provide: APP_GUARD, useClass: AuthGuard },
   ],
 })
-export class AppModule { }
+export class AppModule {}

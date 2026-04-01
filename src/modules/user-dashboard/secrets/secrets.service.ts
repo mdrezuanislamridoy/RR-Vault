@@ -69,22 +69,13 @@ export class SecretsService {
         try {
             const existingSecret = await this.prisma.client.cloudSecret.findUnique({
                 where: { userId },
-                select: {
-                    api_secret: true
-                }
+                select: { api_secret: true }
             })
 
-            if (!existingSecret?.api_secret) {
-                throw new BadRequestException('No secret key found')
-            }
-
-            return successResponse('Secret key fetched successfully', { secretKey: existingSecret.api_secret })
+            return successResponse('Secret key fetched successfully', {
+                secretKey: existingSecret?.api_secret ?? null
+            })
         } catch (error) {
-            if (error instanceof BadRequestException) {
-                throw error
-            }
-            console.log(error);
-
             throw new InternalServerErrorException('Failed to fetch secret key')
         }
     }
@@ -93,21 +84,14 @@ export class SecretsService {
         try {
             const existingSecret = await this.prisma.client.cloudSecret.findUnique({
                 where: { userId },
-                include: {
-                    app_data: true
-                }
+                include: { app_data: true }
             })
 
-            if (!existingSecret?.app_data.length) {
-                throw new BadRequestException('No app id found')
-            }
-
-            return successResponse('App id fetched successfully', { appIds: existingSecret.app_data })
+            return successResponse('App ids fetched successfully', {
+                appIds: existingSecret?.app_data ?? []
+            })
         } catch (error) {
-            if (error instanceof BadRequestException) {
-                throw error
-            }
-            throw new InternalServerErrorException('Failed to fetch app id')
+            throw new InternalServerErrorException('Failed to fetch app ids')
         }
     }
 

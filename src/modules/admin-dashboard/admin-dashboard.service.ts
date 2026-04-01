@@ -14,8 +14,22 @@ export class AdminDashboardService {
                     fileSize: true
                 }
             });
-            const totalSubscriptions = await this.prisma.client.subscribed.count();
-           
+
+            // Calculate total revenue from active subscriptions
+            const activeSubscriptions = await this.prisma.client.subscribed.findMany({
+                where: { status: 'PAID' },
+                include: { package: true }
+            });
+
+            const totalRevenue = activeSubscriptions.reduce((sum, sub) => sum + (sub.package?.price || 0), 0);
+
+            return {
+                totalUsers,
+                totalFiles,
+                totalRevenue,
+                totalStorageUsed: totalStorage._sum.fileSize || 0,
+                activeSubscriptions: activeSubscriptions.length
+            };
         }
         catch (error) {
             throw error;

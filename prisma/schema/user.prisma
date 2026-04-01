@@ -26,10 +26,11 @@ model User {
     stripeCustomerId String?
 
     // relations
-    cloudSecret CloudSecret?
-    StoredFiles StoredFile[]
-    CloudData   CloudData[]
-    folders     Folder[]
+    cloudSecret   CloudSecret?
+    StoredFiles   StoredFile[]
+    CloudData     CloudData[]
+    folders       Folder[]
+    subscriptions Subscribed[]
 
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
