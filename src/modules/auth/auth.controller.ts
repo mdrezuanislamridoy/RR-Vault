@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
@@ -138,6 +131,7 @@ export class AuthController {
     @GoogleUser() user: GoogleUserType,
     @Res() res: Response,
   ) {
+    console.log('[Google Callback] user from passport:', user);
     const result = await this.authService.googleLogin(user);
     const frontendUrl =
       this.config.get('FRONTEND_URL') || 'http://localhost:5173';

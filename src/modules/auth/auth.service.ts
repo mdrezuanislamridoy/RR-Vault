@@ -23,7 +23,6 @@ import {
 import { ResendVerificationDto, VerifyEmailDto } from './dto/verify.dto';
 import { GoogleUser } from './strategies/google.strategy';
 import { successResponse } from '@/common/response/index';
-import { CryptoService } from '@/common/crypto/crypto.service';
 
 @Injectable()
 export class AuthService {
@@ -32,7 +31,6 @@ export class AuthService {
     private readonly jwt: JwtService,
     private readonly config: ConfigService,
     private readonly mail: MailService,
-    private readonly crypto: CryptoService,
   ) {}
 
   // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -199,7 +197,7 @@ export class AuthService {
       await this.prisma.client.cloudSecret.create({
         data: {
           userId: user.id,
-          api_key: this.crypto.encrypt(`ak_${apiKey}`),
+          api_key: `ak_${apiKey}`,
         },
       });
 
@@ -482,12 +480,10 @@ export class AuthService {
         where: { id: userId },
         data: { refreshToken: null },
       });
-      return successResponse('Logged out successfully');
-    } catch (error) {
-      console.log('', error);
-
-      throw new InternalServerErrorException('Failed to logout');
+    } catch {
+      // User may not exist, ignore
     }
+    return successResponse('Logged out successfully');
   }
 
   // ─── Google Login ─────────────────────────────────────────────────────────
@@ -498,11 +494,15 @@ export class AuthService {
         where: { email: googleUser.email },
       });
 
+      console.log('[Google Login] existing user:', user?.id ?? 'none');
+
       if (user && user.isDeleted) {
+        console.log('[Google Login] user isDeleted');
         throw new UnauthorizedException('This account has been deleted');
       }
 
       if (user && user.isBlocked) {
+        console.log('[Google Login] user isBlocked');
         throw new ForbiddenException(
           'Your account has been blocked. Please contact support',
         );
@@ -518,16 +518,18 @@ export class AuthService {
             isEmailVerified: true,
           },
         });
+        console.log('[Google Login] new user created:', user.id);
 
-        // Create CloudSecret (api_key) for new Google user
         const apiKey = randomBytes(32).toString('hex');
         await this.prisma.client.cloudSecret.create({
           data: {
             userId: user.id,
-            api_key: this.crypto.encrypt(`ak_${apiKey}`),
+            api_key: `ak_${apiKey}`,
           },
         });
+        console.log('[Google Login] cloudSecret created for:', user.id);
       } else if (user.accountType !== 'GOOGLE') {
+        console.log('[Google Login] accountType mismatch:', user.accountType);
         throw new ForbiddenException(
           'This email is registered with a password. Please login with email and password.',
         );
@@ -569,6 +571,7 @@ export class AuthService {
       ) {
         throw error;
       }
+      console.error('Google login error:', error);
       throw new InternalServerErrorException('Failed to process Google login');
     }
   }

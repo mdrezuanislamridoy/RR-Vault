@@ -37,6 +37,9 @@ export class AuthGuard implements CanActivate {
     if (isPublic) return true;
 
     const request = context.switchToHttp().getRequest<Request>();
+
+    // Skip JWT check for Google OAuth routes — handled by GoogleAuthGuard
+    if (request.path?.includes('/auth/google')) return true;
     const token = this.extractToken(request);
 
     if (!token) {
@@ -65,6 +68,12 @@ export class AuthGuard implements CanActivate {
     });
 
     if (!user) {
+      // Allow logout even if user no longer exists
+      if (request.path?.includes('/auth/logout')) {
+        request['user'] = { id: payload.sub, ...payload };
+        return true;
+      }
+      console.error('AuthGuard: user not found for sub:', payload.sub);
       throw new UnauthorizedException('Account no longer exists');
     }
 

@@ -8,7 +8,7 @@ import { MailModule } from '@/modules/mail/mail.module';
 import { GoogleStrategy } from './strategies/google.strategy';
 
 @Module({
-  imports: [PassportModule, PrismaModule, MailModule],
+  imports: [PassportModule, JwtModule, PrismaModule, MailModule],
   controllers: [AuthController],
   providers: [AuthService, GoogleStrategy],
   exports: [AuthService],
