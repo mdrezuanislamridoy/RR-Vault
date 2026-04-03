@@ -535,12 +535,20 @@ export class AuthService {
         );
       }
 
+      console.log('[Google Login] About to generate tokens for user:', {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      });
+
       const accessToken = this.generateAccessToken(
         user.id,
         user.email,
         user.role,
       );
       const refreshToken = this.generateRefreshToken(user.id);
+
+      console.log('[Google Login] Tokens generated successfully');
 
       const hashedRefresh: string = await bcrypt.hash(refreshToken, 10);
 

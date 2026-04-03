@@ -3,7 +3,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 export const SwaggerSetting = (app: INestApplication) => {
   const config = new DocumentBuilder()
-    .setTitle('RR Vault API Documentation ')
+    .setTitle('RR Vault API Documentation')
     .setDescription('API documentation')
     .setVersion('1.0')
     .addBearerAuth(
@@ -15,7 +15,7 @@ export const SwaggerSetting = (app: INestApplication) => {
         in: 'header',
       },
       'access-token',
-    ) // optional: if using JWT auth
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   document.paths = Object.fromEntries(
