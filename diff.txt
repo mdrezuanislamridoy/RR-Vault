@@ -1,0 +1,32 @@
+diff --git a/src/main.ts b/src/main.ts
+index 9534aa4..9ac009a 100644
+--- a/src/main.ts
++++ b/src/main.ts
+@@ -1,6 +1,6 @@
+ /* eslint-disable @typescript-eslint/no-floating-promises */
+ import { NestFactory } from '@nestjs/core';
+-import { ValidationPipe } from '@nestjs/common';
++import { ValidationPipe, MicroServiceOptions } from '@nestjs/common';
+ import { AppModule } from './app.module';
+ import { GlobalExceptionFilter } from './common/filters/exception.filter';
+ import { SwaggerSetting } from './config/swagger/swagger';
+@@ -11,7 +11,9 @@ import { SwaggerSetting } from './config/swagger/swagger';
+ };
+ 
+ async function bootstrap() {
+-  const app = await NestFactory.create(AppModule);
++  const app = await NestFactory.createMicroservice<MicroServiceOptions>(AppModule, {
++    
++  });
+ 
+   app.enableCors();
+ 
+@@ -25,6 +27,8 @@ async function bootstrap() {
+     }),
+   );
+ 
++
++
+   SwaggerSetting(app);
+ 
+   const port = process.env.PORT ?? 8888;

@@ -18,6 +18,7 @@ import {
   ApiConsumes,
 } from '@nestjs/swagger';
 import { CloudService } from './cloud.service';
+import { Throttle } from '@nestjs/throttler';
 import { Roles } from '@/common/decorators/roles.decorator';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
 
@@ -28,6 +29,7 @@ export class CloudController {
   constructor(private readonly cloudService: CloudService) {}
 
   @Post('upload')
+  @Throttle({ default: { ttl: 10000, limit: 1 } })
   @Roles('USER')
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')

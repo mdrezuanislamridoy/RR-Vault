@@ -6,7 +6,9 @@ import { GlobalExceptionFilter } from './common/filters/exception.filter';
 import { SwaggerSetting } from './config/swagger/swagger';
 
 // BigInt JSON serialization fix
-(BigInt.prototype as any).toJSON = function () {
+(BigInt.prototype as unknown as { toJSON: () => string }).toJSON = function (
+  this: bigint,
+) {
   return this.toString();
 };
 
@@ -28,7 +30,7 @@ async function bootstrap() {
   SwaggerSetting(app);
 
   const port = process.env.PORT ?? 8888;
-  await app.listen(port);
+  await app.listen(port as number);
   console.log(
     `Server is listening on port: ${port}, http://localhost:${process.env.PORT}/docs`,
   );

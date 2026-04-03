@@ -10,6 +10,7 @@ import { AuthGuard } from './common/guards/auth.guard';
 import { JwtModule } from '@nestjs/jwt';
 import { SecretsModule } from './modules/user-dashboard/secrets/secrets.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 import { SubscriptionModule } from './modules/subscription/subscription.module';
 import { AppsModule } from './modules/user-dashboard/apps/app.module';
 import { AssetsModule } from './modules/user-dashboard/assets/assets.module';
@@ -24,12 +25,15 @@ import { AdminDashboardModule } from './modules/admin-dashboard/admin-dashboard.
     AuthModule,
     PrismaModule,
     SubscriptionModule,
-    ThrottlerModule.forRoot([
-      {
-        ttl: 60000,
-        limit: 100,
-      },
-    ]),
+    ThrottlerModule.forRootAsync({
+      useFactory: () => ({
+        throttlers: [{ ttl: 60000, limit: 100 }],
+        storage: new ThrottlerStorageRedisService({
+          host: process.env.REDIS_HOST ?? 'localhost',
+          port: parseInt(process.env.REDIS_PORT ?? '6379'),
+        }),
+      }),
+    }),
     SecretsModule,
     CloudModule,
     AppsModule,
