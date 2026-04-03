@@ -12,7 +12,9 @@ export class SubscriptionJob {
         const subscriptions = await this.prisma.client.subscribed.findMany({
             where: {
                 status: SubscriptionStatus.PAID,
-                
+                currentPeriodEnd: {
+                    lt: new Date(),
+                },
             },
 
         });
