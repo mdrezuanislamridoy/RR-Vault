@@ -13,7 +13,7 @@ export class WebhookController {
   constructor(
     private readonly prisma: PrismaService,
     private readonly stripeService: StripeService,
-  ) {}
+  ) { }
 
   @Post()
   @ApiOperation({
@@ -104,6 +104,8 @@ export class WebhookController {
           storageLimit: pricing?.maxStorage ?? BigInt(0),
           fileLimit: pricing?.maxFiles ?? 0,
           billingCycle: pricing?.billingCycle ?? 'MONTHLY',
+          currentPeriodStart: new Date(),
+          currentPeriodEnd: pricing?.billingCycle === 'MONTHLY' ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
         },
       });
 
@@ -140,7 +142,7 @@ export class WebhookController {
 
       if (!userId || !planId || !pricingId) return;
 
-      // Append-only: add new history record for this renewal payment
+
       await this.prisma.client.subscriptionPaymentPlanHistory.create({
         data: {
           userId,
@@ -148,6 +150,26 @@ export class WebhookController {
           packagePricingId: pricingId,
           isActive: true,
           status: 'PAID',
+        },
+      });
+
+      const pricing = await this.prisma.client.packagePricing.findUnique({
+        where: { id: pricingId },
+      });
+
+      await this.prisma.client.subscribed.create({
+        data: {
+          userId,
+          subscriptionPlanId: planId,
+          packagePricingId: pricingId,
+          isActive: true,
+          status: 'PAID',
+          stripeSubscriptionId: subscriptionId,
+          storageLimit: pricing?.maxStorage ?? BigInt(0),
+          fileLimit: pricing?.maxFiles ?? 0,
+          billingCycle: pricing?.billingCycle ?? 'MONTHLY',
+          currentPeriodStart: new Date(),
+          currentPeriodEnd: pricing?.billingCycle === 'MONTHLY' ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
         },
       });
 

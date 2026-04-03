@@ -1393,6 +1393,8 @@ export const SubscribedScalarFieldEnum = {
   fileUploaded: 'fileUploaded',
   fileLimit: 'fileLimit',
   billingCycle: 'billingCycle',
+  currentPeriodStart: 'currentPeriodStart',
+  currentPeriodEnd: 'currentPeriodEnd',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

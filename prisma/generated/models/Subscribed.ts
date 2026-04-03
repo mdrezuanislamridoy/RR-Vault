@@ -53,6 +53,8 @@ export type SubscribedMinAggregateOutputType = {
   fileUploaded: number | null
   fileLimit: number | null
   billingCycle: $Enums.BillingCycle | null
+  currentPeriodStart: Date | null
+  currentPeriodEnd: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -70,6 +72,8 @@ export type SubscribedMaxAggregateOutputType = {
   fileUploaded: number | null
   fileLimit: number | null
   billingCycle: $Enums.BillingCycle | null
+  currentPeriodStart: Date | null
+  currentPeriodEnd: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -87,6 +91,8 @@ export type SubscribedCountAggregateOutputType = {
   fileUploaded: number
   fileLimit: number
   billingCycle: number
+  currentPeriodStart: number
+  currentPeriodEnd: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -120,6 +126,8 @@ export type SubscribedMinAggregateInputType = {
   fileUploaded?: true
   fileLimit?: true
   billingCycle?: true
+  currentPeriodStart?: true
+  currentPeriodEnd?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -137,6 +145,8 @@ export type SubscribedMaxAggregateInputType = {
   fileUploaded?: true
   fileLimit?: true
   billingCycle?: true
+  currentPeriodStart?: true
+  currentPeriodEnd?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -154,6 +164,8 @@ export type SubscribedCountAggregateInputType = {
   fileUploaded?: true
   fileLimit?: true
   billingCycle?: true
+  currentPeriodStart?: true
+  currentPeriodEnd?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -258,6 +270,8 @@ export type SubscribedGroupByOutputType = {
   fileUploaded: number
   fileLimit: number
   billingCycle: $Enums.BillingCycle
+  currentPeriodStart: Date | null
+  currentPeriodEnd: Date | null
   createdAt: Date
   updatedAt: Date
   _count: SubscribedCountAggregateOutputType | null
@@ -298,6 +312,8 @@ export type SubscribedWhereInput = {
   fileUploaded?: Prisma.IntFilter<"Subscribed"> | number
   fileLimit?: Prisma.IntFilter<"Subscribed"> | number
   billingCycle?: Prisma.EnumBillingCycleFilter<"Subscribed"> | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.DateTimeNullableFilter<"Subscribed"> | Date | string | null
+  currentPeriodEnd?: Prisma.DateTimeNullableFilter<"Subscribed"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Subscribed"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscribed"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -318,6 +334,8 @@ export type SubscribedOrderByWithRelationInput = {
   fileUploaded?: Prisma.SortOrder
   fileLimit?: Prisma.SortOrder
   billingCycle?: Prisma.SortOrder
+  currentPeriodStart?: Prisma.SortOrderInput | Prisma.SortOrder
+  currentPeriodEnd?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -341,6 +359,8 @@ export type SubscribedWhereUniqueInput = Prisma.AtLeast<{
   fileUploaded?: Prisma.IntFilter<"Subscribed"> | number
   fileLimit?: Prisma.IntFilter<"Subscribed"> | number
   billingCycle?: Prisma.EnumBillingCycleFilter<"Subscribed"> | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.DateTimeNullableFilter<"Subscribed"> | Date | string | null
+  currentPeriodEnd?: Prisma.DateTimeNullableFilter<"Subscribed"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Subscribed"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscribed"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -361,6 +381,8 @@ export type SubscribedOrderByWithAggregationInput = {
   fileUploaded?: Prisma.SortOrder
   fileLimit?: Prisma.SortOrder
   billingCycle?: Prisma.SortOrder
+  currentPeriodStart?: Prisma.SortOrderInput | Prisma.SortOrder
+  currentPeriodEnd?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SubscribedCountOrderByAggregateInput
@@ -386,6 +408,8 @@ export type SubscribedScalarWhereWithAggregatesInput = {
   fileUploaded?: Prisma.IntWithAggregatesFilter<"Subscribed"> | number
   fileLimit?: Prisma.IntWithAggregatesFilter<"Subscribed"> | number
   billingCycle?: Prisma.EnumBillingCycleWithAggregatesFilter<"Subscribed"> | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.DateTimeNullableWithAggregatesFilter<"Subscribed"> | Date | string | null
+  currentPeriodEnd?: Prisma.DateTimeNullableWithAggregatesFilter<"Subscribed"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Subscribed"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Subscribed"> | Date | string
 }
@@ -400,6 +424,8 @@ export type SubscribedCreateInput = {
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
+  currentPeriodStart?: Date | string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSubscriptionsInput
@@ -420,6 +446,8 @@ export type SubscribedUncheckedCreateInput = {
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
+  currentPeriodStart?: Date | string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -434,6 +462,8 @@ export type SubscribedUpdateInput = {
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -454,6 +484,8 @@ export type SubscribedUncheckedUpdateInput = {
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -471,6 +503,8 @@ export type SubscribedCreateManyInput = {
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
+  currentPeriodStart?: Date | string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -485,6 +519,8 @@ export type SubscribedUpdateManyMutationInput = {
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -502,6 +538,8 @@ export type SubscribedUncheckedUpdateManyInput = {
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -529,6 +567,8 @@ export type SubscribedCountOrderByAggregateInput = {
   fileUploaded?: Prisma.SortOrder
   fileLimit?: Prisma.SortOrder
   billingCycle?: Prisma.SortOrder
+  currentPeriodStart?: Prisma.SortOrder
+  currentPeriodEnd?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -553,6 +593,8 @@ export type SubscribedMaxOrderByAggregateInput = {
   fileUploaded?: Prisma.SortOrder
   fileLimit?: Prisma.SortOrder
   billingCycle?: Prisma.SortOrder
+  currentPeriodStart?: Prisma.SortOrder
+  currentPeriodEnd?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -570,6 +612,8 @@ export type SubscribedMinOrderByAggregateInput = {
   fileUploaded?: Prisma.SortOrder
   fileLimit?: Prisma.SortOrder
   billingCycle?: Prisma.SortOrder
+  currentPeriodStart?: Prisma.SortOrder
+  currentPeriodEnd?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -665,6 +709,10 @@ export type SubscribedUncheckedUpdateManyWithoutPackageNestedInput = {
   deleteMany?: Prisma.SubscribedScalarWhereInput | Prisma.SubscribedScalarWhereInput[]
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type SubscribedCreateNestedManyWithoutUserInput = {
   create?: Prisma.XOR<Prisma.SubscribedCreateWithoutUserInput, Prisma.SubscribedUncheckedCreateWithoutUserInput> | Prisma.SubscribedCreateWithoutUserInput[] | Prisma.SubscribedUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.SubscribedCreateOrConnectWithoutUserInput | Prisma.SubscribedCreateOrConnectWithoutUserInput[]
@@ -717,6 +765,8 @@ export type SubscribedCreateWithoutPlanInput = {
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
+  currentPeriodStart?: Date | string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSubscriptionsInput
@@ -735,6 +785,8 @@ export type SubscribedUncheckedCreateWithoutPlanInput = {
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
+  currentPeriodStart?: Date | string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -781,6 +833,8 @@ export type SubscribedScalarWhereInput = {
   fileUploaded?: Prisma.IntFilter<"Subscribed"> | number
   fileLimit?: Prisma.IntFilter<"Subscribed"> | number
   billingCycle?: Prisma.EnumBillingCycleFilter<"Subscribed"> | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.DateTimeNullableFilter<"Subscribed"> | Date | string | null
+  currentPeriodEnd?: Prisma.DateTimeNullableFilter<"Subscribed"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Subscribed"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscribed"> | Date | string
 }
@@ -795,6 +849,8 @@ export type SubscribedCreateWithoutPackageInput = {
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
+  currentPeriodStart?: Date | string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSubscriptionsInput
@@ -813,6 +869,8 @@ export type SubscribedUncheckedCreateWithoutPackageInput = {
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
+  currentPeriodStart?: Date | string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -853,6 +911,8 @@ export type SubscribedCreateWithoutUserInput = {
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
+  currentPeriodStart?: Date | string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   plan: Prisma.SubscriptionPlanCreateNestedOneWithoutSubscriptionsInput
@@ -871,6 +931,8 @@ export type SubscribedUncheckedCreateWithoutUserInput = {
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
+  currentPeriodStart?: Date | string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -913,6 +975,8 @@ export type SubscribedCreateManyPlanInput = {
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
+  currentPeriodStart?: Date | string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -927,6 +991,8 @@ export type SubscribedUpdateWithoutPlanInput = {
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -945,6 +1011,8 @@ export type SubscribedUncheckedUpdateWithoutPlanInput = {
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -961,6 +1029,8 @@ export type SubscribedUncheckedUpdateManyWithoutPlanInput = {
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -977,6 +1047,8 @@ export type SubscribedCreateManyPackageInput = {
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
+  currentPeriodStart?: Date | string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -991,6 +1063,8 @@ export type SubscribedUpdateWithoutPackageInput = {
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -1009,6 +1083,8 @@ export type SubscribedUncheckedUpdateWithoutPackageInput = {
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1025,6 +1101,8 @@ export type SubscribedUncheckedUpdateManyWithoutPackageInput = {
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1041,6 +1119,8 @@ export type SubscribedCreateManyUserInput = {
   fileUploaded?: number
   fileLimit?: number
   billingCycle?: $Enums.BillingCycle
+  currentPeriodStart?: Date | string | null
+  currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1055,6 +1135,8 @@ export type SubscribedUpdateWithoutUserInput = {
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   plan?: Prisma.SubscriptionPlanUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -1073,6 +1155,8 @@ export type SubscribedUncheckedUpdateWithoutUserInput = {
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1089,6 +1173,8 @@ export type SubscribedUncheckedUpdateManyWithoutUserInput = {
   fileUploaded?: Prisma.IntFieldUpdateOperationsInput | number
   fileLimit?: Prisma.IntFieldUpdateOperationsInput | number
   billingCycle?: Prisma.EnumBillingCycleFieldUpdateOperationsInput | $Enums.BillingCycle
+  currentPeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1108,6 +1194,8 @@ export type SubscribedSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   fileUploaded?: boolean
   fileLimit?: boolean
   billingCycle?: boolean
+  currentPeriodStart?: boolean
+  currentPeriodEnd?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1128,6 +1216,8 @@ export type SubscribedSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   fileUploaded?: boolean
   fileLimit?: boolean
   billingCycle?: boolean
+  currentPeriodStart?: boolean
+  currentPeriodEnd?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1148,6 +1238,8 @@ export type SubscribedSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   fileUploaded?: boolean
   fileLimit?: boolean
   billingCycle?: boolean
+  currentPeriodStart?: boolean
+  currentPeriodEnd?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1168,11 +1260,13 @@ export type SubscribedSelectScalar = {
   fileUploaded?: boolean
   fileLimit?: boolean
   billingCycle?: boolean
+  currentPeriodStart?: boolean
+  currentPeriodEnd?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SubscribedOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "subscriptionPlanId" | "packagePricingId" | "stripeSubscriptionId" | "isActive" | "status" | "storageUsed" | "storageLimit" | "fileUploaded" | "fileLimit" | "billingCycle" | "createdAt" | "updatedAt", ExtArgs["result"]["subscribed"]>
+export type SubscribedOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "subscriptionPlanId" | "packagePricingId" | "stripeSubscriptionId" | "isActive" | "status" | "storageUsed" | "storageLimit" | "fileUploaded" | "fileLimit" | "billingCycle" | "currentPeriodStart" | "currentPeriodEnd" | "createdAt" | "updatedAt", ExtArgs["result"]["subscribed"]>
 export type SubscribedInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   plan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
@@ -1209,6 +1303,8 @@ export type $SubscribedPayload<ExtArgs extends runtime.Types.Extensions.Internal
     fileUploaded: number
     fileLimit: number
     billingCycle: $Enums.BillingCycle
+    currentPeriodStart: Date | null
+    currentPeriodEnd: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["subscribed"]>
@@ -1649,6 +1745,8 @@ export interface SubscribedFieldRefs {
   readonly fileUploaded: Prisma.FieldRef<"Subscribed", 'Int'>
   readonly fileLimit: Prisma.FieldRef<"Subscribed", 'Int'>
   readonly billingCycle: Prisma.FieldRef<"Subscribed", 'BillingCycle'>
+  readonly currentPeriodStart: Prisma.FieldRef<"Subscribed", 'DateTime'>
+  readonly currentPeriodEnd: Prisma.FieldRef<"Subscribed", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Subscribed", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Subscribed", 'DateTime'>
 }
