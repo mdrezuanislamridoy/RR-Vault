@@ -10,30 +10,30 @@ import { AuthGuard } from './common/guards/auth.guard';
 import { JwtModule } from '@nestjs/jwt';
 import { SecretsModule } from './modules/user-dashboard/secrets/secrets.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
-import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 import { SubscriptionModule } from './modules/subscription/subscription.module';
 import { AppsModule } from './modules/user-dashboard/apps/app.module';
 import { AssetsModule } from './modules/user-dashboard/assets/assets.module';
 import { OverviewModule } from './modules/user-dashboard/overview/overview.module';
 import { FoldersModule } from './modules/user-dashboard/folders/folders.module';
 import { AdminDashboardModule } from './modules/admin-dashboard/admin-dashboard.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
+    CacheModule.register({
+      isGlobal: true,
+    }),
     ConfigModule.forRoot({ isGlobal: true }),
     JwtModule.register({ global: true }),
     AuthModule,
     PrismaModule,
     SubscriptionModule,
-    ThrottlerModule.forRootAsync({
-      useFactory: () => ({
-        throttlers: [{ ttl: 60000, limit: 100 }],
-        storage: new ThrottlerStorageRedisService({
-          host: process.env.REDIS_HOST ?? 'localhost',
-          port: parseInt(process.env.REDIS_PORT ?? '6379'),
-        }),
-      }),
-    }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 100,
+      },
+    ]),
     SecretsModule,
     CloudModule,
     AppsModule,
