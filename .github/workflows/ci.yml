@@ -1,0 +1,12 @@
+name: build
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: first step
+        uses: actions/checkout@v4
+      - name: check status
+        run: |
+          lsb_release -d
+          pwd
