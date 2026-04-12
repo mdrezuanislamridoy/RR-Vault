@@ -17,12 +17,15 @@ import { OverviewModule } from './modules/user-dashboard/overview/overview.modul
 import { FoldersModule } from './modules/user-dashboard/folders/folders.module';
 import { AdminDashboardModule } from './modules/admin-dashboard/admin-dashboard.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { ScheduleModule } from '@nestjs/schedule';
+import { SchedulerService } from './modules/render/scheduler.service';
 
 @Module({
   imports: [
     CacheModule.register({
       isGlobal: true,
     }),
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({ isGlobal: true }),
     JwtModule.register({ global: true }),
     AuthModule,
@@ -45,6 +48,7 @@ import { CacheModule } from '@nestjs/cache-manager';
   controllers: [AppController],
   providers: [
     AppService,
+    SchedulerService,
     { provide: APP_GUARD, useClass: ThrottlerGuard },
     { provide: APP_GUARD, useClass: AuthGuard },
   ],
